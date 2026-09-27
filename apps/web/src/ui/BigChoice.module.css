@@ -75,16 +75,17 @@
   opacity: 0.6;
 }
 
+/* --big-choice-icon: a screen may size the icon bubble to fit its height (the home screen on a laptop) */
 .icon {
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: var(--big-choice-icon, 64px);
+  height: var(--big-choice-icon, 64px);
   border-radius: var(--radius-md);
   background: var(--tile-accent);
-  font-size: 38px;
+  font-size: calc(var(--big-choice-icon, 64px) * 0.6);
   line-height: 1;
 }
 
@@ -164,10 +165,10 @@
 }
 
 .tile[data-layout='column'] .icon {
-  width: 96px;
-  height: 96px;
+  width: var(--big-choice-icon, 96px);
+  height: var(--big-choice-icon, 96px);
   border-radius: var(--radius-xl);
-  font-size: 56px;
+  font-size: calc(var(--big-choice-icon, 96px) * 0.58);
 }
 
 .tile[data-layout='column'] .text {
