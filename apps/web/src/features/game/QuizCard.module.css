@@ -1,0 +1,68 @@
+/* The lesson's question with three big answers (docs/TEACHING.md §2.4): the top of the panel, never under the bubble. */
+.quiz {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+  animation: quiz-pop var(--duration-base, 200ms) var(--ease-spring, ease-out);
+}
+
+@keyframes quiz-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.streak {
+  align-self: flex-end;
+  margin: 0;
+  padding: 2px var(--space-3, 0.75rem);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--color-surface, #fff);
+  color: var(--color-sunny-deep, #c77f00);
+  font-size: var(--text-sm, 1rem);
+  font-weight: var(--font-weight-black, 900);
+}
+
+.question {
+  margin: 0;
+  font-size: var(--text-md, 1.15rem);
+  font-weight: var(--font-weight-black, 900);
+  line-height: var(--line-height-tight, 1.15);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+}
+
+/* labels are ≤ 3 words / 18 characters: they fit, but a narrow column may still wrap them */
+.quiz .option {
+  height: auto;
+  min-height: 56px;
+  padding-block: var(--space-2, 0.5rem);
+  justify-content: flex-start;
+  font-size: var(--text-md, 1.15rem);
+  line-height: var(--line-height-tight, 1.15);
+  text-align: left;
+  white-space: normal;
+}
+
+.quiz .option[data-state='other'] {
+  opacity: 0.55;
+}
+
+.quiz .option[data-state='wrong'] {
+  outline: 3px solid var(--color-coral, #ff6b5e);
+  outline-offset: -3px;
+}
+
+.glyph {
+  display: inline-block;
+  min-width: 1.2em;
+  font-size: 1.5em;
+  line-height: 1;
+  text-align: center;
+}

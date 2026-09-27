@@ -1,0 +1,184 @@
+/* Chunky tactile button: a fill plus a solid «step» underneath; pressing sinks it by 4 px. */
+.button {
+  --btn-bg: var(--color-primary);
+  --btn-fg: var(--color-on-primary);
+  --btn-step: var(--color-primary-deep);
+  --btn-border: transparent;
+  --btn-height: var(--control-md);
+  --btn-pad: var(--space-6);
+  --btn-font: var(--text-md);
+  --btn-icon: 24px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: var(--btn-height);
+  min-width: var(--btn-height);
+  padding: 0 var(--btn-pad);
+  border: 2px solid var(--btn-border);
+  border-radius: var(--radius-lg);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: var(--btn-font);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  /* the step is a shadow, so it takes no layout space: keep ≥ 12 px gaps around buttons */
+  box-shadow: 0 var(--step) 0 var(--btn-step);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.06) saturate(1.05);
+}
+
+.button:active:not(:disabled),
+.button[aria-pressed='true'] {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--btn-step);
+}
+
+.button:disabled {
+  --btn-bg: #ece4d3;
+  --btn-fg: #7c8794;
+  --btn-step: #d8cdb6;
+  --btn-border: transparent;
+  cursor: not-allowed;
+}
+
+/* ── variants ── */
+.primary {
+  --btn-bg: var(--color-primary);
+  --btn-fg: var(--color-on-primary);
+  --btn-step: var(--color-primary-deep);
+}
+
+.secondary {
+  --btn-bg: var(--color-surface);
+  --btn-fg: var(--color-primary-deep);
+  --btn-step: var(--color-step);
+  --btn-border: var(--color-step);
+}
+
+.accent {
+  --btn-bg: var(--color-sunny);
+  --btn-fg: var(--color-ink);
+  --btn-step: var(--color-sunny-deep);
+}
+
+.danger {
+  --btn-bg: var(--color-coral);
+  --btn-fg: var(--color-ink);
+  --btn-step: var(--color-coral-deep);
+}
+
+.ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--color-primary-deep);
+  --btn-step: transparent;
+  box-shadow: none;
+}
+
+.ghost:hover:not(:disabled) {
+  --btn-bg: var(--color-primary-soft);
+  filter: none;
+}
+
+.ghost:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.ghost:disabled {
+  --btn-bg: transparent;
+}
+
+/* ── sizes ── */
+.md {
+  --btn-height: var(--control-md);
+  --btn-pad: var(--space-6);
+  --btn-font: var(--text-md);
+  --btn-icon: 24px;
+}
+
+.lg {
+  --btn-height: var(--control-lg);
+  --btn-pad: var(--space-8);
+  --btn-font: var(--text-lg);
+  --btn-icon: 30px;
+}
+
+.xl {
+  --btn-height: var(--control-xl);
+  --btn-pad: var(--space-10);
+  --btn-font: var(--text-xl);
+  --btn-icon: 38px;
+  border-radius: calc(var(--radius-lg) + 4px);
+}
+
+.block {
+  display: flex;
+  width: 100%;
+}
+
+.iconOnly {
+  padding: 0;
+  width: var(--btn-height);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn-icon);
+  height: var(--btn-icon);
+  font-size: var(--btn-icon);
+  line-height: 1;
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  display: inline-block;
+}
+
+/* ── loading ── */
+.loading {
+  cursor: progress;
+}
+
+.loading .icon,
+.loading .label {
+  /* keep the width, show only the spinner */
+  opacity: 0;
+}
+
+.busy {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  border: 0.22em solid currentColor;
+  border-right-color: transparent;
+  animation: button-spin 0.8s linear infinite;
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

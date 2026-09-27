@@ -1,0 +1,62 @@
+# «Гамбитик» on a VPS with Docker, behind a Traefik that already runs there (docker provider, exposedbydefault=false;
+# e.g. the Traefik of a Hostinger Docker VPS, host network). The public site: every child signs in (GAMBIT_ACCOUNTS,
+# docs/ACCOUNTS.md) — no shared password in front of it. Lives in GAMBIT_REMOTE_DIR (default /docker/gambitik) next to:
+#   .env      — compose variables only: GAMBIT_IMAGE_TAG (deploy.sh), GAMBIT_HOST and GAMBIT_TZ (deploy.sh writes them from
+#               deploy.env when missing), optionally GAMBIT_TRAEFIK_ENTRYPOINT (default websecure) and
+#               GAMBIT_TRAEFIK_CERTRESOLVER (default letsencrypt) to match your Traefik
+#   app.env   — the app's own settings: GAMBIT_INVITE_CODE (set-invite.sh; without it sign-up is closed)
+#   overlay/  — the phrases recorded on the Mac (sync-voice.sh), mounted read-only
+# See README.md next to this file.
+name: gambitik
+
+services:
+  gambitik:
+    image: gambitik:${GAMBIT_IMAGE_TAG:?GAMBIT_IMAGE_TAG is not set in .env — run deploy.sh}
+    container_name: gambitik
+    restart: unless-stopped
+    # a real PID 1 (signals, zombies); the server stops within a second on SIGTERM
+    init: true
+    env_file:
+      - path: ./app.env
+        required: false
+    environment:
+      # the one name Traefik routes here — the server trusts it as its Host and as the https Origin
+      GAMBIT_PUBLIC_HOSTS: ${GAMBIT_HOST:?GAMBIT_HOST is not set in .env — run deploy.sh}
+      # the family's clock, not the container's UTC: the server writes local time into what the family reads — the
+      # game file names (games/YYYY/MM/YYYY-MM-DD_HHMM_…), the journal's date and thought times, the profile. Node's
+      # own ICU knows the zones, the slim image needs no tzdata.
+      TZ: ${GAMBIT_TZ:-UTC}
+      # the public site: sign-up with an invite code (app.env), one data folder per child (docs/ACCOUNTS.md)
+      GAMBIT_ACCOUNTS: '1'
+      # the client address for the sign-in limits: Traefik's X-Forwarded-For / X-Real-IP (it overwrites the client's)
+      GAMBIT_TRUST_PROXY: '1'
+    volumes:
+      - gambitik-data:/data
+      - ./overlay:/overlay:ro
+    # nothing but /data (and /tmp) is ever written: the source tree and the overlay stay read-only
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    # no published ports: Traefik (host network) reaches the container's own address on port 8787
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.gambitik.rule=Host(`${GAMBIT_HOST:?GAMBIT_HOST is not set in .env — run deploy.sh}`)
+      - traefik.http.routers.gambitik.entrypoints=${GAMBIT_TRAEFIK_ENTRYPOINT:-websecure}
+      - traefik.http.routers.gambitik.tls.certresolver=${GAMBIT_TRAEFIK_CERTRESOLVER:-letsencrypt}
+      # no shared password: the app's own sign-in guards every child's data (the SPA and the auth routes are open)
+      - traefik.http.routers.gambitik.middlewares=gambitik-headers
+      # the app sends its own CSP / nosniff / frame headers; HSTS belongs to the TLS end
+      - traefik.http.middlewares.gambitik-headers.headers.stsSeconds=31536000
+      - traefik.http.services.gambitik.loadbalancer.server.port=8787
+
+volumes:
+  # the child's profile, games and journals (SQLite + files); survives every update — back it up (README.md).
+  # External: compose never creates or removes it, so `docker compose down -v` (or removing the project) cannot delete
+  # the child's data — deploy.sh creates it once; an empty volume takes /data's owner (node, 700) from the image.
+  gambitik-data:
+    external: true
+    name: gambitik-data

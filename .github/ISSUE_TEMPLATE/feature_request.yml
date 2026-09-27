@@ -1,0 +1,34 @@
+name: Идея / Feature request
+description: Предложить новую функцию или улучшение. Suggest a feature or an improvement.
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Помните о принципах проекта (CONTRIBUTING.md): **без генеративного ИИ в партии ребёнка, без рекламы и трекинга, без сбора личных данных детей.**
+        Keep in mind: no generative AI in the child's game, no ads or tracking, no collection of children's personal data.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую проблему решает / What problem does it solve
+      description: Кому и в какой момент это поможет — ребёнку, родителю, учителю, разработчику?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Что предлагаете / Proposal
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Другие варианты / Alternatives considered
+  - type: checkboxes
+    id: principles
+    attributes:
+      label: Принципы / Principles
+      options:
+        - label: Идея не добавляет генеративный ИИ в партию, рекламу, трекинг или сбор личных данных. / It adds no runtime generative AI, ads, tracking or personal data collection.
+          required: true
+        - label: Я готов(а) сделать pull request сам(а). / I would like to open a PR myself.

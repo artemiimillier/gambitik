@@ -1,0 +1,107 @@
+/* The public site's door: the onboarding card (../Onboarding.module.css) with fields aligned to the left. */
+
+.card {
+  justify-items: stretch;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--color-ink-muted);
+  font-weight: var(--font-weight-bold);
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-sunny-soft);
+  color: var(--color-primary);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+}
+
+.tab {
+  min-height: var(--control-md, 48px);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink-muted);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-ink);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: var(--font-weight-bold);
+}
+
+.hint {
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+
+.link {
+  justify-self: center;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.code {
+  padding: var(--space-4) var(--space-6);
+  border: 3px dashed var(--color-primary);
+  border-radius: var(--radius-lg);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: 0.06em;
+  user-select: all;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+/* the hidden field against scripts: out of sight and out of the tab order, but still in the form */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

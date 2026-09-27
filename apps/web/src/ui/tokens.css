@@ -1,0 +1,122 @@
+/*
+ * Design tokens — «Гамбитик».
+ * Direction (ARCHITECTURE §6, research 08 §8): warm paper + juicy accents. Calm surfaces and board,
+ * saturated colour only on interactive things and rewards.
+ *
+ * Contrast rules (WCAG, computed by script, not by eye):
+ *   - white text ONLY on --color-primary (6.0:1), --color-primary-deep (9.0:1) and the other *-deep colours;
+ *   - on --color-sunny / --color-star / --color-coral / --color-success / --color-info the text is ALWAYS --color-ink
+ *     (7.5 / 8.9 / 4.6 / 6.2 / 5.7 : 1).
+ */
+:root {
+  /* ── surfaces ── */
+  --color-bg: #fff8ec; /* warm paper */
+  --color-surface: #ffffff;
+  --color-surface-2: #fff1db; /* warm tint: inset panels, hovered tiles */
+  --color-line: #e6d9bf; /* hairlines on paper (decorative, not a text colour) */
+  --color-line-strong: #b9a98a;
+  --color-step: #d2c4a6; /* neutral «step» under white buttons and tiles */
+
+  /* ── text ── */
+  --color-ink: #1d3540; /* 12.2:1 on bg */
+  --color-ink-muted: #52667a; /* 5.6:1 on bg */
+  --color-on-primary: #ffffff;
+
+  /* ── brand ── */
+  --color-primary: #0f6f69; /* deep teal */
+  --color-primary-deep: #0a524e; /* step shadow, pressed, hover text */
+  --color-primary-soft: #d8f0eb; /* selected tiles, soft badges */
+  --color-sunny: #ffb938; /* sunny yellow accent */
+  --color-sunny-deep: #c77f00;
+  --color-sunny-soft: #fff0cc;
+  --color-star: #ffd23f; /* rewards */
+
+  /* ── semantics ── */
+  --color-coral: #ff6b5e; /* warnings, «ой»; never a shaming red */
+  --color-coral-deep: #c9372e;
+  --color-coral-soft: #ffe3df;
+  --color-success: #3ccb9b;
+  --color-success-deep: #167a58;
+  --color-success-soft: #ddf6ec;
+  --color-info: #4db5ff;
+  --color-info-deep: #1f6fb8;
+  --color-info-soft: #e0f2ff;
+
+  /* ── board «Мята» (mirrored in boardTheme.ts) ── */
+  --board-light: #f3ebd8;
+  --board-dark: #8cb8a8;
+
+  /* ── shape ── */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px; /* cards, buttons, tiles */
+  --radius-xl: 28px; /* modals, hero panels */
+  --radius-pill: 999px;
+
+  /* ── spacing scale (4 px base, in rem so the parent font-size setting scales it) ── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ── control sizes: kids need big targets (research 08 §1.3) ── */
+  --control-md: 56px;
+  --control-lg: 64px;
+  --control-xl: 80px;
+  --tile-min-height: 96px;
+
+  /* ── shadows: the chunky «step» under pressable things, soft lift under cards ── */
+  --step: 6px;
+  --shadow-step: 0 var(--step) 0 rgba(29, 53, 64, 0.16);
+  --shadow-card: 0 2px 0 rgba(29, 53, 64, 0.05), 0 14px 28px -18px rgba(29, 53, 64, 0.35);
+  --shadow-pop: 0 30px 70px -24px rgba(29, 53, 64, 0.55);
+
+  /* ── typography ── */
+  --font-family: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-weight-text: 650; /* child-facing text is never thinner than 600 */
+  --font-weight-bold: 800;
+  --font-weight-black: 900;
+  --line-height-text: 1.45;
+  --line-height-tight: 1.15;
+
+  /* fluid type scale; minimum child-facing size is 18 px */
+  --text-xs: 0.875rem; /* parent-only fine print */
+  --text-sm: 1rem;
+  --text-md: clamp(1.125rem, 1.06rem + 0.28vw, 1.25rem); /* 18 → 20 */
+  --text-lg: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem); /* 20 → 24 */
+  --text-xl: clamp(1.5rem, 1.32rem + 0.8vw, 2rem); /* 24 → 32 */
+  --text-2xl: clamp(1.875rem, 1.55rem + 1.4vw, 2.75rem); /* 30 → 44 */
+  --text-3xl: clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem); /* 36 → 60 */
+
+  /* parent setting 100 / 115 / 130 %: set --font-scale on <html> */
+  --font-scale: 1;
+
+  /* ── focus ── */
+  --color-focus: var(--color-primary);
+  --focus-width: 3px;
+  --focus-offset: 3px;
+
+  /* ── motion ── */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── layout ── */
+  --screen-gutter: clamp(1rem, 0.4rem + 2.4vw, 2.5rem);
+  --screen-max-width: 1200px;
+  /* free strip kept for the mascot dock (fixed, bottom-right): Гамбитик with his speech bubble ABOVE him.
+     Wide windows keep this much free on the right, narrow ones at the bottom (coach/MascotDock.css). */
+  --mascot-dock-size: 320px;
+
+  /* ── layers ── */
+  --z-sticky: 10;
+  --z-dock: 30;
+  --z-toast: 60;
+}

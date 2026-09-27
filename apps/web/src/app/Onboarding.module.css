@@ -1,0 +1,129 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* the mascot asks the questions from his corner: keep it free */
+  padding: var(--space-8) var(--screen-gutter) calc(var(--mascot-dock-size) + var(--space-4));
+  background:
+    radial-gradient(circle at 12% 18%, var(--color-sunny-soft) 0 140px, transparent 141px),
+    radial-gradient(circle at 88% 12%, var(--color-primary-soft) 0 110px, transparent 111px),
+    var(--color-bg);
+}
+
+@media (min-width: 900px) {
+  /* wide window: Гамбитик and his bubble own the strip on the right, the card is centred in the rest */
+  .page {
+    padding-bottom: var(--space-8);
+    padding-right: calc(var(--mascot-dock-size) + var(--space-4));
+  }
+}
+
+.dots {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.dots li {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-line);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    width var(--duration-base) var(--ease-out);
+}
+
+.dots li[data-done='true'] {
+  background: var(--color-primary);
+}
+
+.dots li[data-on='true'] {
+  width: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--color-sunny);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.card {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-6);
+  width: min(100%, 640px);
+  padding: var(--space-10) var(--space-8);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  animation: card-in var(--duration-base) var(--ease-spring);
+}
+
+.question {
+  font-size: var(--text-2xl);
+}
+
+.lead {
+  max-width: 34ch;
+  font-size: var(--text-lg);
+}
+
+.problem {
+  min-height: 1.5em;
+  margin-top: calc(var(--space-3) * -1);
+  color: var(--color-coral-deep);
+  font-weight: var(--font-weight-bold);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  width: 100%;
+}
+
+.parentNote {
+  max-width: 52ch;
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+
+.hello {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--color-sunny-soft);
+  color: var(--color-primary);
+  font-size: 84px;
+  line-height: 1;
+}
+
+@keyframes card-in {
+  from {
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: var(--space-8) var(--space-5);
+  }
+
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}

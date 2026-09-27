@@ -1,0 +1,9 @@
+# raw 128 kbps masters as Higgsfield returned them (re-downloadable from the ledger while the CDN keeps them)
+.masters/
+# generator lock (one generator per ledger)
+*.jsonl.lock
+# the full harvest of `voice:harvest` (≈ 30 MB of engine games; a 24-game sample is committed for the tests)
+.harvest/
+
+# the whole-library run (voice:library-plan / voice:library-run): its plan, progress and finish reports
+.library/

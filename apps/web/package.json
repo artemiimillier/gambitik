@@ -1,0 +1,39 @@
+{
+  "name": "@gambit/web",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "engine:copy": "node scripts/copy-engine.ts",
+    "dev": "node scripts/copy-engine.ts && vite",
+    "build": "node scripts/copy-engine.ts && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@fontsource-variable/nunito": "^5.3.0",
+    "@gambit/content": "workspace:*",
+    "@gambit/core": "workspace:*",
+    "@gambit/openings": "workspace:*",
+    "@gambit/shared": "workspace:*",
+    "canvas-confetti": "^1.9.4",
+    "chess.js": "1.4.0",
+    "react": "^19.3.0",
+    "react-chessboard": "5.12.1",
+    "react-dom": "^19.3.0",
+    "recharts": "^3.10.1",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "stockfish": "19.0.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.0"
+  }
+}

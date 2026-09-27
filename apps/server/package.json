@@ -1,0 +1,29 @@
+{
+  "name": "@gambit/server",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=../../.env src/index.ts",
+    "start": "NODE_ENV=production node --env-file-if-exists=../../.env src/index.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@gambit/content": "workspace:*",
+    "@gambit/core": "workspace:*",
+    "@gambit/openings": "workspace:*",
+    "@gambit/shared": "workspace:*",
+    "@hono/node-server": "^2.1.1",
+    "@hono/zod-validator": "^0.9.1",
+    "chess.js": "1.4.0",
+    "glicko2-lite": "^6.0.0",
+    "hono": "^4.13.8",
+    "ts-fsrs": "^5.4.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2"
+  }
+}

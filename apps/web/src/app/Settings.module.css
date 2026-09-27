@@ -1,0 +1,299 @@
+.sections {
+  display: grid;
+  gap: var(--space-6);
+  width: min(100%, 860px);
+  margin-inline: auto;
+}
+
+.label {
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-weight-bold);
+}
+
+.nameForm {
+  display: grid;
+  margin-bottom: var(--space-6);
+}
+
+.nameRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.nameRow > input {
+  flex: 1;
+  min-width: 14rem;
+}
+
+.help {
+  margin-top: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.help[data-problem='true'] {
+  color: var(--color-coral-deep);
+  font-weight: var(--font-weight-bold);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* five modes with long, telling titles («Живой голос — слушает и говорит одновременно»): one per row */
+.voiceGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.scaleRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.saveNote {
+  margin-top: var(--space-4);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success-deep);
+}
+
+.saveNote[data-tone='info'] {
+  color: var(--color-info-deep);
+}
+
+.saveNote[data-tone='warn'] {
+  color: var(--color-coral-deep);
+}
+
+.footer {
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+  text-align: center;
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font-size: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ───────── voice status block ───────── */
+.micGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.talkLabel {
+  margin-top: var(--space-5);
+}
+
+.talkGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.subheading {
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-black);
+}
+
+.facts {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+/* the daily limit of the paid voice: today's minutes, the price hint, the idle and daily rules */
+.limitFacts {
+  display: grid;
+  gap: var(--space-1);
+  margin: calc(-1 * var(--space-2)) 0 var(--space-5);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.limitFacts > p:first-child {
+  font-weight: var(--font-weight-bold);
+}
+
+/* ───────── curriculum stage (parent) ───────── */
+.stageList {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.stageRow {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--control-lg);
+  padding: var(--space-2) var(--space-4);
+  border: 3px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.stageRow:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.stageRow:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.stageRow[aria-checked='true'] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.stageNumber {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  font-weight: var(--font-weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.stageRow[aria-checked='true'] .stageNumber {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.stageText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stageTitle {
+  font-weight: var(--font-weight-bold);
+}
+
+.stageDescription {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.35;
+}
+
+/* ───────── parent gate ───────── */
+.gate {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.gateTitle {
+  font-size: var(--text-xl);
+}
+
+.holdButton {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: var(--control-xl);
+  border: 3px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-primary-deep);
+  font: inherit;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-black);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.holdFill {
+  position: absolute;
+  inset: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--color-primary-soft);
+  transition: transform 150ms var(--ease-out);
+}
+
+/* the fill IS the three-second clock: it must run even with «меньше анимации» — it carries information */
+.holdButton[data-holding='true'] .holdFill {
+  transform: scaleX(1);
+  transition: transform 3000ms linear;
+}
+
+.holdLabel {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+}
+
+.gateForm {
+  display: grid;
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--color-line);
+}
+
+@media (max-width: 640px) {
+  .micGrid,
+  .talkGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* two-colour chip in front of a board-theme name */
+.boardSwatch {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  margin-right: var(--space-2);
+  border-radius: 6px;
+  border: 1px solid rgb(0 0 0 / 12%);
+  vertical-align: -0.3em;
+}

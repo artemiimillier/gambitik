@@ -1,0 +1,47 @@
+{
+  "name": "gambit",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "description": "Гамбитик — local-first kids chess trainer",
+  "packageManager": "pnpm@11.5.2",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @gambit/server --filter @gambit/web run dev",
+    "build": "pnpm --filter @gambit/web run build",
+    "start": "NODE_ENV=production node --env-file-if-exists=.env apps/server/src/index.ts",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "e2e:prod": "playwright test -c playwright.prod.config.ts",
+    "e2e:accounts": "playwright test -c playwright.accounts.config.ts",
+    "typecheck": "pnpm -r run typecheck && tsc --noEmit -p e2e/tsconfig.json",
+    "engine:copy": "pnpm --filter @gambit/web run engine:copy",
+    "puzzles:import": "node --env-file-if-exists=.env tools/import-puzzles.ts",
+    "openings:build": "node --env-file-if-exists=.env tools/build-openings.ts",
+    "voice:cost": "node tools/voice-clips/cli.ts cost",
+    "voice:generate": "node tools/voice-clips/cli.ts generate",
+    "voice:process": "node tools/voice-clips/cli.ts process",
+    "voice:verify": "node tools/voice-clips/cli.ts verify",
+    "voice:review": "node tools/voice-clips/cli.ts review",
+    "voice:ledger": "node tools/voice-clips/cli.ts ledger",
+    "voice:whisper": "node tools/voice-clips/cli.ts whisper",
+    "voice:harvest": "node tools/voice-clips/cli.ts harvest",
+    "voice:script": "node tools/voice-clips/cli.ts script",
+    "voice:plan": "node tools/voice-clips/cli.ts plan",
+    "voice:coverage": "node tools/voice-clips/cli.ts coverage",
+    "voice:demo-game": "node tools/voice-clips/cli.ts demo-game",
+    "voice:library-plan": "node tools/voice-clips/cli.ts library-plan",
+    "voice:library-run": "node tools/voice-clips/cli.ts library-run",
+    "teach:report": "node tools/teaching/cli.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2",
+    "chess.js": "1.4.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}

@@ -1,0 +1,102 @@
+.dialog {
+  --modal-width: 520px;
+
+  width: min(var(--modal-width), calc(100vw - 2 * var(--space-4)));
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--space-4));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xl);
+  background: transparent;
+  color: var(--color-ink);
+  overflow: visible;
+}
+
+.dialog[data-size='sm'] {
+  --modal-width: 400px;
+}
+
+.dialog[data-size='lg'] {
+  --modal-width: 720px;
+}
+
+.dialog::backdrop {
+  /* light veil: the mascot stays visible behind it */
+  background: rgba(29, 53, 64, 0.42);
+}
+
+.dialog[open] {
+  animation: modal-in 260ms var(--ease-spring);
+}
+
+.dialog[open]::backdrop {
+  animation: veil-in 200ms ease-out;
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-height: inherit;
+  padding: var(--space-8) var(--space-8) var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-pop);
+  text-align: center;
+  overflow-y: auto;
+}
+
+.panel .close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  line-height: 1;
+}
+
+.title {
+  font-size: var(--text-xl);
+  padding-inline: var(--space-8);
+}
+
+.body {
+  width: 100%;
+  color: var(--color-ink);
+  font-size: var(--text-md);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  width: 100%;
+  margin-top: var(--space-2);
+  padding-bottom: var(--step);
+}
+
+.actions > * {
+  flex: 1 1 180px;
+}
+
+@keyframes modal-in {
+  from {
+    transform: translateY(24px) scale(0.94);
+    opacity: 0;
+  }
+}
+
+@keyframes veil-in {
+  from {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@gambit/tools",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "description": "Data tooling: Lichess puzzle import, openings build. Run from the repo root via pnpm puzzles:import / pnpm openings:build",
+  "scripts": {
+    "puzzles:import": "node import-puzzles.ts",
+    "openings:build": "node build-openings.ts",
+    "starter:build": "node build-starter.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@gambit/openings": "workspace:*",
+    "@gambit/shared": "workspace:*",
+    "chess.js": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2"
+  }
+}

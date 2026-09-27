@@ -1,0 +1,42 @@
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+.star {
+  flex: none;
+  overflow: visible;
+}
+
+.empty {
+  fill: #f3ead6;
+  stroke: #d2c4a6;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.star[data-kind='full'] .empty {
+  stroke: none;
+  fill: none;
+}
+
+.fill {
+  fill: var(--color-star);
+  stroke: var(--color-sunny-deep);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.animate .star:not([data-kind='empty']) {
+  animation: star-pop 420ms var(--ease-spring) backwards;
+  transform-origin: 50% 55%;
+}
+
+@keyframes star-pop {
+  from {
+    transform: scale(0) rotate(-40deg);
+    opacity: 0;
+  }
+}

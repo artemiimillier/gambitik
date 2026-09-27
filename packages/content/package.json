@@ -1,0 +1,19 @@
+{
+  "name": "@gambit/content",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "description": "Personas, curriculum, concept cards, prompts (consumed as TypeScript source)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@gambit/shared": "workspace:*",
+    "chess.js": "1.4.0"
+  }
+}

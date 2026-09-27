@@ -1,0 +1,120 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-bg);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-5) var(--screen-gutter) var(--space-4);
+}
+
+.back {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back .backButton {
+  /* the back button is the way home: keep it big and in the same corner on every screen */
+  padding-inline: var(--space-5) var(--space-6);
+}
+
+.titles {
+  min-width: 0;
+  text-align: center;
+}
+
+.title {
+  font-size: var(--text-2xl);
+}
+
+.subtitle {
+  margin-top: var(--space-1);
+  color: var(--color-ink-muted);
+  font-size: var(--text-md);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-4) var(--screen-gutter) var(--space-8);
+}
+
+.center {
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  min-width: 0;
+  max-width: var(--screen-max-width);
+  margin-inline: auto;
+}
+
+.screen[data-width='wide'] .content {
+  max-width: none;
+}
+
+/* ── room for the mascot dock ── */
+.screen[data-dock='bottom'] .main {
+  padding-bottom: calc(var(--mascot-dock-size) + var(--space-4));
+}
+
+.screen[data-dock='side'] .main {
+  padding-bottom: calc(var(--mascot-dock-size) + var(--space-4));
+}
+
+@media (min-width: 900px) {
+  .screen[data-dock='side'] .main {
+    padding-bottom: var(--space-8);
+    /* keep the larger of: the normal gutter, or the dock width */
+    padding-right: max(var(--screen-gutter), calc(var(--mascot-dock-size) + var(--space-4)));
+  }
+
+  /* On very wide windows the centred column already leaves the corner free: balance both gutters. */
+  .screen[data-dock='side'][data-width='normal'] .main {
+    padding-left: max(var(--screen-gutter), min(calc(var(--mascot-dock-size) + var(--space-4)), calc((100vw - var(--screen-max-width)) / 2)));
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .titles {
+    text-align: left;
+  }
+
+  .back .backButton {
+    width: var(--control-lg);
+    padding: 0;
+  }
+
+  .back .backButton > span:last-child {
+    /* icon-only on phones; the accessible name stays on the button */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

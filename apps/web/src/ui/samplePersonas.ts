@@ -1,0 +1,98 @@
+/**
+ * Fallback persona list for the Gallery and for tests. The real data lives in @gambit/content (PERSONAS);
+ * this sample follows research 08 §4 so the avatars can be designed before that package exists.
+ */
+import type { Persona } from '@gambit/shared';
+
+const NO_LINES: Persona['lines'] = { intro: [], onWin: [], onLose: [], onDraw: [], onGoodMoveByChild: [] };
+
+export const SAMPLE_PERSONAS: Persona[] = [
+  {
+    id: 'petya',
+    name: 'Петя',
+    age: 6,
+    nominalElo: 300,
+    tagline: 'Только выучил ходы и отвлекается на кота',
+    style: 'Ходит почти наугад и часто забывает про защиту.',
+    avatar: { bg: '#7BD389', skin: '#FFD9B8', hair: '#F2C14E', hairStyle: 'spiky' },
+    lines: { ...NO_LINES, intro: ['Привет! Я Петя. Я уже знаю, как ходит конь! Ну… почти.'] },
+    recommendedFromStage: 1,
+  },
+  {
+    id: 'sonya',
+    name: 'Соня',
+    age: 7,
+    nominalElo: 500,
+    tagline: 'Обожает своего ферзя',
+    style: 'Рано выводит ферзя и хватает всё, что плохо лежит.',
+    avatar: { bg: '#FFD23F', skin: '#FFE0C7', hair: '#8B5A2B', hairStyle: 'ponytail', accessory: 'bow' },
+    lines: { ...NO_LINES, intro: ['Я Соня! Мой ферзь самый сильный, сейчас увидишь!'] },
+    recommendedFromStage: 1,
+  },
+  {
+    id: 'grisha',
+    name: 'Гриша',
+    age: 8,
+    nominalElo: 700,
+    tagline: 'Хитрюга с детским матом',
+    style: 'Каждый раз целится на слабое поле у короля.',
+    avatar: { bg: '#FF9F45', skin: '#FFD2B0', hair: '#E8702A', hairStyle: 'curly' },
+    lines: { ...NO_LINES, intro: ['Я Гриша. Спорим, поставлю мат в четыре хода?'] },
+    recommendedFromStage: 2,
+  },
+  {
+    id: 'sasha',
+    name: 'Саша',
+    age: 9,
+    nominalElo: 900,
+    tagline: 'Ходит в шахматный кружок',
+    style: 'Играет по правилам, но пропускает двухходовую тактику.',
+    avatar: { bg: '#4DB5FF', skin: '#F3C9A5', hair: '#5B4636', hairStyle: 'cap', accessory: 'cap' },
+    lines: { ...NO_LINES, intro: ['Привет, я Саша, хожу в шахматный кружок. Сыграем по-честному?'] },
+    recommendedFromStage: 3,
+  },
+  {
+    id: 'vika',
+    name: 'Вика',
+    age: 10,
+    nominalElo: 1100,
+    tagline: 'Решает задачки на скорость',
+    style: 'Любит вилки и связки, но иногда забывает про своего короля.',
+    avatar: { bg: '#9B7BFF', skin: '#FFE0C7', hair: '#2B2B3A', hairStyle: 'bob' },
+    lines: { ...NO_LINES, intro: ['Я Вика. Обожаю вилки и связки. Следи за своими фигурами!'] },
+    recommendedFromStage: 4,
+  },
+  {
+    id: 'lyova',
+    name: 'Лёва',
+    age: 12,
+    nominalElo: 1400,
+    tagline: 'Спокойный профессор в очках',
+    style: 'Играет надёжно и хорошо знает простые эндшпили.',
+    avatar: { bg: '#2BB3A3', skin: '#F3C9A5', hair: '#A9825A', hairStyle: 'short', accessory: 'glasses' },
+    lines: { ...NO_LINES, intro: ['Здравствуй. Я Лёва, у меня второй разряд. Я никуда не тороплюсь.'] },
+    recommendedFromStage: 5,
+  },
+  {
+    id: 'nika',
+    name: 'Ника',
+    age: 15,
+    nominalElo: 1800,
+    tagline: 'Первый разряд, любит атаковать',
+    style: 'Гамбиты, жертвы и инициатива.',
+    avatar: { bg: '#E5484D', skin: '#FFD9B8', hair: '#B33A5B', hairStyle: 'long', accessory: 'headphones' },
+    lines: { ...NO_LINES, intro: ['Я Ника, первый разряд. Люблю атаковать. Береги короля!'] },
+    recommendedFromStage: 6,
+  },
+  {
+    id: 'dima',
+    name: 'Дима',
+    age: 17,
+    nominalElo: 2500,
+    tagline: 'Юный гроссмейстер',
+    style: 'Играет в полную силу, без поблажек.',
+    avatar: { bg: '#26304F', skin: '#EFC7A4', hair: '#1C1C28', hairStyle: 'short', accessory: 'scarf' },
+    lines: { ...NO_LINES, intro: ['Дима. Гроссмейстер. Поблажек не будет.'] },
+    recommendedFromStage: 7,
+  },
+];

@@ -1,0 +1,820 @@
+/*
+ * Mascot dock. Uses the ui-kit design tokens (ui/tokens.css) with literal fallbacks, so the dock
+ * also looks right on a page that has not loaded the tokens (playground, tests).
+ */
+
+.gmb-dock {
+  --gmb-ink: var(--color-ink, #1d3540);
+  --gmb-surface: var(--color-surface, #ffffff);
+  --gmb-primary: var(--color-primary, #0f6f69);
+  --gmb-primary-deep: var(--color-primary-deep, #0a524e);
+  --gmb-sunny: var(--color-sunny, #ffb938);
+  --gmb-sunny-deep: var(--color-sunny-deep, #c77f00);
+  --gmb-coral: var(--color-coral, #ff6b5e);
+  --gmb-coral-deep: var(--color-coral-deep, #c9372e);
+  --gmb-step-neutral: var(--color-step, #d2c4a6);
+  --gmb-btn: var(--control-md, 56px);
+
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: var(--z-dock, 30);
+  /* ONE column: the bubble above the mascot's head. Screens keep a strip of --mascot-dock-size free on the
+     right, so the speech never covers the board, a button or a text (see MascotDock.tsx). */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  max-width: calc(100vw - 24px);
+  font-family: var(--font-family, 'Nunito Variable', 'Nunito', ui-rounded, system-ui, sans-serif);
+  color: var(--gmb-ink);
+  /* the dock floats over the page: only its real controls catch clicks */
+  pointer-events: none;
+}
+
+.gmb-dock[data-side='left'] {
+  right: auto;
+  left: max(12px, env(safe-area-inset-left));
+  align-items: flex-start;
+}
+
+/* buttons to the left of the mascot, standing on the same floor */
+.gmb-dock-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.gmb-dock[data-side='left'] .gmb-dock-row {
+  flex-direction: row-reverse;
+}
+
+.gmb-dock button {
+  pointer-events: auto;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gmb-dock button:focus-visible {
+  outline: var(--focus-width, 3px) solid var(--color-focus, #0f6f69);
+  outline-offset: var(--focus-offset, 3px);
+}
+
+.gmb-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ───────── speech bubble ───────── */
+.gmb-bubble {
+  position: relative;
+  box-sizing: border-box;
+  max-width: min(var(--gmb-bubble-width, 304px), calc(100vw - 24px));
+  min-width: 120px;
+  padding: 13px 18px 14px;
+  border: 3px solid var(--gmb-ink);
+  border-radius: 24px;
+  background: var(--gmb-surface);
+  box-shadow: 0 6px 0 rgba(29, 53, 64, 0.16);
+  pointer-events: auto;
+  transform-origin: 100% 100%;
+  transition:
+    opacity 0.18s ease,
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0s linear 0s;
+}
+
+.gmb-dock[data-side='left'] .gmb-bubble {
+  transform-origin: 0 100%;
+}
+
+.gmb-bubble[data-visible='false'] {
+  opacity: 0;
+  transform: scale(0.6) translateY(12px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0s linear 0.18s;
+}
+
+/* tail pointing down at the mascot's head */
+.gmb-bubble::before,
+.gmb-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: calc(var(--gmb-mascot-size, 180px) * 0.5 - 11px);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 17px 11px 0 11px;
+  border-color: var(--gmb-ink) transparent transparent transparent;
+}
+
+.gmb-bubble::after {
+  top: calc(100% - 4px);
+  right: calc(var(--gmb-mascot-size, 180px) * 0.5 - 7px);
+  border-width: 11px 7px 0 7px;
+  border-top-color: var(--gmb-surface);
+}
+
+.gmb-dock[data-side='left'] .gmb-bubble::before {
+  right: auto;
+  left: calc(var(--gmb-mascot-size, 180px) * 0.5 - 11px);
+}
+
+.gmb-dock[data-side='left'] .gmb-bubble::after {
+  right: auto;
+  left: calc(var(--gmb-mascot-size, 180px) * 0.5 - 7px);
+}
+
+.gmb-bubble-text {
+  margin: 0;
+  font-size: clamp(1.125rem, 1.06rem + 0.2vw, 1.1875rem); /* 18 → 19 px: readable for a 6-year-old */
+  font-weight: 750;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+  /* pages are cut to about four lines (MascotDock.tsx); five is the safety net, nothing is ever lost mid-word */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  overflow: hidden;
+}
+
+.gmb-bubble[data-prompt='true'] {
+  background: var(--gmb-sunny);
+  animation: gmb-prompt-bounce 1.6s ease-in-out infinite;
+}
+
+.gmb-bubble[data-prompt='true']::after {
+  border-top-color: var(--gmb-sunny);
+}
+
+.gmb-bubble[data-prompt='true'] {
+  max-width: max-content;
+}
+
+.gmb-bubble[data-prompt='true'] .gmb-bubble-text {
+  font-size: clamp(1.1875rem, 1.1rem + 0.3vw, 1.3125rem);
+  font-weight: 850;
+  white-space: nowrap;
+  display: block;
+  overflow: visible;
+}
+
+/* a lesson phrase with no recording yet (docs/TEACHING.md §4.5): small, quiet, below the words */
+.gmb-bubble-unvoiced {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-ink-muted, #52667a);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: right;
+}
+
+/* «Дозапись голоса»: the phrase is being recorded — the same quiet mark, a friendlier colour */
+.gmb-bubble-unvoiced[data-mark='recording'] {
+  color: var(--color-info-deep, #2f5f8a);
+}
+
+.gmb-bubble-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gmb-bubble-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gmb-ink);
+  opacity: 0.22;
+  transition: opacity 0.2s;
+}
+
+.gmb-bubble-dots i[data-on='true'] {
+  opacity: 0.85;
+}
+
+/* ───────── round buttons ───────── */
+.gmb-dock-buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-right: 6px;
+  padding-bottom: 18px;
+}
+
+.gmb-round {
+  --round-bg: var(--gmb-surface);
+  --round-fg: var(--gmb-ink);
+  --round-step: var(--gmb-step-neutral);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--gmb-btn);
+  height: var(--gmb-btn);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--round-bg);
+  color: var(--round-fg) !important;
+  box-shadow: 0 6px 0 var(--round-step);
+  transition:
+    transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.12s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.12s;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gmb-round:hover {
+  filter: brightness(1.05) saturate(1.05);
+}
+
+.gmb-round:active,
+.gmb-round[data-active='true'] {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--round-step);
+}
+
+/* «Подсказка» is secondary now: the big «Поговорить» button is the main way to get help */
+.gmb-round-hint {
+  --round-bg: var(--gmb-sunny);
+  --round-step: var(--gmb-sunny-deep);
+  margin-top: 8px;
+  margin-bottom: 18px; /* room for the caption */
+}
+
+.gmb-round-caption {
+  position: absolute;
+  top: calc(100% + 9px);
+  left: 50%;
+  translate: -50% 0;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.gmb-round-hint:active .gmb-round-caption {
+  translate: -50% -4px;
+}
+
+.gmb-round-mic {
+  --round-bg: var(--gmb-primary);
+  --round-fg: #ffffff;
+  --round-step: var(--gmb-primary-deep);
+}
+
+.gmb-round-mic[data-active='true'] {
+  --round-bg: var(--gmb-coral);
+  --round-fg: var(--gmb-ink);
+  --round-step: var(--gmb-coral-deep);
+}
+
+.gmb-round-mic[data-active='true']::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 4px solid var(--gmb-coral);
+  border-radius: 50%;
+  animation: gmb-ring 1.1s ease-out infinite;
+  pointer-events: none;
+}
+
+/* open microphone: the button is a state indicator — calm while it listens, grey when it does not */
+.gmb-round-mic[data-mic='muted'],
+.gmb-round-mic[data-mic='asleep'] {
+  --round-bg: var(--gmb-surface);
+  --round-fg: var(--gmb-ink);
+  --round-step: var(--gmb-step-neutral);
+}
+.gmb-round-mic[data-mic='asleep'] {
+  opacity: 0.72;
+}
+
+/* ───────── «Поговорить»: the big conversation button ───────── */
+.gmb-talk {
+  --talk-size: 72px;
+  --talk-bg: var(--gmb-primary);
+  --talk-fg: #ffffff;
+  --talk-step: var(--gmb-primary-deep);
+  --talk-ring: var(--gmb-primary);
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 96px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gmb-talk-disc {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--talk-size);
+  height: var(--talk-size);
+  border-radius: 50%;
+  background: var(--talk-bg);
+  color: var(--talk-fg);
+  box-shadow: 0 6px 0 var(--talk-step);
+  transition:
+    transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.12s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.2s;
+}
+
+.gmb-talk-disc svg {
+  width: 34px;
+  height: 34px;
+}
+
+.gmb-talk:hover .gmb-talk-disc {
+  filter: brightness(1.05) saturate(1.05);
+}
+
+.gmb-talk:active .gmb-talk-disc {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--talk-step);
+}
+
+.gmb-talk-caption {
+  /* above the loudness ring, which may grow over the gap */
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+  pointer-events: none;
+}
+
+/* the ring around the disc: a soft pulse while listening, the child's loudness while he talks */
+.gmb-talk-ring {
+  position: absolute;
+  inset: -7px;
+  border: 4px solid var(--talk-ring);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gmb-talk[data-active='true'] {
+  --talk-bg: var(--gmb-coral);
+  --talk-fg: var(--gmb-ink);
+  --talk-step: var(--gmb-coral-deep);
+  --talk-ring: var(--gmb-coral);
+}
+
+.gmb-talk[data-state='listening'] .gmb-talk-ring {
+  animation: gmb-ring 1.8s ease-out infinite;
+}
+
+.gmb-talk[data-state='childSpeaking'] .gmb-talk-ring {
+  opacity: calc(0.35 + var(--gmb-mic-level, 0) * 0.65);
+  scale: calc(1 + var(--gmb-mic-level, 0) * 0.2);
+  transition: scale 0.08s linear, opacity 0.08s linear;
+}
+
+.gmb-talk[data-state='coachSpeaking'] .gmb-talk-ring,
+.gmb-talk[data-state='thinking'] .gmb-talk-ring {
+  opacity: 0.35;
+}
+
+.gmb-talk[data-state='connecting'] {
+  --talk-bg: var(--gmb-surface);
+  --talk-fg: var(--gmb-primary);
+  --talk-step: var(--gmb-step-neutral);
+}
+
+.gmb-talk[data-state='error'] {
+  --talk-bg: var(--gmb-surface);
+  --talk-fg: var(--gmb-coral-deep);
+  --talk-step: var(--gmb-coral-deep);
+}
+
+.gmb-talk[data-state='error'] .gmb-talk-caption {
+  color: var(--gmb-coral-deep);
+}
+
+/* the browser refused the microphone: he still speaks — the button offers to allow it («Микрофон закрыт — нажми…») */
+.gmb-talk[data-mic-blocked='true'] {
+  --talk-bg: var(--gmb-surface);
+  --talk-fg: var(--gmb-coral-deep);
+  --talk-step: var(--gmb-coral-deep);
+}
+
+.gmb-talk[data-mic-blocked='true'] .gmb-talk-caption {
+  color: var(--gmb-coral-deep);
+  font-size: 0.8rem;
+}
+
+/* today's minutes of the paid voice are used up: a calm, clearly inactive button */
+.gmb-talk[data-limit='true'] {
+  --talk-bg: var(--gmb-surface);
+  --talk-fg: var(--gmb-ink);
+  --talk-step: var(--gmb-step-neutral);
+  cursor: not-allowed;
+}
+
+.gmb-talk[data-limit='true'] .gmb-talk-disc {
+  opacity: 0.6;
+}
+
+.gmb-talk[data-limit='true']:hover .gmb-talk-disc {
+  filter: none;
+}
+
+.gmb-talk[data-limit='true']:active .gmb-talk-disc {
+  transform: none;
+  box-shadow: 0 6px 0 var(--talk-step);
+}
+
+.gmb-talk-spinner {
+  width: 30px;
+  height: 30px;
+  border: 4px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: gmb-spin 0.8s linear infinite;
+}
+
+.gmb-talk-dots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.gmb-talk-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: gmb-dot 1.1s ease-in-out infinite;
+}
+
+.gmb-talk-dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.gmb-talk-dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ───────── one-time headphones note (open microphone without confirmed headphones) ───────── */
+.gmb-note {
+  box-sizing: border-box;
+  max-width: min(var(--gmb-bubble-width, 304px), calc(100vw - 24px));
+  padding: 12px 14px 14px;
+  border: 3px solid var(--gmb-ink);
+  border-radius: 20px;
+  background: var(--gmb-surface);
+  box-shadow: 0 6px 0 rgba(29, 53, 64, 0.16);
+  pointer-events: auto;
+}
+.gmb-note-text {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+.gmb-note-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.gmb-note-button {
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 3px solid var(--gmb-ink);
+  border-radius: 16px;
+  background: var(--gmb-surface);
+  font-size: 16px;
+  font-weight: 800;
+}
+.gmb-note-button-main {
+  background: var(--gmb-sunny);
+}
+/* the site's microphone is blocked: the title on its own line, the steps under it */
+.gmb-note[data-kind='mic-help'] .gmb-note-text strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 900;
+}
+
+/* «Не слышно? Нажми сюда» — the model spoke, the page played nothing: one big, obvious, sunny button */
+.gmb-hear {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(var(--gmb-bubble-width, 304px), calc(100vw - 24px));
+  min-height: 56px;
+  padding: 8px 14px 8px 10px;
+  border: 3px solid var(--gmb-ink);
+  border-radius: 20px;
+  background: var(--gmb-sunny);
+  color: var(--gmb-ink) !important;
+  box-shadow: 0 6px 0 var(--gmb-sunny-deep);
+  text-align: left;
+  text-wrap: balance;
+  animation: gmb-hear-in 240ms ease-out both;
+}
+/* after `.gmb-dock button { font: inherit }` */
+.gmb-dock .gmb-hear {
+  font-size: 17px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+.gmb-hear:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--gmb-sunny-deep);
+}
+.gmb-hear svg {
+  flex: none;
+}
+@keyframes gmb-hear-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gmb-hear {
+    animation: none;
+  }
+}
+
+.gmb-round-mute {
+  width: 48px;
+  height: 48px;
+  margin-top: 12px;
+}
+
+.gmb-round-mute[aria-pressed='true'] {
+  --round-bg: var(--color-surface-2, #fff1db);
+  opacity: 0.92;
+}
+
+/* the parent's «Всегда без звука» (Settings): the child cannot switch the voice on here */
+.gmb-round-mute:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ───────── the mascot itself is one big button ───────── */
+.gmb-dock-mascot {
+  position: relative;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 40% 40% 28% 28%;
+  background: none;
+  line-height: 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gmb-dock-mascot:hover {
+  transform: scale(1.03);
+}
+
+.gmb-dock-mascot:active {
+  transform: scale(0.97);
+}
+
+/* first-gesture state: a friendly pulsing halo invites the first click */
+.gmb-dock[data-gesture='true'] .gmb-dock-mascot::before {
+  content: '';
+  position: absolute;
+  inset: 6% 2% 2%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--gmb-sunny) 70%, transparent), transparent);
+  animation: gmb-halo 1.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gmb-dock[data-gesture='true'] .gmb-dock-mascot .gmb-mascot {
+  position: relative;
+}
+
+@keyframes gmb-prompt-bounce {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+
+@keyframes gmb-halo {
+  0%, 100% { opacity: 0.35; scale: 0.92; }
+  50% { opacity: 0.9; scale: 1.06; }
+}
+
+@keyframes gmb-ring {
+  0% { opacity: 0.9; scale: 0.9; }
+  100% { opacity: 0; scale: 1.35; }
+}
+
+@keyframes gmb-spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes gmb-dot {
+  0%, 80%, 100% { opacity: 0.35; translate: 0 0; }
+  40% { opacity: 1; translate: 0 -4px; }
+}
+
+/* small screens: a smaller mascot, the bubble may use the whole width */
+@media (max-width: 720px) {
+  .gmb-dock {
+    gap: 12px;
+    --gmb-mascot-size: 124px !important;
+  }
+
+  .gmb-bubble {
+    max-width: min(300px, calc(100vw - 32px));
+  }
+
+  .gmb-dock-buttons {
+    padding-bottom: 8px;
+  }
+
+  .gmb-talk {
+    --talk-size: 64px;
+    width: 88px;
+  }
+
+  .gmb-dock-mascot .gmb-mascot {
+    width: 124px;
+    height: auto;
+  }
+}
+
+/* low laptop windows (a 13" screen minus the browser's toolbars): on screens that ask for it (the game) a smaller
+   Гамбитик leaves the height to the page */
+@media (min-width: 721px) and (max-height: 760px) {
+  .gmb-dock[data-compact='true'] {
+    --gmb-mascot-size: 124px !important;
+  }
+
+  .gmb-dock[data-compact='true'] .gmb-dock-mascot .gmb-mascot {
+    width: 124px;
+    height: auto;
+  }
+}
+
+/* reduced motion: OS setting or the parent switch <html data-reduced-motion> (see ui/global.css) */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-reduced-motion='false']) .gmb-bubble[data-prompt='true'],
+  html:not([data-reduced-motion='false']) .gmb-dock[data-gesture='true'] .gmb-dock-mascot::before,
+  html:not([data-reduced-motion='false']) .gmb-round-mic[data-active='true']::after,
+  html:not([data-reduced-motion='false']) .gmb-talk-ring,
+  html:not([data-reduced-motion='false']) .gmb-talk-dots i {
+    animation: none !important;
+  }
+  /* a still ring instead of the pulse: the state stays visible */
+  html:not([data-reduced-motion='false']) .gmb-talk[data-state='listening'] .gmb-talk-ring {
+    opacity: 0.5;
+  }
+  html:not([data-reduced-motion='false']) .gmb-talk-spinner {
+    animation-duration: 2.4s !important;
+  }
+  html:not([data-reduced-motion='false']) .gmb-bubble,
+  html:not([data-reduced-motion='false']) .gmb-round,
+  html:not([data-reduced-motion='false']) .gmb-talk-disc,
+  html:not([data-reduced-motion='false']) .gmb-dock-mascot {
+    transition: none !important;
+  }
+}
+
+html[data-reduced-motion='true'] .gmb-bubble[data-prompt='true'],
+html[data-reduced-motion='true'] .gmb-dock[data-gesture='true'] .gmb-dock-mascot::before,
+html[data-reduced-motion='true'] .gmb-round-mic[data-active='true']::after,
+html[data-reduced-motion='true'] .gmb-talk-ring,
+html[data-reduced-motion='true'] .gmb-talk-dots i {
+  animation: none !important;
+}
+html[data-reduced-motion='true'] .gmb-talk[data-state='listening'] .gmb-talk-ring {
+  opacity: 0.5;
+}
+html[data-reduced-motion='true'] .gmb-talk-spinner {
+  animation-duration: 2.4s !important;
+}
+html[data-reduced-motion='true'] .gmb-bubble,
+html[data-reduced-motion='true'] .gmb-round,
+html[data-reduced-motion='true'] .gmb-dock-mascot {
+  transition: none !important;
+}
+
+/* ───── «Записи»: «Спроси» — no microphone, the child asks with big chips (docs/voice-clips/SPEC.md §8.2) ───── */
+
+.gmb-round-ask {
+  --round-bg: var(--gmb-primary);
+  --round-fg: #ffffff;
+  --round-step: var(--gmb-primary-deep);
+  margin-top: 8px;
+  margin-bottom: 18px; /* room for the caption */
+}
+
+.gmb-round-ask[data-active='true'] {
+  --round-bg: var(--gmb-primary-deep);
+}
+
+.gmb-round-ask:active .gmb-round-caption {
+  translate: -50% -4px;
+}
+
+.gmb-ask {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: min(var(--gmb-bubble-width, 304px), calc(100vw - 24px));
+  padding: 12px;
+  border: 3px solid var(--gmb-ink);
+  border-radius: 22px;
+  background: var(--gmb-surface);
+  box-shadow: 0 6px 0 rgba(29, 53, 64, 0.16);
+  pointer-events: auto;
+  animation: gmb-hear-in 200ms ease-out both;
+}
+
+.gmb-ask-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 76px;
+  padding: 8px 6px;
+  border: 3px solid var(--gmb-ink);
+  border-radius: 18px;
+  background: var(--gmb-sunny);
+  box-shadow: 0 4px 0 var(--gmb-sunny-deep);
+  color: var(--gmb-ink);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  touch-action: manipulation;
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gmb-ask-chip:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--gmb-sunny-deep);
+}
+
+.gmb-ask-chip[data-ask='repeat'] {
+  background: var(--gmb-surface);
+  box-shadow: 0 4px 0 var(--gmb-step-neutral);
+}
+
+.gmb-ask-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gmb-ask {
+    animation: none;
+  }
+}
+
+/* the caption sits under the button, on the page: ink, not the button's white icon colour */
+.gmb-round-ask .gmb-round-caption {
+  color: var(--gmb-ink);
+}

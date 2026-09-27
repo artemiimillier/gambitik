@@ -1,0 +1,211 @@
+.stack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-12);
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.section > h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.muted {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.column {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.column > * {
+  max-width: 100%;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  min-height: 96px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-line);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.swatch code {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 650;
+  opacity: 0.75;
+}
+
+.swatch[data-dark] {
+  color: #fff;
+  border-color: transparent;
+}
+
+.typeScale {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.buttonGrid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.iconRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  color: var(--color-primary-deep);
+}
+
+.iconCell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+}
+
+.homeTiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-6);
+  padding-top: var(--space-3);
+}
+
+.rowTiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-5);
+  padding-top: var(--space-3);
+}
+
+.personaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr));
+  gap: var(--space-5);
+}
+
+.personaTile > span:first-child {
+  /* the avatar is already round and colourful: no icon bubble behind it */
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+}
+
+.pawns {
+  display: inline-flex;
+  gap: 1px;
+  color: #d9ccb0;
+  font-size: 18px;
+}
+
+.pawn[data-on] {
+  color: var(--color-primary);
+}
+
+.moodGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
+  gap: var(--space-4);
+}
+
+.moodRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(6, 64px);
+  gap: var(--space-3);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.twoCols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-5);
+}
+
+.threeCols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.boards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-6);
+}
+
+.boardFigure {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+  justify-items: center;
+  font-weight: 800;
+}
+
+.miniBoard {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1;
+}
+
+.miniSquare {
+  position: relative;
+}
+
+.miniMark {
+  position: absolute;
+  inset: 0;
+}
+
+.arrowChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--board-light);
+  font-weight: 800;
+}

@@ -1,0 +1,297 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 96% -4%, var(--color-sunny-soft) 0 220px, transparent 221px),
+    var(--color-bg);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: calc(var(--screen-max-width) + 2 * var(--screen-gutter));
+  margin-inline: auto;
+  padding: var(--space-6) var(--screen-gutter) var(--space-3);
+}
+
+.hello {
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-3xl);
+}
+
+.subtitle {
+  margin-top: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: var(--text-lg);
+}
+
+.main {
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: calc(var(--screen-max-width) + 2 * var(--screen-gutter));
+  margin-inline: auto;
+  /* bottom room for the mascot dock on narrow windows … */
+  padding: var(--space-4) var(--screen-gutter) calc(var(--mascot-dock-size) + var(--space-4));
+}
+
+@media (min-width: 900px) {
+  /* … and a free right column on wide ones: Гамбитик stands next to the tiles */
+  .main {
+    padding-bottom: var(--space-8);
+    padding-right: max(var(--screen-gutter), calc(var(--mascot-dock-size) + var(--space-4)));
+  }
+}
+
+/* ───────── the four doors ───────── */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+@media (min-width: 1100px) {
+  .tiles {
+    grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* a little more compact than the stock column tile, so the whole home fits a laptop screen */
+.tiles .tile.tile {
+  min-height: 0;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-4);
+}
+
+.tileTitle {
+  white-space: nowrap;
+}
+
+/* «Играть» is THE primary action: brand teal, white text */
+.tiles .playTile.playTile,
+.tiles .playTile.playTile:hover:not(:disabled) {
+  --tile-border: var(--color-primary-deep);
+  --tile-step: var(--color-primary-deep);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.tiles .playTile.playTile:hover:not(:disabled) {
+  filter: brightness(1.07);
+}
+
+.playGlyph {
+  color: var(--color-primary-deep);
+}
+
+.playSubtitle {
+  color: var(--color-on-primary);
+  opacity: 0.92;
+}
+
+/* ───────── plan for today ───────── */
+.plan {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 3px dashed var(--color-line-strong);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-2);
+}
+
+.plan[data-all-done='true'] {
+  border-style: solid;
+  border-color: var(--color-success-deep);
+  background: var(--color-success-soft);
+}
+
+.planHeadline {
+  font-size: var(--text-lg);
+}
+
+.planSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  counter-reset: none;
+}
+
+.planItem {
+  position: relative;
+  min-width: 0;
+}
+
+/* a little arrow between the steps: «разминка → партия → разбор» */
+.planItem + .planItem::before {
+  content: '→';
+  position: absolute;
+  top: 50%;
+  left: calc(var(--space-4) * -1);
+  width: var(--space-4);
+  transform: translateY(-50%);
+  color: var(--color-ink-muted);
+  font-weight: var(--font-weight-black);
+  text-align: center;
+  pointer-events: none;
+}
+
+.planStep {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--control-xl);
+  padding: var(--space-3) var(--space-4);
+  border: 3px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  text-align: left;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.planStep:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.planStep:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.planStep:disabled {
+  color: #7c8794;
+  cursor: default;
+}
+
+.planStep[data-suggested='true'] {
+  border-color: var(--color-sunny-deep);
+}
+
+.planStep[data-done='true'] {
+  border-color: var(--color-success-deep);
+  background: var(--color-success-soft);
+}
+
+.planMark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+  font-weight: var(--font-weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.planMark > svg {
+  width: 28px;
+  height: 28px;
+}
+
+.planStep[data-done='true'] .planMark {
+  background: var(--color-success-deep);
+  color: #ffffff;
+}
+
+.planText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.planTitle {
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-tight);
+}
+
+.planHint {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.25;
+}
+
+.planStep:disabled .planHint {
+  color: inherit;
+}
+
+.planBadge {
+  position: absolute;
+  top: 0;
+  right: var(--space-3);
+  transform: translateY(-60%);
+}
+
+@media (max-width: 760px) {
+  .planSteps {
+    grid-template-columns: 1fr;
+  }
+
+  .planItem + .planItem::before {
+    display: none;
+  }
+}
+
+/* ───────── last game ───────── */
+/* kept narrow on purpose: the bottom-right area belongs to Гамбитик's speech bubble */
+.lastGame {
+  min-width: 0;
+  width: min(100%, 640px);
+}
+
+.lastGameRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.lastGameText {
+  flex: 1;
+  display: grid;
+  gap: var(--space-1);
+  min-width: 12rem;
+}
+
+.lastGameTitle {
+  font-weight: var(--font-weight-bold);
+}
+
+.lastGameMeta {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ───────── «Продолжить партию» — an interrupted game waits (row tile above the four doors) ───────── */
+.main .resumeTile.resumeTile {
+  min-height: 0;
+  padding-block: var(--space-3);
+}

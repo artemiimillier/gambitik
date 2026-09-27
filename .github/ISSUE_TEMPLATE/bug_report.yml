@@ -1,0 +1,54 @@
+name: Ошибка / Bug report
+description: Что-то работает не так. Something does not work as expected.
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо, что сообщили! Об уязвимостях пишите **не сюда**, а приватно — см. SECURITY.md.
+        **Не указывайте личные данные ребёнка** (настоящее имя, возраст, школу, фото) и не прикладывайте файлы из папки `data/`.
+        Thanks for the report! Please do not include any personal data of a child.
+  - type: textarea
+    id: what
+    attributes:
+      label: Что случилось / What happened
+      description: Что вы видели и что ожидали увидеть.
+      placeholder: "В задачах после неверного хода стрелка подсказки не исчезает…"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Как повторить / Steps to reproduce
+      placeholder: |
+        1. Открыть «Задачи»
+        2. Сделать неверный ход
+        3. …
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Где / Where
+      options:
+        - Локально (pnpm dev / pnpm start)
+        - Свой сервер (Docker)
+        - Публичный сайт / public instance
+        - Другое / other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Версия (коммит) / Version (commit)
+      description: "`git rev-parse --short HEAD` или `build` из `/api/health`."
+  - type: input
+    id: browser
+    attributes:
+      label: Браузер и система / Browser and OS
+      placeholder: "Chrome 150, macOS 26 / Safari, iPad"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Скриншоты, ошибки из консоли / Screenshots, console errors
+      description: Уберите из них имена и другие личные данные.

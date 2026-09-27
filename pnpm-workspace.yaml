@@ -1,0 +1,11 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'tools'
+
+# pnpm 11: the `stockfish` package ships a postinstall that only symlinks
+# bin/stockfish.js to the 94 MB build. We never use it (engine files are copied
+# explicitly by `pnpm engine:copy`), and without an explicit decision here
+# `pnpm install` exits with ERR_PNPM_IGNORED_BUILDS (code 1).
+allowBuilds:
+  stockfish: false

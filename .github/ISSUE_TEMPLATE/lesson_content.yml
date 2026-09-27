@@ -1,0 +1,49 @@
+name: Текст урока / Lesson content
+description: Исправить или предложить фразу Гамбитика, тему, вопрос или мини-урок. Fix or suggest a coaching text.
+labels: ["lesson-content", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Тексты Гамбитика слушают дети 7–10 лет. Правила — docs/TEACHING.md: **без названий клеток и латиницы**, Гамбитик — **мальчик**, **без пустого «молодец»**, ошибка объясняется правилом, тон добрый, слова — по ступени ребёнка.
+        Coaching texts are Russian and follow docs/TEACHING.md.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Что это / Kind
+      options:
+        - Ошибка в тексте (опечатка, грамматика, род)
+        - Шахматная неправда (фраза не соответствует позиции)
+        - Непонятно или слишком сложно для ребёнка
+        - Новая формулировка / новый вариант фразы
+        - Новая тема, вопрос или мини-урок
+        - Другое
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Как сейчас / Current text
+      description: Точная фраза (если есть), где она прозвучала (партия, задача, разбор), ступень ребёнка, режим (Учитель / Подсказчик).
+      placeholder: "«…» — в партии на 2-й ступени, после хода коня"
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Как лучше / Proposed text
+      description: Ваша формулировка и почему так лучше.
+    validations:
+      required: true
+  - type: textarea
+    id: position
+    attributes:
+      label: Позиция / Position
+      description: FEN или ходы партии (PGN), если фраза про конкретную позицию. Без имён.
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Правила текстов / Text rules
+      options:
+        - label: В предложенном тексте нет названий клеток, латиницы и цифр. / No square names, Latin letters or digits.
+          required: true
+        - label: Текст добрый и понятен ребёнку 7–10 лет. / Kind and understandable for ages 7–10.
+          required: true

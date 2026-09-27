@@ -1,0 +1,433 @@
+{
+ "at": "2026-09-24T10:42:11.035Z",
+ "processedJobs": 75,
+ "skippedJobs": 0,
+ "units": 123,
+ "requeue": [
+  {
+   "jobId": "fff6c60a-5d1f-4b28-8996-dd2bd825b29d",
+   "jobKey": "j7af7425c12937",
+   "prompt": "Мой совет — конём на дэ два.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:teach.head.advice#1",
+    "slot:ins:n:d2"
+   ]
+  },
+  {
+   "jobId": "2479132d-b648-4ae5-8b17-f5a01e0f0aad",
+   "jobKey": "jb810ea2ed0d31",
+   "prompt": "Или синяя стрелка: пешка на цэ четыре.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:teach.head.alt#1",
+    "slot:nom:p:c4"
+   ]
+  },
+  {
+   "jobId": "060a5c9e-5312-4d34-8c95-a4479b5b3892",
+   "jobKey": "jaa5184507a2d5",
+   "prompt": "Хороший ход — ладья на е один.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:teach.head.good#1",
+    "slot:nom:r:e1"
+   ]
+  },
+  {
+   "jobId": "9c50208f-9ce0-46fd-8692-149d2ae56ab0",
+   "jobKey": "j898799591d4b1",
+   "prompt": "Дальше по плану — пешка на е пять.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:teach.head.planNext#1",
+    "slot:nom:p:e5"
+   ]
+  },
+  {
+   "jobId": "fe3abab5-6052-4f95-82ce-0f8ed7dea118",
+   "jobKey": "je0bb3bd48aa22",
+   "prompt": "Следующий шаг плана — ферзь бьёт на дэ два.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:teach.head.planStep#1",
+    "slot:cap:q:d2"
+   ]
+  },
+  {
+   "jobId": "93a53b95-6314-4f63-8491-a97776baac85",
+   "jobKey": "j12cc026b17a8d",
+   "prompt": "Идём по плану: пешка на эф семь.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:teach.head.plan#2",
+    "slot:nom:p:f7"
+   ]
+  },
+  {
+   "jobId": "f1d69716-a709-4d48-8b7f-add5b66d7672",
+   "jobKey": "jb3d184c44fe78",
+   "prompt": "Подарок такой: ферзь на эф семь.",
+   "reason": "split: 1 pieces, expected 2",
+   "keys": [
+    "line:reveal.head#2",
+    "slot:nom:q:f7"
+   ]
+  }
+ ],
+ "rerender": [
+  {
+   "id": "c30407ec86c8de",
+   "key": "line:teach.head.plan#1",
+   "jobKey": "je329e78658260",
+   "sylps": 2.42,
+   "recordings": 1
+  },
+  {
+   "id": "cad9aa866a9b03",
+   "key": "slot:nom:p:e4",
+   "jobKey": "je329e78658260",
+   "sylps": 9.86,
+   "recordings": 1
+  },
+  {
+   "id": "c18fc18d0470f5",
+   "key": "line:start.head.first#1",
+   "jobKey": "j64a42a91dd781",
+   "sylps": 2,
+   "recordings": 1
+  },
+  {
+   "id": "c91b6d9f199d98",
+   "key": "slot:nom:n:f3",
+   "jobKey": "j64a42a91dd781",
+   "sylps": 11.43,
+   "recordings": 1
+  },
+  {
+   "id": "c193572068a079",
+   "key": "line:teach.head.answer.plan#1",
+   "jobKey": "j205c8f3ab2bad",
+   "sylps": 2.32,
+   "recordings": 1
+  },
+  {
+   "id": "cd782230311eef",
+   "key": "slot:ins:n:f1",
+   "jobKey": "j205c8f3ab2bad",
+   "sylps": 26.09,
+   "recordings": 1
+  },
+  {
+   "id": "cfecba5e81cc02",
+   "key": "slot:nom:b:d3",
+   "jobKey": "jb60c3f2823af0",
+   "sylps": 2.65,
+   "recordings": 1
+  },
+  {
+   "id": "c1758b11a78d54",
+   "key": "line:teach.tail.plan#1",
+   "jobKey": "j68cfbd8be6b09",
+   "sylps": 5.63,
+   "recordings": 1
+  },
+  {
+   "id": "c6a92b76f504d3",
+   "key": "line:reason.openLine#1",
+   "jobKey": "j99adda23e1aa3",
+   "sylps": 6.58,
+   "recordings": 1
+  },
+  {
+   "id": "cf5f6008861dae",
+   "key": "line:reason.recapture@b#1",
+   "jobKey": "j5466d6895ba79",
+   "sylps": 6.61,
+   "recordings": 1
+  },
+  {
+   "id": "ceee204392220c",
+   "key": "line:teach.tail.choose/m#2",
+   "jobKey": "jc3fffe185e254",
+   "sylps": 2.61,
+   "recordings": 1
+  },
+  {
+   "id": "cb185785144be1",
+   "key": "line:teach.tail.plan#2",
+   "jobKey": "j484ae5a001b8e",
+   "sylps": 6.06,
+   "recordings": 1
+  },
+  {
+   "id": "c3c43ecb99d200",
+   "key": "slot:nom:castle:short",
+   "jobKey": "j33e3ce6a8d324",
+   "sylps": 5.84,
+   "recordings": 1
+  },
+  {
+   "id": "c8608056adc046",
+   "key": "line:ask.why.think#1",
+   "jobKey": "j9aed9c17d113c",
+   "sylps": 6.11,
+   "recordings": 1
+  },
+  {
+   "id": "ca307550b45b80",
+   "key": "line:ask.opp.none#1",
+   "jobKey": "j185b1cf9c292e",
+   "sylps": 6.22,
+   "recordings": 1
+  },
+  {
+   "id": "c4d3881a5cd22c",
+   "key": "line:praise.mate#1",
+   "jobKey": "j2276a72d558f4",
+   "sylps": 2.58,
+   "recordings": 1
+  },
+  {
+   "id": "cb9be181d1aa92",
+   "key": "line:opp.took@n#1",
+   "jobKey": "j21a7d3de37be7",
+   "sylps": 6.13,
+   "recordings": 1
+  },
+  {
+   "id": "c9991873316731",
+   "key": "line:generic.teachTurn.turn.think#1",
+   "jobKey": "jb687bdce7104f",
+   "sylps": 2.56,
+   "recordings": 1
+  },
+  {
+   "id": "c70852179761f0",
+   "key": "line:opp.pawn#2",
+   "jobKey": "j47fddf2a00255",
+   "sylps": 5.65,
+   "recordings": 1
+  },
+  {
+   "id": "cf96d5f74c7522",
+   "key": "slot:sq:h7",
+   "jobKey": "j5e2e253e5a621",
+   "sylps": 2.63,
+   "recordings": 2
+  },
+  {
+   "id": "ce02dee3dc82e3",
+   "key": "slot:sq:a6",
+   "jobKey": "j5e2e253e5a621",
+   "sylps": 2.24,
+   "recordings": 2
+  }
+ ],
+ "needsEar": [
+  {
+   "id": "c30407ec86c8de",
+   "key": "line:teach.head.plan#1",
+   "flags": [
+    "tempo:2.42",
+    "edge-f0:352"
+   ]
+  },
+  {
+   "id": "cad9aa866a9b03",
+   "key": "slot:nom:p:e4",
+   "flags": [
+    "tempo:9.86",
+    "edge-f0:197"
+   ]
+  },
+  {
+   "id": "c18fc18d0470f5",
+   "key": "line:start.head.first#1",
+   "flags": [
+    "tempo:2",
+    "edge-f0:300"
+   ]
+  },
+  {
+   "id": "c91b6d9f199d98",
+   "key": "slot:nom:n:f3",
+   "flags": [
+    "tempo:11.43",
+    "edge-f0:196"
+   ]
+  },
+  {
+   "id": "c193572068a079",
+   "key": "line:teach.head.answer.plan#1",
+   "flags": [
+    "tempo:2.32"
+   ]
+  },
+  {
+   "id": "cd782230311eef",
+   "key": "slot:ins:n:f1",
+   "flags": [
+    "tempo:26.09"
+   ]
+  },
+  {
+   "id": "cfecba5e81cc02",
+   "key": "slot:nom:b:d3",
+   "flags": [
+    "tempo:2.65"
+   ]
+  },
+  {
+   "id": "c1758b11a78d54",
+   "key": "line:teach.tail.plan#1",
+   "flags": [
+    "tempo:5.63"
+   ]
+  },
+  {
+   "id": "c6a92b76f504d3",
+   "key": "line:reason.openLine#1",
+   "flags": [
+    "tempo:6.58"
+   ]
+  },
+  {
+   "id": "cf5f6008861dae",
+   "key": "line:reason.recapture@b#1",
+   "flags": [
+    "tempo:6.61"
+   ]
+  },
+  {
+   "id": "ceee204392220c",
+   "key": "line:teach.tail.choose/m#2",
+   "flags": [
+    "tempo:2.61"
+   ]
+  },
+  {
+   "id": "cb185785144be1",
+   "key": "line:teach.tail.plan#2",
+   "flags": [
+    "tempo:6.06"
+   ]
+  },
+  {
+   "id": "c3c43ecb99d200",
+   "key": "slot:nom:castle:short",
+   "flags": [
+    "tempo:5.84"
+   ]
+  },
+  {
+   "id": "c4eaae6418924d",
+   "key": "slot:sq:e4",
+   "flags": [
+    "pauses-clamped:1",
+    "edge-f0:246"
+   ]
+  },
+  {
+   "id": "c8608056adc046",
+   "key": "line:ask.why.think#1",
+   "flags": [
+    "tempo:6.11"
+   ]
+  },
+  {
+   "id": "ca307550b45b80",
+   "key": "line:ask.opp.none#1",
+   "flags": [
+    "tempo:6.22"
+   ]
+  },
+  {
+   "id": "c4d3881a5cd22c",
+   "key": "line:praise.mate#1",
+   "flags": [
+    "tempo:2.58"
+   ]
+  },
+  {
+   "id": "cb9be181d1aa92",
+   "key": "line:opp.took@n#1",
+   "flags": [
+    "tempo:6.13"
+   ]
+  },
+  {
+   "id": "c9991873316731",
+   "key": "line:generic.teachTurn.turn.think#1",
+   "flags": [
+    "tempo:2.56"
+   ]
+  },
+  {
+   "id": "c70852179761f0",
+   "key": "line:opp.pawn#2",
+   "flags": [
+    "tempo:5.65"
+   ]
+  },
+  {
+   "id": "cf68b7433eeec7",
+   "key": "line:opp.moved@q#1",
+   "flags": [
+    "edge-f0:193"
+   ]
+  },
+  {
+   "id": "c638fb73414413",
+   "key": "slot:sq:e2",
+   "flags": [
+    "edge-f0:262"
+   ]
+  },
+  {
+   "id": "c06ecb7bc637b1",
+   "key": "slot:sq:e2",
+   "flags": [
+    "edge-f0:288"
+   ]
+  },
+  {
+   "id": "cf96d5f74c7522",
+   "key": "slot:sq:h7",
+   "flags": [
+    "tempo:2.63"
+   ]
+  },
+  {
+   "id": "ce02dee3dc82e3",
+   "key": "slot:sq:a6",
+   "flags": [
+    "pauses-clamped:1",
+    "tempo:2.24"
+   ]
+  },
+  {
+   "id": "c0da0e4f67f15b",
+   "key": "slot:head:ins:r",
+   "flags": [
+    "edge-f0:195"
+   ]
+  },
+  {
+   "id": "c83c8565cd1af2",
+   "key": "slot:head:ins:p",
+   "flags": [
+    "edge-f0:213"
+   ]
+  }
+ ],
+ "missingMasters": [],
+ "publish": {
+  "changed": false,
+  "file": "",
+  "libraryVersion": 0,
+  "units": 0,
+  "bytes": 0,
+  "warnings": []
+ }
+}

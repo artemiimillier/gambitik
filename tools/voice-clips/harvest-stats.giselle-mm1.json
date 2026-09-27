@@ -1,0 +1,6606 @@
+{
+ "v": 1,
+ "voiceKey": "giselle-mm1",
+ "games": 480,
+ "holdoutGames": 120,
+ "demo": {
+  "seed": "g174",
+  "facts": {
+   "game": "g174",
+   "teachTurns": 17,
+   "treasure": 3,
+   "reveal": 2,
+   "danger": 1,
+   "praise": 3,
+   "takebackOffer": 1,
+   "strategyIntro": true,
+   "gameEnd": true,
+   "bridge": 0,
+   "unvoiceable": 0,
+   "plies": 35,
+   "childWon": true,
+   "address": "m",
+   "eligible": true
+  }
+ },
+ "train": {
+  "v": 1,
+  "voiceKey": "giselle-mm1",
+  "split": "train",
+  "games": 360,
+  "teacherGames": 274,
+  "blitzGames": 176,
+  "events": 16615,
+  "byKind": {
+   "encourage": {
+    "events": 321,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 321
+    }
+   },
+   "explainBest": {
+    "events": 72,
+    "generic": 2,
+    "mismatch": 0,
+    "levels": {
+     "1": 67,
+     "3": 3,
+     "5": 2
+    }
+   },
+   "gameEnd": {
+    "events": 360,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 360
+    }
+   },
+   "gameStart": {
+    "events": 360,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 360
+    }
+   },
+   "greeting": {
+    "events": 502,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 502
+    }
+   },
+   "hint": {
+    "events": 1473,
+    "generic": 4,
+    "mismatch": 0,
+    "levels": {
+     "1": 1469,
+     "5": 4
+    }
+   },
+   "praise": {
+    "events": 1664,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 1664
+    }
+   },
+   "takebackOffer": {
+    "events": 276,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 276
+    }
+   },
+   "teachReaction": {
+    "events": 629,
+    "generic": 352,
+    "mismatch": 341,
+    "levels": {
+     "1": 276,
+     "3": 1,
+     "5": 352
+    }
+   },
+   "teachTurn": {
+    "events": 10405,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 10405
+    }
+   },
+   "thinkingRoutine": {
+    "events": 19,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 19
+    }
+   },
+   "threatWarning": {
+    "events": 534,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 534
+    }
+   }
+  },
+  "pools": {
+   "ask.find/f": {
+    "plays": 296,
+    "games": 47
+   },
+   "ask.find/m": {
+    "plays": 585,
+    "games": 81
+   },
+   "danger.check": {
+    "plays": 150,
+    "games": 77
+   },
+   "danger.fork": {
+    "plays": 8,
+    "games": 8
+   },
+   "danger.hanging@b": {
+    "plays": 229,
+    "games": 81
+   },
+   "danger.hanging@n": {
+    "plays": 215,
+    "games": 83
+   },
+   "danger.hanging@p": {
+    "plays": 268,
+    "games": 56
+   },
+   "danger.hanging@q": {
+    "plays": 88,
+    "games": 54
+   },
+   "danger.hanging@r": {
+    "plays": 89,
+    "games": 51
+   },
+   "danger.mate": {
+    "plays": 33,
+    "games": 14
+   },
+   "danger.threat": {
+    "plays": 99,
+    "games": 51
+   },
+   "end.draw": {
+    "plays": 1,
+    "games": 1
+   },
+   "end.loss": {
+    "plays": 42,
+    "games": 42
+   },
+   "end.loss.timeout": {
+    "plays": 15,
+    "games": 15
+   },
+   "end.praise.accurate/f": {
+    "plays": 31,
+    "games": 31
+   },
+   "end.praise.accurate/m": {
+    "plays": 49,
+    "games": 49
+   },
+   "end.praise.manyStrong/f": {
+    "plays": 39,
+    "games": 39
+   },
+   "end.praise.manyStrong/m": {
+    "plays": 63,
+    "games": 63
+   },
+   "end.praise.manyStrongHints/f": {
+    "plays": 11,
+    "games": 11
+   },
+   "end.praise.manyStrongHints/m": {
+    "plays": 30,
+    "games": 30
+   },
+   "end.praise.noBlunder/f": {
+    "plays": 13,
+    "games": 13
+   },
+   "end.praise.noBlunder/m": {
+    "plays": 42,
+    "games": 42
+   },
+   "end.praise.noHints/f": {
+    "plays": 15,
+    "games": 15
+   },
+   "end.praise.noHints/m": {
+    "plays": 21,
+    "games": 21
+   },
+   "end.praise.takebackAccepted/f": {
+    "plays": 18,
+    "games": 18
+   },
+   "end.praise.takebackAccepted/m": {
+    "plays": 26,
+    "games": 26
+   },
+   "end.praise.worked/f": {
+    "plays": 1,
+    "games": 1
+   },
+   "end.praise.worked/m": {
+    "plays": 1,
+    "games": 1
+   },
+   "end.unfinished": {
+    "plays": 41,
+    "games": 41
+   },
+   "end.win.checkmate": {
+    "plays": 219,
+    "games": 219
+   },
+   "end.win.timeout": {
+    "plays": 21,
+    "games": 21
+   },
+   "end.win/f": {
+    "plays": 9,
+    "games": 9
+   },
+   "end.win/m": {
+    "plays": 12,
+    "games": 12
+   },
+   "generic.explainBest": {
+    "plays": 2,
+    "games": 2
+   },
+   "generic.hint": {
+    "plays": 4,
+    "games": 4
+   },
+   "generic.teachReaction": {
+    "plays": 352,
+    "games": 166
+   },
+   "goal.aimF7": {
+    "plays": 11,
+    "games": 11
+   },
+   "goal.bishopAtKing": {
+    "plays": 7,
+    "games": 7
+   },
+   "goal.bishopFirst": {
+    "plays": 17,
+    "games": 12
+   },
+   "goal.bothKnights": {
+    "plays": 34,
+    "games": 24
+   },
+   "goal.castle": {
+    "plays": 27,
+    "games": 26
+   },
+   "goal.centreStrike": {
+    "plays": 38,
+    "games": 34
+   },
+   "goal.developAll": {
+    "plays": 5,
+    "games": 3
+   },
+   "goal.developCastle": {
+    "plays": 41,
+    "games": 24
+   },
+   "goal.fightCentre": {
+    "plays": 5,
+    "games": 4
+   },
+   "goal.hitCentre": {
+    "plays": 14,
+    "games": 13
+   },
+   "goal.holdCentre": {
+    "plays": 84,
+    "games": 72
+   },
+   "goal.holdSquare": {
+    "plays": 1,
+    "games": 1
+   },
+   "goal.knightHoldsCentre": {
+    "plays": 8,
+    "games": 5
+   },
+   "goal.knightJump": {
+    "plays": 1,
+    "games": 1
+   },
+   "goal.longDiagonal": {
+    "plays": 8,
+    "games": 7
+   },
+   "goal.openLines": {
+    "plays": 20,
+    "games": 12
+   },
+   "goal.pawnFortress": {
+    "plays": 29,
+    "games": 19
+   },
+   "goal.pawnStorm": {
+    "plays": 1,
+    "games": 1
+   },
+   "goal.pinKnight": {
+    "plays": 2,
+    "games": 2
+   },
+   "goal.pressCentrePawn": {
+    "plays": 1,
+    "games": 1
+   },
+   "goal.pressKnight": {
+    "plays": 2,
+    "games": 2
+   },
+   "goal.rookCentre": {
+    "plays": 3,
+    "games": 2
+   },
+   "goal.takeCentre": {
+    "plays": 21,
+    "games": 18
+   },
+   "greet.first": {
+    "plays": 30,
+    "games": 30
+   },
+   "greet.hello.day": {
+    "plays": 89,
+    "games": 89
+   },
+   "greet.hello.evening": {
+    "plays": 92,
+    "games": 92
+   },
+   "greet.hello.morning": {
+    "plays": 96,
+    "games": 96
+   },
+   "greet.hello.night": {
+    "plays": 83,
+    "games": 83
+   },
+   "greet.night": {
+    "plays": 77,
+    "games": 77
+   },
+   "greet.none": {
+    "plays": 253,
+    "games": 253
+   },
+   "hello.game": {
+    "plays": 142,
+    "games": 142
+   },
+   "move.promo@b": {
+    "plays": 4,
+    "games": 2
+   },
+   "move.promo@q": {
+    "plays": 42,
+    "games": 28
+   },
+   "move.promo@r": {
+    "plays": 5,
+    "games": 5
+   },
+   "opp.attack@n": {
+    "plays": 2,
+    "games": 2
+   },
+   "opp.attack@p": {
+    "plays": 20,
+    "games": 16
+   },
+   "opp.castled": {
+    "plays": 2,
+    "games": 2
+   },
+   "opp.developed@b": {
+    "plays": 26,
+    "games": 26
+   },
+   "opp.developed@n": {
+    "plays": 30,
+    "games": 28
+   },
+   "opp.earlyQueen": {
+    "plays": 23,
+    "games": 23
+   },
+   "opp.moved@b": {
+    "plays": 24,
+    "games": 22
+   },
+   "opp.moved@k": {
+    "plays": 37,
+    "games": 27
+   },
+   "opp.moved@n": {
+    "plays": 40,
+    "games": 33
+   },
+   "opp.moved@q": {
+    "plays": 24,
+    "games": 21
+   },
+   "opp.moved@r": {
+    "plays": 36,
+    "games": 29
+   },
+   "opp.pawn": {
+    "plays": 123,
+    "games": 76
+   },
+   "opp.took@b": {
+    "plays": 32,
+    "games": 29
+   },
+   "opp.took@n": {
+    "plays": 34,
+    "games": 32
+   },
+   "opp.took@p": {
+    "plays": 83,
+    "games": 60
+   },
+   "opp.took@q": {
+    "plays": 13,
+    "games": 13
+   },
+   "opp.took@r": {
+    "plays": 18,
+    "games": 18
+   },
+   "plan.castleSoon": {
+    "plays": 53,
+    "games": 43
+   },
+   "plan.improve@b": {
+    "plays": 15,
+    "games": 12
+   },
+   "plan.improve@n": {
+    "plays": 1,
+    "games": 1
+   },
+   "plan.improve@q": {
+    "plays": 1,
+    "games": 1
+   },
+   "plan.improve@r": {
+    "plays": 30,
+    "games": 20
+   },
+   "plan.kingToCenter": {
+    "plays": 19,
+    "games": 17
+   },
+   "plan.pushPassed": {
+    "plays": 14,
+    "games": 11
+   },
+   "plan.tradeWhenAhead": {
+    "plays": 74,
+    "games": 50
+   },
+   "praise.backRank": {
+    "plays": 1,
+    "games": 1
+   },
+   "praise.capture/f": {
+    "plays": 296,
+    "games": 106
+   },
+   "praise.capture/m": {
+    "plays": 521,
+    "games": 199
+   },
+   "praise.discovered": {
+    "plays": 35,
+    "games": 34
+   },
+   "praise.doubleCheck": {
+    "plays": 3,
+    "games": 3
+   },
+   "praise.fork": {
+    "plays": 143,
+    "games": 104
+   },
+   "praise.mate": {
+    "plays": 192,
+    "games": 192
+   },
+   "praise.mateIdea/f": {
+    "plays": 123,
+    "games": 64
+   },
+   "praise.mateIdea/m": {
+    "plays": 235,
+    "games": 132
+   },
+   "praise.pin": {
+    "plays": 40,
+    "games": 35
+   },
+   "praise.process/f": {
+    "plays": 589,
+    "games": 118
+   },
+   "praise.process/m": {
+    "plays": 1075,
+    "games": 218
+   },
+   "praise.promotion": {
+    "plays": 34,
+    "games": 31
+   },
+   "praise.removeDefender": {
+    "plays": 4,
+    "games": 4
+   },
+   "praise.skewer": {
+    "plays": 13,
+    "games": 12
+   },
+   "praise.trapped": {
+    "plays": 24,
+    "games": 22
+   },
+   "react.leftBook/m": {
+    "plays": 5,
+    "games": 5
+   },
+   "react.ownGood/f": {
+    "plays": 72,
+    "games": 30
+   },
+   "react.ownGood/m": {
+    "plays": 102,
+    "games": 49
+   },
+   "reason.aimWeakSquare": {
+    "plays": 4,
+    "games": 4
+   },
+   "reason.answerCheck": {
+    "plays": 172,
+    "games": 90
+   },
+   "reason.attack@b": {
+    "plays": 81,
+    "games": 58
+   },
+   "reason.attack@n": {
+    "plays": 146,
+    "games": 110
+   },
+   "reason.attack@p": {
+    "plays": 238,
+    "games": 140
+   },
+   "reason.attack@q": {
+    "plays": 99,
+    "games": 74
+   },
+   "reason.attack@r": {
+    "plays": 97,
+    "games": 76
+   },
+   "reason.block@b": {
+    "plays": 2,
+    "games": 2
+   },
+   "reason.block@n": {
+    "plays": 1,
+    "games": 1
+   },
+   "reason.block@p": {
+    "plays": 14,
+    "games": 13
+   },
+   "reason.block@q": {
+    "plays": 5,
+    "games": 5
+   },
+   "reason.block@r": {
+    "plays": 4,
+    "games": 3
+   },
+   "reason.castle": {
+    "plays": 138,
+    "games": 122
+   },
+   "reason.centerPawn": {
+    "plays": 209,
+    "games": 164
+   },
+   "reason.check": {
+    "plays": 367,
+    "games": 154
+   },
+   "reason.connectRooks": {
+    "plays": 50,
+    "games": 44
+   },
+   "reason.defend@b": {
+    "plays": 32,
+    "games": 25
+   },
+   "reason.defend@n": {
+    "plays": 47,
+    "games": 42
+   },
+   "reason.defend@p": {
+    "plays": 153,
+    "games": 115
+   },
+   "reason.defend@q": {
+    "plays": 8,
+    "games": 7
+   },
+   "reason.defend@r": {
+    "plays": 6,
+    "games": 6
+   },
+   "reason.defendMate": {
+    "plays": 19,
+    "games": 16
+   },
+   "reason.develop@b": {
+    "plays": 156,
+    "games": 120
+   },
+   "reason.develop@n": {
+    "plays": 191,
+    "games": 136
+   },
+   "reason.discoveredAttack": {
+    "plays": 34,
+    "games": 30
+   },
+   "reason.doubleCheck": {
+    "plays": 7,
+    "games": 7
+   },
+   "reason.escape@b": {
+    "plays": 171,
+    "games": 119
+   },
+   "reason.escape@n": {
+    "plays": 129,
+    "games": 99
+   },
+   "reason.escape@p": {
+    "plays": 101,
+    "games": 83
+   },
+   "reason.escape@q": {
+    "plays": 77,
+    "games": 61
+   },
+   "reason.escape@r": {
+    "plays": 75,
+    "games": 58
+   },
+   "reason.fightCenter": {
+    "plays": 20,
+    "games": 18
+   },
+   "reason.fork": {
+    "plays": 75,
+    "games": 63
+   },
+   "reason.freeCapture@b": {
+    "plays": 105,
+    "games": 82
+   },
+   "reason.freeCapture@n": {
+    "plays": 101,
+    "games": 85
+   },
+   "reason.freeCapture@p": {
+    "plays": 354,
+    "games": 187
+   },
+   "reason.freeCapture@q": {
+    "plays": 68,
+    "games": 60
+   },
+   "reason.freeCapture@r": {
+    "plays": 132,
+    "games": 99
+   },
+   "reason.improvePiece@b": {
+    "plays": 67,
+    "games": 58
+   },
+   "reason.improvePiece@n": {
+    "plays": 71,
+    "games": 56
+   },
+   "reason.improvePiece@q": {
+    "plays": 42,
+    "games": 36
+   },
+   "reason.improvePiece@r": {
+    "plays": 50,
+    "games": 42
+   },
+   "reason.kingActivity": {
+    "plays": 42,
+    "games": 27
+   },
+   "reason.mate": {
+    "plays": 151,
+    "games": 125
+   },
+   "reason.mateSoon": {
+    "plays": 184,
+    "games": 126
+   },
+   "reason.openLine": {
+    "plays": 173,
+    "games": 120
+   },
+   "reason.passedPawn": {
+    "plays": 112,
+    "games": 70
+   },
+   "reason.pin": {
+    "plays": 38,
+    "games": 34
+   },
+   "reason.prepareCastle": {
+    "plays": 46,
+    "games": 40
+   },
+   "reason.quiet": {
+    "plays": 259,
+    "games": 134
+   },
+   "reason.recapture@b": {
+    "plays": 87,
+    "games": 73
+   },
+   "reason.recapture@n": {
+    "plays": 38,
+    "games": 37
+   },
+   "reason.recapture@p": {
+    "plays": 102,
+    "games": 80
+   },
+   "reason.recapture@q": {
+    "plays": 15,
+    "games": 15
+   },
+   "reason.recapture@r": {
+    "plays": 23,
+    "games": 22
+   },
+   "reason.removeDefender": {
+    "plays": 8,
+    "games": 8
+   },
+   "reason.restrictKing": {
+    "plays": 5,
+    "games": 4
+   },
+   "reason.rookOpenFile": {
+    "plays": 104,
+    "games": 82
+   },
+   "reason.rookSeventh": {
+    "plays": 9,
+    "games": 8
+   },
+   "reason.skewer": {
+    "plays": 18,
+    "games": 18
+   },
+   "reason.supportCenter": {
+    "plays": 28,
+    "games": 26
+   },
+   "reason.threatMate": {
+    "plays": 51,
+    "games": 45
+   },
+   "reason.trade": {
+    "plays": 279,
+    "games": 167
+   },
+   "reason.trappedPiece@b": {
+    "plays": 4,
+    "games": 4
+   },
+   "reason.trappedPiece@n": {
+    "plays": 5,
+    "games": 4
+   },
+   "reason.trappedPiece@q": {
+    "plays": 3,
+    "games": 2
+   },
+   "reason.trappedPiece@r": {
+    "plays": 4,
+    "games": 4
+   },
+   "reason.winMaterial@b": {
+    "plays": 31,
+    "games": 28
+   },
+   "reason.winMaterial@n": {
+    "plays": 70,
+    "games": 62
+   },
+   "reason.winMaterial@p": {
+    "plays": 96,
+    "games": 77
+   },
+   "reason.winMaterial@q": {
+    "plays": 8,
+    "games": 8
+   },
+   "reason.winMaterial@r": {
+    "plays": 54,
+    "games": 48
+   },
+   "repeat.head": {
+    "plays": 537,
+    "games": 209
+   },
+   "reveal.head": {
+    "plays": 995,
+    "games": 252
+   },
+   "start.head.first": {
+    "plays": 132,
+    "games": 132
+   },
+   "start.open": {
+    "plays": 38,
+    "games": 38
+   },
+   "start.open.greet": {
+    "plays": 48,
+    "games": 48
+   },
+   "start.tail.coached": {
+    "plays": 67,
+    "games": 67
+   },
+   "start.tail.untimed": {
+    "plays": 19,
+    "games": 19
+   },
+   "strategy.bishops-opening": {
+    "plays": 15,
+    "games": 15
+   },
+   "strategy.botvinnik-system": {
+    "plays": 27,
+    "games": 27
+   },
+   "strategy.caro-kann": {
+    "plays": 1,
+    "games": 1
+   },
+   "strategy.classic-development": {
+    "plays": 25,
+    "games": 25
+   },
+   "strategy.colle": {
+    "plays": 22,
+    "games": 22
+   },
+   "strategy.dutch-stonewall": {
+    "plays": 3,
+    "games": 3
+   },
+   "strategy.four-knights": {
+    "plays": 12,
+    "games": 12
+   },
+   "strategy.french": {
+    "plays": 5,
+    "games": 5
+   },
+   "strategy.italian": {
+    "plays": 28,
+    "games": 28
+   },
+   "strategy.kings-indian": {
+    "plays": 2,
+    "games": 2
+   },
+   "strategy.kings-indian-setup": {
+    "plays": 24,
+    "games": 24
+   },
+   "strategy.london": {
+    "plays": 15,
+    "games": 15
+   },
+   "strategy.open-game": {
+    "plays": 3,
+    "games": 3
+   },
+   "strategy.orthodox": {
+    "plays": 1,
+    "games": 1
+   },
+   "strategy.queens-gambit": {
+    "plays": 4,
+    "games": 4
+   },
+   "strategy.queens-indian-setup": {
+    "plays": 20,
+    "games": 20
+   },
+   "strategy.reversed-sicilian": {
+    "plays": 21,
+    "games": 21
+   },
+   "strategy.scandinavian": {
+    "plays": 6,
+    "games": 6
+   },
+   "strategy.scotch": {
+    "plays": 17,
+    "games": 17
+   },
+   "strategy.slav": {
+    "plays": 2,
+    "games": 2
+   },
+   "strategy.spanish": {
+    "plays": 13,
+    "games": 13
+   },
+   "strategy.two-knights": {
+    "plays": 2,
+    "games": 2
+   },
+   "strategy.vienna": {
+    "plays": 6,
+    "games": 6
+   },
+   "takeback.accepted": {
+    "plays": 176,
+    "games": 136
+   },
+   "takeback.again": {
+    "plays": 2,
+    "games": 2
+   },
+   "takeback.again@b": {
+    "plays": 2,
+    "games": 2
+   },
+   "takeback.again@n": {
+    "plays": 6,
+    "games": 6
+   },
+   "takeback.again@q": {
+    "plays": 9,
+    "games": 9
+   },
+   "takeback.again@r": {
+    "plays": 6,
+    "games": 6
+   },
+   "takeback.declined": {
+    "plays": 100,
+    "games": 85
+   },
+   "takeback.head.advice": {
+    "plays": 25,
+    "games": 23
+   },
+   "takeback.q.badTrade": {
+    "plays": 5,
+    "games": 5
+   },
+   "takeback.q.fork@n": {
+    "plays": 2,
+    "games": 2
+   },
+   "takeback.q.fork@p": {
+    "plays": 1,
+    "games": 1
+   },
+   "takeback.q.fork@q": {
+    "plays": 2,
+    "games": 2
+   },
+   "takeback.q.hanging": {
+    "plays": 2,
+    "games": 2
+   },
+   "takeback.q.hanging@b": {
+    "plays": 12,
+    "games": 9
+   },
+   "takeback.q.hanging@n": {
+    "plays": 10,
+    "games": 10
+   },
+   "takeback.q.hanging@p": {
+    "plays": 17,
+    "games": 15
+   },
+   "takeback.q.hanging@q": {
+    "plays": 7,
+    "games": 7
+   },
+   "takeback.q.hanging@r": {
+    "plays": 6,
+    "games": 6
+   },
+   "takeback.q.mate": {
+    "plays": 3,
+    "games": 3
+   },
+   "takeback.q.pin@b": {
+    "plays": 1,
+    "games": 1
+   },
+   "takeback.q.promotion": {
+    "plays": 2,
+    "games": 2
+   },
+   "takeback.q.trapped": {
+    "plays": 1,
+    "games": 1
+   },
+   "takeback.reason.dontSee": {
+    "plays": 13,
+    "games": 12
+   },
+   "takeback.reason.planned": {
+    "plays": 16,
+    "games": 16
+   },
+   "takeback.reason.risk": {
+    "plays": 14,
+    "games": 13
+   },
+   "takeback.stop": {
+    "plays": 251,
+    "games": 171
+   },
+   "teach.deviation": {
+    "plays": 24,
+    "games": 24
+   },
+   "teach.deviation.same": {
+    "plays": 18,
+    "games": 18
+   },
+   "teach.head.advice": {
+    "plays": 1255,
+    "games": 269
+   },
+   "teach.head.alt": {
+    "plays": 41,
+    "games": 36
+   },
+   "teach.head.answer": {
+    "plays": 684,
+    "games": 234
+   },
+   "teach.head.answer.plan": {
+    "plays": 427,
+    "games": 203
+   },
+   "teach.head.arrow": {
+    "plays": 1449,
+    "games": 265
+   },
+   "teach.head.calm": {
+    "plays": 112,
+    "games": 61
+   },
+   "teach.head.go": {
+    "plays": 744,
+    "games": 242
+   },
+   "teach.head.good": {
+    "plays": 1185,
+    "games": 263
+   },
+   "teach.head.plan": {
+    "plays": 380,
+    "games": 229
+   },
+   "teach.head.planNext": {
+    "plays": 336,
+    "games": 219
+   },
+   "teach.head.planStep": {
+    "plays": 334,
+    "games": 222
+   },
+   "teach.tail.choose/f": {
+    "plays": 21,
+    "games": 18
+   },
+   "teach.tail.choose/m": {
+    "plays": 20,
+    "games": 18
+   },
+   "teach.tail.plan": {
+    "plays": 353,
+    "games": 227
+   },
+   "topic.bad-trade": {
+    "plays": 15,
+    "games": 15
+   },
+   "topic.fork": {
+    "plays": 1,
+    "games": 1
+   },
+   "topic.free-capture": {
+    "plays": 1,
+    "games": 1
+   },
+   "topic.hanging-piece": {
+    "plays": 4,
+    "games": 4
+   },
+   "topic.opening-center": {
+    "plays": 21,
+    "games": 21
+   },
+   "topic.opening-development": {
+    "plays": 81,
+    "games": 81
+   },
+   "topic.opening-early-queen": {
+    "plays": 6,
+    "games": 6
+   },
+   "topic.opening-king-safety": {
+    "plays": 23,
+    "games": 23
+   },
+   "treasure.discovered": {
+    "plays": 36,
+    "games": 32
+   },
+   "treasure.doubleCheck": {
+    "plays": 4,
+    "games": 4
+   },
+   "treasure.fork": {
+    "plays": 153,
+    "games": 103
+   },
+   "treasure.free@b": {
+    "plays": 175,
+    "games": 124
+   },
+   "treasure.free@n": {
+    "plays": 164,
+    "games": 121
+   },
+   "treasure.free@q": {
+    "plays": 117,
+    "games": 94
+   },
+   "treasure.free@r": {
+    "plays": 220,
+    "games": 147
+   },
+   "treasure.mate1": {
+    "plays": 262,
+    "games": 194
+   },
+   "treasure.mate2": {
+    "plays": 207,
+    "games": 153
+   },
+   "treasure.mate3": {
+    "plays": 147,
+    "games": 110
+   },
+   "treasure.pin": {
+    "plays": 37,
+    "games": 34
+   },
+   "treasure.removeDefender": {
+    "plays": 3,
+    "games": 3
+   },
+   "treasure.skewer": {
+    "plays": 18,
+    "games": 15
+   },
+   "treasure.trapped": {
+    "plays": 29,
+    "games": 25
+   },
+   "treasure.win@b": {
+    "plays": 24,
+    "games": 20
+   },
+   "treasure.win@n": {
+    "plays": 35,
+    "games": 33
+   },
+   "treasure.win@q": {
+    "plays": 107,
+    "games": 92
+   },
+   "treasure.win@r": {
+    "plays": 18,
+    "games": 18
+   }
+  },
+  "slots": {
+   "cap:b:a1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:b:a3": {
+    "plays": 31,
+    "games": 20
+   },
+   "cap:b:a4": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:b:a5": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:b:a6": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:b:a7": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:b:a8": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:b:b1": {
+    "plays": 6,
+    "games": 4
+   },
+   "cap:b:b2": {
+    "plays": 7,
+    "games": 7
+   },
+   "cap:b:b3": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:b:b4": {
+    "plays": 22,
+    "games": 16
+   },
+   "cap:b:b5": {
+    "plays": 18,
+    "games": 15
+   },
+   "cap:b:b6": {
+    "plays": 5,
+    "games": 3
+   },
+   "cap:b:b7": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:b:b8": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:b:c1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:b:c2": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:b:c3": {
+    "plays": 8,
+    "games": 5
+   },
+   "cap:b:c4": {
+    "plays": 15,
+    "games": 13
+   },
+   "cap:b:c5": {
+    "plays": 15,
+    "games": 10
+   },
+   "cap:b:c6": {
+    "plays": 20,
+    "games": 18
+   },
+   "cap:b:c7": {
+    "plays": 7,
+    "games": 6
+   },
+   "cap:b:c8": {
+    "plays": 4,
+    "games": 2
+   },
+   "cap:b:d1": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:b:d2": {
+    "plays": 16,
+    "games": 11
+   },
+   "cap:b:d3": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:b:d4": {
+    "plays": 11,
+    "games": 4
+   },
+   "cap:b:d5": {
+    "plays": 15,
+    "games": 7
+   },
+   "cap:b:d6": {
+    "plays": 7,
+    "games": 5
+   },
+   "cap:b:d7": {
+    "plays": 12,
+    "games": 10
+   },
+   "cap:b:d8": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:b:e1": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:b:e2": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:b:e3": {
+    "plays": 9,
+    "games": 7
+   },
+   "cap:b:e4": {
+    "plays": 12,
+    "games": 10
+   },
+   "cap:b:e5": {
+    "plays": 13,
+    "games": 12
+   },
+   "cap:b:e6": {
+    "plays": 16,
+    "games": 12
+   },
+   "cap:b:e7": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:b:e8": {
+    "plays": 3,
+    "games": 2
+   },
+   "cap:b:f1": {
+    "plays": 11,
+    "games": 7
+   },
+   "cap:b:f2": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:b:f3": {
+    "plays": 12,
+    "games": 9
+   },
+   "cap:b:f4": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:b:f5": {
+    "plays": 18,
+    "games": 13
+   },
+   "cap:b:f6": {
+    "plays": 12,
+    "games": 9
+   },
+   "cap:b:f7": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:b:f8": {
+    "plays": 10,
+    "games": 7
+   },
+   "cap:b:g1": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:b:g2": {
+    "plays": 11,
+    "games": 7
+   },
+   "cap:b:g3": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:b:g4": {
+    "plays": 14,
+    "games": 14
+   },
+   "cap:b:g5": {
+    "plays": 24,
+    "games": 19
+   },
+   "cap:b:g6": {
+    "plays": 9,
+    "games": 7
+   },
+   "cap:b:g7": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:b:g8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:b:h1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:b:h2": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:b:h3": {
+    "plays": 20,
+    "games": 16
+   },
+   "cap:b:h4": {
+    "plays": 9,
+    "games": 6
+   },
+   "cap:b:h5": {
+    "plays": 5,
+    "games": 2
+   },
+   "cap:b:h6": {
+    "plays": 24,
+    "games": 18
+   },
+   "cap:b:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:b:h8": {
+    "plays": 9,
+    "games": 8
+   },
+   "cap:k:a2": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:b6": {
+    "plays": 2,
+    "games": 1
+   },
+   "cap:k:c2": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:k:c3": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:c5": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:c6": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:k:c7": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:k:d1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:d4": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:d7": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:k:d8": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:k:e7": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:k:f1": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:k:f2": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:k:f3": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:k:f5": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:f7": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:k:f8": {
+    "plays": 6,
+    "games": 3
+   },
+   "cap:k:g2": {
+    "plays": 5,
+    "games": 3
+   },
+   "cap:k:g6": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:g7": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:h2": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:k:h6": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:k:h7": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:k:h8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:a1": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:n:a2": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:n:a3": {
+    "plays": 3,
+    "games": 2
+   },
+   "cap:n:a4": {
+    "plays": 7,
+    "games": 6
+   },
+   "cap:n:a6": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:a8": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:n:b1": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:n:b2": {
+    "plays": 5,
+    "games": 3
+   },
+   "cap:n:b3": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:n:b4": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:n:b5": {
+    "plays": 16,
+    "games": 14
+   },
+   "cap:n:b6": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:n:b8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:c1": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:n:c2": {
+    "plays": 8,
+    "games": 6
+   },
+   "cap:n:c3": {
+    "plays": 17,
+    "games": 14
+   },
+   "cap:n:c4": {
+    "plays": 9,
+    "games": 5
+   },
+   "cap:n:c5": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:n:c6": {
+    "plays": 12,
+    "games": 8
+   },
+   "cap:n:c7": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:n:c8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:d1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:n:d2": {
+    "plays": 11,
+    "games": 10
+   },
+   "cap:n:d3": {
+    "plays": 7,
+    "games": 7
+   },
+   "cap:n:d4": {
+    "plays": 28,
+    "games": 24
+   },
+   "cap:n:d5": {
+    "plays": 32,
+    "games": 25
+   },
+   "cap:n:d6": {
+    "plays": 12,
+    "games": 8
+   },
+   "cap:n:d7": {
+    "plays": 10,
+    "games": 9
+   },
+   "cap:n:d8": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:n:e1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:e2": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:n:e3": {
+    "plays": 15,
+    "games": 11
+   },
+   "cap:n:e4": {
+    "plays": 37,
+    "games": 22
+   },
+   "cap:n:e5": {
+    "plays": 55,
+    "games": 38
+   },
+   "cap:n:e6": {
+    "plays": 12,
+    "games": 10
+   },
+   "cap:n:e7": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:n:e8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:f1": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:n:f2": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:n:f3": {
+    "plays": 10,
+    "games": 9
+   },
+   "cap:n:f4": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:n:f5": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:n:f6": {
+    "plays": 17,
+    "games": 12
+   },
+   "cap:n:f7": {
+    "plays": 10,
+    "games": 8
+   },
+   "cap:n:f8": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:n:g2": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:g3": {
+    "plays": 9,
+    "games": 7
+   },
+   "cap:n:g4": {
+    "plays": 12,
+    "games": 11
+   },
+   "cap:n:g5": {
+    "plays": 17,
+    "games": 14
+   },
+   "cap:n:g6": {
+    "plays": 7,
+    "games": 5
+   },
+   "cap:n:g7": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:n:h1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:n:h2": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:n:h3": {
+    "plays": 3,
+    "games": 1
+   },
+   "cap:n:h4": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:n:h5": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:n:h6": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:n:h7": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:n:h8": {
+    "plays": 8,
+    "games": 8
+   },
+   "cap:p:a1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:p:a3": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:p:a4": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:p:a5": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:p:a6": {
+    "plays": 7,
+    "games": 5
+   },
+   "cap:p:a7": {
+    "plays": 2,
+    "games": 1
+   },
+   "cap:p:a8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:p:b1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:p:b2": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:p:b3": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:p:b4": {
+    "plays": 36,
+    "games": 28
+   },
+   "cap:p:b5": {
+    "plays": 14,
+    "games": 11
+   },
+   "cap:p:b6": {
+    "plays": 14,
+    "games": 9
+   },
+   "cap:p:b7": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:p:c2": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:p:c3": {
+    "plays": 30,
+    "games": 23
+   },
+   "cap:p:c4": {
+    "plays": 53,
+    "games": 37
+   },
+   "cap:p:c5": {
+    "plays": 27,
+    "games": 23
+   },
+   "cap:p:c6": {
+    "plays": 36,
+    "games": 25
+   },
+   "cap:p:c7": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:p:d1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:p:d2": {
+    "plays": 10,
+    "games": 9
+   },
+   "cap:p:d3": {
+    "plays": 15,
+    "games": 13
+   },
+   "cap:p:d4": {
+    "plays": 63,
+    "games": 43
+   },
+   "cap:p:d5": {
+    "plays": 49,
+    "games": 38
+   },
+   "cap:p:d6": {
+    "plays": 20,
+    "games": 18
+   },
+   "cap:p:d7": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:p:e2": {
+    "plays": 10,
+    "games": 7
+   },
+   "cap:p:e3": {
+    "plays": 22,
+    "games": 16
+   },
+   "cap:p:e4": {
+    "plays": 28,
+    "games": 21
+   },
+   "cap:p:e5": {
+    "plays": 49,
+    "games": 36
+   },
+   "cap:p:e6": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:p:e7": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:p:f1": {
+    "plays": 3,
+    "games": 2
+   },
+   "cap:p:f2": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:p:f3": {
+    "plays": 26,
+    "games": 24
+   },
+   "cap:p:f4": {
+    "plays": 15,
+    "games": 15
+   },
+   "cap:p:f5": {
+    "plays": 25,
+    "games": 21
+   },
+   "cap:p:f6": {
+    "plays": 31,
+    "games": 20
+   },
+   "cap:p:f7": {
+    "plays": 8,
+    "games": 4
+   },
+   "cap:p:f8": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:p:g2": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:p:g3": {
+    "plays": 14,
+    "games": 13
+   },
+   "cap:p:g4": {
+    "plays": 29,
+    "games": 21
+   },
+   "cap:p:g5": {
+    "plays": 35,
+    "games": 26
+   },
+   "cap:p:g6": {
+    "plays": 14,
+    "games": 12
+   },
+   "cap:p:g7": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:p:g8": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:p:h3": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:p:h4": {
+    "plays": 6,
+    "games": 4
+   },
+   "cap:p:h5": {
+    "plays": 7,
+    "games": 7
+   },
+   "cap:p:h6": {
+    "plays": 17,
+    "games": 15
+   },
+   "cap:p:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:p:h8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:q:a1": {
+    "plays": 5,
+    "games": 3
+   },
+   "cap:q:a2": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:q:a3": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:q:a4": {
+    "plays": 8,
+    "games": 8
+   },
+   "cap:q:a5": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:q:a6": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:q:a8": {
+    "plays": 7,
+    "games": 5
+   },
+   "cap:q:b1": {
+    "plays": 7,
+    "games": 6
+   },
+   "cap:q:b2": {
+    "plays": 11,
+    "games": 8
+   },
+   "cap:q:b3": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:q:b4": {
+    "plays": 6,
+    "games": 4
+   },
+   "cap:q:b5": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:q:b6": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:q:b7": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:q:b8": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:q:c1": {
+    "plays": 7,
+    "games": 6
+   },
+   "cap:q:c3": {
+    "plays": 4,
+    "games": 1
+   },
+   "cap:q:c4": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:q:c5": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:q:c6": {
+    "plays": 12,
+    "games": 9
+   },
+   "cap:q:c7": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:q:c8": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:q:d1": {
+    "plays": 7,
+    "games": 6
+   },
+   "cap:q:d2": {
+    "plays": 12,
+    "games": 8
+   },
+   "cap:q:d3": {
+    "plays": 12,
+    "games": 11
+   },
+   "cap:q:d4": {
+    "plays": 14,
+    "games": 9
+   },
+   "cap:q:d5": {
+    "plays": 14,
+    "games": 10
+   },
+   "cap:q:d6": {
+    "plays": 17,
+    "games": 10
+   },
+   "cap:q:d7": {
+    "plays": 12,
+    "games": 10
+   },
+   "cap:q:d8": {
+    "plays": 8,
+    "games": 6
+   },
+   "cap:q:e2": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:q:e3": {
+    "plays": 11,
+    "games": 8
+   },
+   "cap:q:e4": {
+    "plays": 11,
+    "games": 7
+   },
+   "cap:q:e5": {
+    "plays": 10,
+    "games": 8
+   },
+   "cap:q:e6": {
+    "plays": 10,
+    "games": 7
+   },
+   "cap:q:e7": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:q:e8": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:q:f1": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:q:f2": {
+    "plays": 10,
+    "games": 6
+   },
+   "cap:q:f3": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:q:f4": {
+    "plays": 8,
+    "games": 5
+   },
+   "cap:q:f5": {
+    "plays": 5,
+    "games": 3
+   },
+   "cap:q:f6": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:q:f7": {
+    "plays": 9,
+    "games": 8
+   },
+   "cap:q:f8": {
+    "plays": 3,
+    "games": 2
+   },
+   "cap:q:g1": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:q:g2": {
+    "plays": 4,
+    "games": 3
+   },
+   "cap:q:g3": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:q:g4": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:q:g5": {
+    "plays": 11,
+    "games": 9
+   },
+   "cap:q:g6": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:q:g7": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:q:g8": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:q:h1": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:q:h2": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:q:h3": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:q:h4": {
+    "plays": 8,
+    "games": 6
+   },
+   "cap:q:h5": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:q:h6": {
+    "plays": 6,
+    "games": 3
+   },
+   "cap:q:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:q:h8": {
+    "plays": 8,
+    "games": 8
+   },
+   "cap:r:a1": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:r:a2": {
+    "plays": 5,
+    "games": 3
+   },
+   "cap:r:a3": {
+    "plays": 6,
+    "games": 4
+   },
+   "cap:r:a4": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:a5": {
+    "plays": 10,
+    "games": 8
+   },
+   "cap:r:a6": {
+    "plays": 8,
+    "games": 5
+   },
+   "cap:r:a7": {
+    "plays": 9,
+    "games": 5
+   },
+   "cap:r:b1": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:r:b2": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:r:b3": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:r:b4": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:r:b5": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:b6": {
+    "plays": 8,
+    "games": 3
+   },
+   "cap:r:b7": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:r:b8": {
+    "plays": 6,
+    "games": 3
+   },
+   "cap:r:c1": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:r:c2": {
+    "plays": 10,
+    "games": 7
+   },
+   "cap:r:c4": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:c5": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:r:c6": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:r:c7": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:c8": {
+    "plays": 11,
+    "games": 5
+   },
+   "cap:r:d1": {
+    "plays": 8,
+    "games": 7
+   },
+   "cap:r:d2": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:d3": {
+    "plays": 5,
+    "games": 5
+   },
+   "cap:r:d4": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:r:d5": {
+    "plays": 9,
+    "games": 8
+   },
+   "cap:r:d6": {
+    "plays": 6,
+    "games": 4
+   },
+   "cap:r:d7": {
+    "plays": 7,
+    "games": 7
+   },
+   "cap:r:d8": {
+    "plays": 10,
+    "games": 5
+   },
+   "cap:r:e1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:e2": {
+    "plays": 8,
+    "games": 6
+   },
+   "cap:r:e3": {
+    "plays": 6,
+    "games": 6
+   },
+   "cap:r:e4": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:e5": {
+    "plays": 9,
+    "games": 8
+   },
+   "cap:r:e6": {
+    "plays": 6,
+    "games": 5
+   },
+   "cap:r:e7": {
+    "plays": 10,
+    "games": 7
+   },
+   "cap:r:e8": {
+    "plays": 9,
+    "games": 5
+   },
+   "cap:r:f1": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:f2": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:r:f3": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:f4": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:r:f5": {
+    "plays": 3,
+    "games": 2
+   },
+   "cap:r:f6": {
+    "plays": 8,
+    "games": 6
+   },
+   "cap:r:f7": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:r:f8": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:g1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:g2": {
+    "plays": 10,
+    "games": 7
+   },
+   "cap:r:g3": {
+    "plays": 4,
+    "games": 4
+   },
+   "cap:r:g4": {
+    "plays": 3,
+    "games": 2
+   },
+   "cap:r:g5": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:g6": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:g7": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:r:g8": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:h1": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:h2": {
+    "plays": 1,
+    "games": 1
+   },
+   "cap:r:h3": {
+    "plays": 2,
+    "games": 2
+   },
+   "cap:r:h5": {
+    "plays": 5,
+    "games": 4
+   },
+   "cap:r:h6": {
+    "plays": 3,
+    "games": 3
+   },
+   "cap:r:h7": {
+    "plays": 6,
+    "games": 4
+   },
+   "cap:r:h8": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:b:a2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:b:a3": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:b:a4": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:b:a5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:b:a6": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:b:a7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:b:b1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:b:b2": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:b:b3": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:b:b4": {
+    "plays": 19,
+    "games": 18
+   },
+   "ins:b:b5": {
+    "plays": 23,
+    "games": 17
+   },
+   "ins:b:b6": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:b:b7": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:b:b8": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:b:c1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:b:c2": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:b:c3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:b:c4": {
+    "plays": 21,
+    "games": 17
+   },
+   "ins:b:c5": {
+    "plays": 17,
+    "games": 12
+   },
+   "ins:b:c6": {
+    "plays": 9,
+    "games": 8
+   },
+   "ins:b:c7": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:b:d2": {
+    "plays": 15,
+    "games": 15
+   },
+   "ins:b:d3": {
+    "plays": 35,
+    "games": 30
+   },
+   "ins:b:d4": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:b:d5": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:b:d6": {
+    "plays": 28,
+    "games": 21
+   },
+   "ins:b:d7": {
+    "plays": 16,
+    "games": 12
+   },
+   "ins:b:d8": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:b:e1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:b:e2": {
+    "plays": 17,
+    "games": 17
+   },
+   "ins:b:e3": {
+    "plays": 20,
+    "games": 18
+   },
+   "ins:b:e4": {
+    "plays": 8,
+    "games": 7
+   },
+   "ins:b:e5": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:b:e6": {
+    "plays": 24,
+    "games": 21
+   },
+   "ins:b:e7": {
+    "plays": 26,
+    "games": 25
+   },
+   "ins:b:e8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:b:f1": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:b:f2": {
+    "plays": 3,
+    "games": 2
+   },
+   "ins:b:f3": {
+    "plays": 7,
+    "games": 6
+   },
+   "ins:b:f4": {
+    "plays": 21,
+    "games": 18
+   },
+   "ins:b:f5": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:b:f6": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:b:f7": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:b:f8": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:b:g2": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:b:g3": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:b:g4": {
+    "plays": 16,
+    "games": 15
+   },
+   "ins:b:g5": {
+    "plays": 22,
+    "games": 17
+   },
+   "ins:b:g6": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:b:g7": {
+    "plays": 7,
+    "games": 5
+   },
+   "ins:b:h2": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:b:h3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:b:h4": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:b:h5": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:b:h6": {
+    "plays": 8,
+    "games": 7
+   },
+   "ins:k:a2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:a7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:b1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:b3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:b5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:b7": {
+    "plays": 2,
+    "games": 1
+   },
+   "ins:k:b8": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:c1": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:k:c2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:k:c3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:c7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:c8": {
+    "plays": 2,
+    "games": 1
+   },
+   "ins:k:d1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:d2": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:k:d3": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:d7": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:k:d8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:e1": {
+    "plays": 3,
+    "games": 2
+   },
+   "ins:k:e2": {
+    "plays": 7,
+    "games": 6
+   },
+   "ins:k:e3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:k:e4": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:e5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:e6": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:k:e7": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:k:e8": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:k:f1": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:k:f2": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:k:f4": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:k:f6": {
+    "plays": 3,
+    "games": 2
+   },
+   "ins:k:f7": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:k:f8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:g1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:g2": {
+    "plays": 9,
+    "games": 8
+   },
+   "ins:k:g3": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:g4": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:g5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:k:g6": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:k:g7": {
+    "plays": 11,
+    "games": 8
+   },
+   "ins:k:h1": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:k:h2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:k:h6": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:k:h7": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:k:h8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:a2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:a4": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:n:a5": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:n:a8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:b1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:b3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:n:b4": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:n:b5": {
+    "plays": 14,
+    "games": 12
+   },
+   "ins:n:b6": {
+    "plays": 9,
+    "games": 8
+   },
+   "ins:n:b7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:c1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:c2": {
+    "plays": 9,
+    "games": 8
+   },
+   "ins:n:c3": {
+    "plays": 56,
+    "games": 50
+   },
+   "ins:n:c4": {
+    "plays": 17,
+    "games": 13
+   },
+   "ins:n:c5": {
+    "plays": 12,
+    "games": 9
+   },
+   "ins:n:c6": {
+    "plays": 70,
+    "games": 59
+   },
+   "ins:n:c7": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:n:c8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:d2": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:n:d3": {
+    "plays": 7,
+    "games": 6
+   },
+   "ins:n:d4": {
+    "plays": 25,
+    "games": 22
+   },
+   "ins:n:d5": {
+    "plays": 17,
+    "games": 16
+   },
+   "ins:n:d6": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:n:d7": {
+    "plays": 13,
+    "games": 11
+   },
+   "ins:n:d8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:e1": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:n:e2": {
+    "plays": 5,
+    "games": 3
+   },
+   "ins:n:e3": {
+    "plays": 9,
+    "games": 8
+   },
+   "ins:n:e4": {
+    "plays": 27,
+    "games": 23
+   },
+   "ins:n:e5": {
+    "plays": 17,
+    "games": 16
+   },
+   "ins:n:e6": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:n:e7": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:n:f1": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:n:f2": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:n:f3": {
+    "plays": 35,
+    "games": 29
+   },
+   "ins:n:f4": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:n:f5": {
+    "plays": 8,
+    "games": 7
+   },
+   "ins:n:f6": {
+    "plays": 99,
+    "games": 84
+   },
+   "ins:n:f7": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:n:g1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:g2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:n:g3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:g4": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:n:g5": {
+    "plays": 11,
+    "games": 11
+   },
+   "ins:n:g6": {
+    "plays": 7,
+    "games": 5
+   },
+   "ins:n:g8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:h2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:h3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:n:h4": {
+    "plays": 7,
+    "games": 5
+   },
+   "ins:n:h5": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:n:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:p:a3": {
+    "plays": 19,
+    "games": 17
+   },
+   "ins:p:a4": {
+    "plays": 21,
+    "games": 19
+   },
+   "ins:p:a5": {
+    "plays": 16,
+    "games": 16
+   },
+   "ins:p:a6": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:p:b2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:p:b3": {
+    "plays": 12,
+    "games": 9
+   },
+   "ins:p:b4": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:p:b5": {
+    "plays": 18,
+    "games": 14
+   },
+   "ins:p:b6": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:p:b7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:p:c2": {
+    "plays": 6,
+    "games": 4
+   },
+   "ins:p:c3": {
+    "plays": 20,
+    "games": 20
+   },
+   "ins:p:c4": {
+    "plays": 20,
+    "games": 16
+   },
+   "ins:p:c5": {
+    "plays": 46,
+    "games": 42
+   },
+   "ins:p:c6": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:p:d3": {
+    "plays": 9,
+    "games": 8
+   },
+   "ins:p:d4": {
+    "plays": 42,
+    "games": 37
+   },
+   "ins:p:d5": {
+    "plays": 85,
+    "games": 81
+   },
+   "ins:p:d6": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:p:d7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:p:e2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:p:e3": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:p:e4": {
+    "plays": 59,
+    "games": 53
+   },
+   "ins:p:e5": {
+    "plays": 91,
+    "games": 82
+   },
+   "ins:p:e6": {
+    "plays": 32,
+    "games": 31
+   },
+   "ins:p:e7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:p:f2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:p:f3": {
+    "plays": 14,
+    "games": 13
+   },
+   "ins:p:f4": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:p:f5": {
+    "plays": 18,
+    "games": 18
+   },
+   "ins:p:f6": {
+    "plays": 7,
+    "games": 6
+   },
+   "ins:p:f7": {
+    "plays": 2,
+    "games": 1
+   },
+   "ins:p:g2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:p:g3": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:p:g4": {
+    "plays": 13,
+    "games": 13
+   },
+   "ins:p:g5": {
+    "plays": 9,
+    "games": 9
+   },
+   "ins:p:g6": {
+    "plays": 9,
+    "games": 7
+   },
+   "ins:p:g7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:p:h2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:p:h3": {
+    "plays": 13,
+    "games": 11
+   },
+   "ins:p:h4": {
+    "plays": 10,
+    "games": 10
+   },
+   "ins:p:h5": {
+    "plays": 12,
+    "games": 11
+   },
+   "ins:p:h6": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:p:h7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:a1": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:a2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:a3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:a4": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:a5": {
+    "plays": 7,
+    "games": 7
+   },
+   "ins:q:a6": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:a7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:b1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:b2": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:b3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:b4": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:b6": {
+    "plays": 12,
+    "games": 11
+   },
+   "ins:q:b7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:b8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:c1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:c2": {
+    "plays": 11,
+    "games": 9
+   },
+   "ins:q:c3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:c4": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:c5": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:q:c6": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:q:c7": {
+    "plays": 10,
+    "games": 10
+   },
+   "ins:q:c8": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:d1": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:q:d2": {
+    "plays": 12,
+    "games": 12
+   },
+   "ins:q:d3": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:q:d4": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:q:d5": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:d6": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:q:d7": {
+    "plays": 13,
+    "games": 11
+   },
+   "ins:q:d8": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:e1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:e2": {
+    "plays": 11,
+    "games": 10
+   },
+   "ins:q:e3": {
+    "plays": 7,
+    "games": 6
+   },
+   "ins:q:e4": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:q:e5": {
+    "plays": 11,
+    "games": 11
+   },
+   "ins:q:e6": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:q:e7": {
+    "plays": 10,
+    "games": 10
+   },
+   "ins:q:e8": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:q:f2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:f3": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:q:f4": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:q:f5": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:q:f6": {
+    "plays": 8,
+    "games": 7
+   },
+   "ins:q:f7": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:q:f8": {
+    "plays": 2,
+    "games": 1
+   },
+   "ins:q:g1": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:g2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:q:g3": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:q:g4": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:g5": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:g6": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:q:g7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:h1": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:h2": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:q:h4": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:q:h5": {
+    "plays": 9,
+    "games": 9
+   },
+   "ins:q:h6": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:q:h8": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:a1": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:r:a2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:a3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:a5": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:a6": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:a7": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:r:a8": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:r:b1": {
+    "plays": 6,
+    "games": 5
+   },
+   "ins:r:b2": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:b3": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:b4": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:b5": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:b6": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:b7": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:b8": {
+    "plays": 9,
+    "games": 9
+   },
+   "ins:r:c1": {
+    "plays": 11,
+    "games": 9
+   },
+   "ins:r:c2": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:c3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:c4": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:c5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:c6": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:r:c7": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:r:c8": {
+    "plays": 13,
+    "games": 11
+   },
+   "ins:r:d1": {
+    "plays": 13,
+    "games": 12
+   },
+   "ins:r:d2": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:d3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:d4": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:r:d5": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:r:d6": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:r:d7": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:r:d8": {
+    "plays": 20,
+    "games": 18
+   },
+   "ins:r:e1": {
+    "plays": 30,
+    "games": 25
+   },
+   "ins:r:e2": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:r:e3": {
+    "plays": 7,
+    "games": 6
+   },
+   "ins:r:e4": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:r:e5": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:e6": {
+    "plays": 8,
+    "games": 5
+   },
+   "ins:r:e7": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:r:e8": {
+    "plays": 24,
+    "games": 22
+   },
+   "ins:r:f1": {
+    "plays": 3,
+    "games": 3
+   },
+   "ins:r:f2": {
+    "plays": 6,
+    "games": 6
+   },
+   "ins:r:f3": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:f4": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:f5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:f6": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:f7": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:r:f8": {
+    "plays": 5,
+    "games": 5
+   },
+   "ins:r:g1": {
+    "plays": 4,
+    "games": 4
+   },
+   "ins:r:g2": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:g3": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:r:g4": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:g5": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:g6": {
+    "plays": 5,
+    "games": 4
+   },
+   "ins:r:g7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:g8": {
+    "plays": 8,
+    "games": 8
+   },
+   "ins:r:h1": {
+    "plays": 4,
+    "games": 3
+   },
+   "ins:r:h2": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:h3": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:h4": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:h5": {
+    "plays": 1,
+    "games": 1
+   },
+   "ins:r:h7": {
+    "plays": 2,
+    "games": 2
+   },
+   "ins:r:h8": {
+    "plays": 7,
+    "games": 4
+   },
+   "nom:b:a2": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:b:a4": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:b:a5": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:b:a6": {
+    "plays": 7,
+    "games": 5
+   },
+   "nom:b:b2": {
+    "plays": 8,
+    "games": 8
+   },
+   "nom:b:b3": {
+    "plays": 6,
+    "games": 4
+   },
+   "nom:b:b4": {
+    "plays": 22,
+    "games": 15
+   },
+   "nom:b:b5": {
+    "plays": 12,
+    "games": 11
+   },
+   "nom:b:b6": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:b:b7": {
+    "plays": 8,
+    "games": 7
+   },
+   "nom:b:c1": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:b:c2": {
+    "plays": 7,
+    "games": 6
+   },
+   "nom:b:c3": {
+    "plays": 9,
+    "games": 8
+   },
+   "nom:b:c4": {
+    "plays": 37,
+    "games": 30
+   },
+   "nom:b:c5": {
+    "plays": 24,
+    "games": 18
+   },
+   "nom:b:c6": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:b:c7": {
+    "plays": 8,
+    "games": 5
+   },
+   "nom:b:d1": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:b:d2": {
+    "plays": 9,
+    "games": 8
+   },
+   "nom:b:d3": {
+    "plays": 51,
+    "games": 39
+   },
+   "nom:b:d4": {
+    "plays": 8,
+    "games": 5
+   },
+   "nom:b:d5": {
+    "plays": 5,
+    "games": 5
+   },
+   "nom:b:d6": {
+    "plays": 29,
+    "games": 25
+   },
+   "nom:b:d7": {
+    "plays": 22,
+    "games": 17
+   },
+   "nom:b:d8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:b:e2": {
+    "plays": 36,
+    "games": 26
+   },
+   "nom:b:e3": {
+    "plays": 22,
+    "games": 18
+   },
+   "nom:b:e4": {
+    "plays": 7,
+    "games": 5
+   },
+   "nom:b:e5": {
+    "plays": 8,
+    "games": 7
+   },
+   "nom:b:e6": {
+    "plays": 39,
+    "games": 28
+   },
+   "nom:b:e7": {
+    "plays": 49,
+    "games": 37
+   },
+   "nom:b:e8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:b:f3": {
+    "plays": 14,
+    "games": 9
+   },
+   "nom:b:f4": {
+    "plays": 27,
+    "games": 22
+   },
+   "nom:b:f5": {
+    "plays": 23,
+    "games": 16
+   },
+   "nom:b:f6": {
+    "plays": 14,
+    "games": 10
+   },
+   "nom:b:f7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:b:f8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:b:g2": {
+    "plays": 11,
+    "games": 8
+   },
+   "nom:b:g3": {
+    "plays": 5,
+    "games": 3
+   },
+   "nom:b:g4": {
+    "plays": 11,
+    "games": 8
+   },
+   "nom:b:g5": {
+    "plays": 27,
+    "games": 21
+   },
+   "nom:b:g6": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:b:g7": {
+    "plays": 21,
+    "games": 15
+   },
+   "nom:b:h2": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:b:h3": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:b:h5": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:b:h6": {
+    "plays": 9,
+    "games": 8
+   },
+   "nom:b:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:castle:long": {
+    "plays": 54,
+    "games": 39
+   },
+   "nom:castle:short": {
+    "plays": 201,
+    "games": 136
+   },
+   "nom:k:a2": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:b1": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:k:b3": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:k:b4": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:b8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:c2": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:k:c3": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:k:c4": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:c7": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:k:c8": {
+    "plays": 7,
+    "games": 3
+   },
+   "nom:k:d1": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:d2": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:k:d3": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:k:d6": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:d7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:d8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:e1": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:e2": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:k:e3": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:e4": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:e5": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:e7": {
+    "plays": 6,
+    "games": 4
+   },
+   "nom:k:e8": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:k:f1": {
+    "plays": 10,
+    "games": 7
+   },
+   "nom:k:f2": {
+    "plays": 8,
+    "games": 5
+   },
+   "nom:k:f3": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:k:f4": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:k:f5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:f6": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:k:f7": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:k:f8": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:k:g1": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:k:g2": {
+    "plays": 8,
+    "games": 6
+   },
+   "nom:k:g4": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:g5": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:k:g6": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:k:g7": {
+    "plays": 8,
+    "games": 7
+   },
+   "nom:k:g8": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:k:h1": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:h2": {
+    "plays": 5,
+    "games": 3
+   },
+   "nom:k:h5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:k:h6": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:k:h7": {
+    "plays": 8,
+    "games": 6
+   },
+   "nom:k:h8": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:n:a1": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:n:a3": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:a4": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:n:a5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:a6": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:b2": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:n:b3": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:n:b4": {
+    "plays": 17,
+    "games": 11
+   },
+   "nom:n:b5": {
+    "plays": 12,
+    "games": 9
+   },
+   "nom:n:b6": {
+    "plays": 14,
+    "games": 10
+   },
+   "nom:n:b8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:c1": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:n:c2": {
+    "plays": 7,
+    "games": 7
+   },
+   "nom:n:c3": {
+    "plays": 61,
+    "games": 48
+   },
+   "nom:n:c4": {
+    "plays": 14,
+    "games": 11
+   },
+   "nom:n:c5": {
+    "plays": 10,
+    "games": 6
+   },
+   "nom:n:c6": {
+    "plays": 132,
+    "games": 83
+   },
+   "nom:n:c7": {
+    "plays": 8,
+    "games": 6
+   },
+   "nom:n:c8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:d2": {
+    "plays": 42,
+    "games": 27
+   },
+   "nom:n:d3": {
+    "plays": 8,
+    "games": 8
+   },
+   "nom:n:d4": {
+    "plays": 18,
+    "games": 17
+   },
+   "nom:n:d5": {
+    "plays": 15,
+    "games": 14
+   },
+   "nom:n:d6": {
+    "plays": 6,
+    "games": 6
+   },
+   "nom:n:d7": {
+    "plays": 27,
+    "games": 17
+   },
+   "nom:n:e1": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:e2": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:n:e3": {
+    "plays": 10,
+    "games": 6
+   },
+   "nom:n:e4": {
+    "plays": 21,
+    "games": 17
+   },
+   "nom:n:e5": {
+    "plays": 19,
+    "games": 14
+   },
+   "nom:n:e6": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:n:e7": {
+    "plays": 12,
+    "games": 12
+   },
+   "nom:n:f2": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:f3": {
+    "plays": 147,
+    "games": 104
+   },
+   "nom:n:f4": {
+    "plays": 10,
+    "games": 8
+   },
+   "nom:n:f5": {
+    "plays": 7,
+    "games": 5
+   },
+   "nom:n:f6": {
+    "plays": 140,
+    "games": 97
+   },
+   "nom:n:f7": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:n:g1": {
+    "plays": 3,
+    "games": 1
+   },
+   "nom:n:g2": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:n:g3": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:n:g4": {
+    "plays": 17,
+    "games": 14
+   },
+   "nom:n:g5": {
+    "plays": 13,
+    "games": 11
+   },
+   "nom:n:g6": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:n:g7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:h2": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:n:h3": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:n:h4": {
+    "plays": 11,
+    "games": 6
+   },
+   "nom:n:h5": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:n:h6": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:n:h7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:p:a1": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:a2": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:a3": {
+    "plays": 11,
+    "games": 11
+   },
+   "nom:p:a4": {
+    "plays": 19,
+    "games": 14
+   },
+   "nom:p:a5": {
+    "plays": 9,
+    "games": 7
+   },
+   "nom:p:a6": {
+    "plays": 13,
+    "games": 11
+   },
+   "nom:p:a7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:a8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:b1": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:p:b2": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:p:b3": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:p:b4": {
+    "plays": 14,
+    "games": 10
+   },
+   "nom:p:b5": {
+    "plays": 13,
+    "games": 11
+   },
+   "nom:p:b6": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:p:b7": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:p:c1": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:p:c2": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:p:c3": {
+    "plays": 34,
+    "games": 23
+   },
+   "nom:p:c4": {
+    "plays": 36,
+    "games": 29
+   },
+   "nom:p:c5": {
+    "plays": 74,
+    "games": 55
+   },
+   "nom:p:c6": {
+    "plays": 18,
+    "games": 15
+   },
+   "nom:p:c7": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:p:c8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:d1": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:p:d2": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:d3": {
+    "plays": 12,
+    "games": 11
+   },
+   "nom:p:d4": {
+    "plays": 192,
+    "games": 111
+   },
+   "nom:p:d5": {
+    "plays": 148,
+    "games": 115
+   },
+   "nom:p:d6": {
+    "plays": 8,
+    "games": 8
+   },
+   "nom:p:d7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:d8": {
+    "plays": 9,
+    "games": 2
+   },
+   "nom:p:e1": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:p:e3": {
+    "plays": 9,
+    "games": 8
+   },
+   "nom:p:e4": {
+    "plays": 292,
+    "games": 140
+   },
+   "nom:p:e5": {
+    "plays": 138,
+    "games": 115
+   },
+   "nom:p:e6": {
+    "plays": 44,
+    "games": 31
+   },
+   "nom:p:e7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:p:e8": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:p:f1": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:p:f2": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:p:f3": {
+    "plays": 7,
+    "games": 7
+   },
+   "nom:p:f4": {
+    "plays": 11,
+    "games": 10
+   },
+   "nom:p:f5": {
+    "plays": 19,
+    "games": 16
+   },
+   "nom:p:f6": {
+    "plays": 10,
+    "games": 10
+   },
+   "nom:p:f7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:f8": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:g1": {
+    "plays": 5,
+    "games": 2
+   },
+   "nom:p:g3": {
+    "plays": 12,
+    "games": 9
+   },
+   "nom:p:g4": {
+    "plays": 18,
+    "games": 13
+   },
+   "nom:p:g5": {
+    "plays": 11,
+    "games": 11
+   },
+   "nom:p:g6": {
+    "plays": 14,
+    "games": 10
+   },
+   "nom:p:g7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:p:g8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:p:h1": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:h3": {
+    "plays": 14,
+    "games": 12
+   },
+   "nom:p:h4": {
+    "plays": 11,
+    "games": 7
+   },
+   "nom:p:h5": {
+    "plays": 13,
+    "games": 11
+   },
+   "nom:p:h6": {
+    "plays": 15,
+    "games": 14
+   },
+   "nom:p:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:p:h8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:a1": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:q:a3": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:q:a4": {
+    "plays": 7,
+    "games": 7
+   },
+   "nom:q:a5": {
+    "plays": 8,
+    "games": 8
+   },
+   "nom:q:a6": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:q:a7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:q:b1": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:q:b2": {
+    "plays": 7,
+    "games": 6
+   },
+   "nom:q:b3": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:b4": {
+    "plays": 5,
+    "games": 5
+   },
+   "nom:q:b5": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:b6": {
+    "plays": 15,
+    "games": 12
+   },
+   "nom:q:b7": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:q:b8": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:q:c1": {
+    "plays": 7,
+    "games": 5
+   },
+   "nom:q:c2": {
+    "plays": 14,
+    "games": 12
+   },
+   "nom:q:c3": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:q:c4": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:q:c5": {
+    "plays": 9,
+    "games": 7
+   },
+   "nom:q:c6": {
+    "plays": 8,
+    "games": 7
+   },
+   "nom:q:c7": {
+    "plays": 17,
+    "games": 14
+   },
+   "nom:q:c8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:d1": {
+    "plays": 8,
+    "games": 6
+   },
+   "nom:q:d2": {
+    "plays": 16,
+    "games": 13
+   },
+   "nom:q:d3": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:d4": {
+    "plays": 12,
+    "games": 11
+   },
+   "nom:q:d5": {
+    "plays": 7,
+    "games": 5
+   },
+   "nom:q:d6": {
+    "plays": 6,
+    "games": 4
+   },
+   "nom:q:d7": {
+    "plays": 17,
+    "games": 13
+   },
+   "nom:q:d8": {
+    "plays": 11,
+    "games": 9
+   },
+   "nom:q:e1": {
+    "plays": 8,
+    "games": 7
+   },
+   "nom:q:e2": {
+    "plays": 18,
+    "games": 15
+   },
+   "nom:q:e3": {
+    "plays": 9,
+    "games": 6
+   },
+   "nom:q:e4": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:q:e5": {
+    "plays": 5,
+    "games": 5
+   },
+   "nom:q:e6": {
+    "plays": 5,
+    "games": 5
+   },
+   "nom:q:e7": {
+    "plays": 11,
+    "games": 10
+   },
+   "nom:q:e8": {
+    "plays": 10,
+    "games": 9
+   },
+   "nom:q:f1": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:f2": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:q:f3": {
+    "plays": 6,
+    "games": 6
+   },
+   "nom:q:f4": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:f5": {
+    "plays": 11,
+    "games": 5
+   },
+   "nom:q:f6": {
+    "plays": 13,
+    "games": 11
+   },
+   "nom:q:f7": {
+    "plays": 16,
+    "games": 13
+   },
+   "nom:q:f8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:g1": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:g2": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:q:g3": {
+    "plays": 5,
+    "games": 5
+   },
+   "nom:q:g4": {
+    "plays": 5,
+    "games": 3
+   },
+   "nom:q:g5": {
+    "plays": 9,
+    "games": 8
+   },
+   "nom:q:g6": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:q:g7": {
+    "plays": 10,
+    "games": 8
+   },
+   "nom:q:g8": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:h1": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:q:h2": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:q:h3": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:q:h4": {
+    "plays": 6,
+    "games": 6
+   },
+   "nom:q:h5": {
+    "plays": 12,
+    "games": 11
+   },
+   "nom:q:h6": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:q:h7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:q:h8": {
+    "plays": 6,
+    "games": 5
+   },
+   "nom:r:a1": {
+    "plays": 11,
+    "games": 10
+   },
+   "nom:r:a2": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:r:a3": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:a4": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:a5": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:r:a7": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:r:a8": {
+    "plays": 6,
+    "games": 6
+   },
+   "nom:r:b1": {
+    "plays": 7,
+    "games": 6
+   },
+   "nom:r:b2": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:r:b3": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:b4": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:r:b5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:b6": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:b7": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:r:b8": {
+    "plays": 11,
+    "games": 9
+   },
+   "nom:r:c1": {
+    "plays": 9,
+    "games": 7
+   },
+   "nom:r:c2": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:c5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:c7": {
+    "plays": 7,
+    "games": 7
+   },
+   "nom:r:c8": {
+    "plays": 13,
+    "games": 11
+   },
+   "nom:r:d1": {
+    "plays": 29,
+    "games": 22
+   },
+   "nom:r:d2": {
+    "plays": 6,
+    "games": 4
+   },
+   "nom:r:d3": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:d4": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:d5": {
+    "plays": 4,
+    "games": 2
+   },
+   "nom:r:d6": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:r:d7": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:r:d8": {
+    "plays": 33,
+    "games": 25
+   },
+   "nom:r:e1": {
+    "plays": 63,
+    "games": 49
+   },
+   "nom:r:e2": {
+    "plays": 9,
+    "games": 7
+   },
+   "nom:r:e3": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:r:e4": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:r:e5": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:r:e6": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:r:e7": {
+    "plays": 6,
+    "games": 6
+   },
+   "nom:r:e8": {
+    "plays": 42,
+    "games": 31
+   },
+   "nom:r:f1": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:r:f2": {
+    "plays": 5,
+    "games": 5
+   },
+   "nom:r:f4": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:r:f5": {
+    "plays": 2,
+    "games": 1
+   },
+   "nom:r:f6": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:r:f7": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:r:f8": {
+    "plays": 4,
+    "games": 4
+   },
+   "nom:r:g1": {
+    "plays": 10,
+    "games": 9
+   },
+   "nom:r:g2": {
+    "plays": 5,
+    "games": 4
+   },
+   "nom:r:g3": {
+    "plays": 5,
+    "games": 3
+   },
+   "nom:r:g4": {
+    "plays": 3,
+    "games": 2
+   },
+   "nom:r:g5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:g6": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:g7": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:g8": {
+    "plays": 11,
+    "games": 11
+   },
+   "nom:r:h1": {
+    "plays": 9,
+    "games": 7
+   },
+   "nom:r:h2": {
+    "plays": 3,
+    "games": 3
+   },
+   "nom:r:h3": {
+    "plays": 4,
+    "games": 3
+   },
+   "nom:r:h4": {
+    "plays": 2,
+    "games": 2
+   },
+   "nom:r:h5": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:h6": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:h7": {
+    "plays": 1,
+    "games": 1
+   },
+   "nom:r:h8": {
+    "plays": 2,
+    "games": 2
+   },
+   "sq:a1": {
+    "plays": 5,
+    "games": 5
+   },
+   "sq:a2": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:a3": {
+    "plays": 4,
+    "games": 3
+   },
+   "sq:a4": {
+    "plays": 2,
+    "games": 2
+   },
+   "sq:a5": {
+    "plays": 5,
+    "games": 4
+   },
+   "sq:a6": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:a8": {
+    "plays": 1,
+    "games": 1
+   },
+   "sq:b1": {
+    "plays": 6,
+    "games": 6
+   },
+   "sq:b2": {
+    "plays": 6,
+    "games": 5
+   },
+   "sq:b3": {
+    "plays": 2,
+    "games": 2
+   },
+   "sq:b4": {
+    "plays": 8,
+    "games": 8
+   },
+   "sq:b5": {
+    "plays": 2,
+    "games": 2
+   },
+   "sq:b6": {
+    "plays": 1,
+    "games": 1
+   },
+   "sq:b7": {
+    "plays": 4,
+    "games": 4
+   },
+   "sq:b8": {
+    "plays": 4,
+    "games": 4
+   },
+   "sq:c1": {
+    "plays": 6,
+    "games": 6
+   },
+   "sq:c2": {
+    "plays": 5,
+    "games": 5
+   },
+   "sq:c3": {
+    "plays": 6,
+    "games": 6
+   },
+   "sq:c4": {
+    "plays": 4,
+    "games": 3
+   },
+   "sq:c5": {
+    "plays": 5,
+    "games": 5
+   },
+   "sq:c6": {
+    "plays": 8,
+    "games": 7
+   },
+   "sq:c7": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:c8": {
+    "plays": 5,
+    "games": 4
+   },
+   "sq:d1": {
+    "plays": 5,
+    "games": 5
+   },
+   "sq:d2": {
+    "plays": 8,
+    "games": 7
+   },
+   "sq:d3": {
+    "plays": 4,
+    "games": 3
+   },
+   "sq:d4": {
+    "plays": 11,
+    "games": 9
+   },
+   "sq:d5": {
+    "plays": 10,
+    "games": 9
+   },
+   "sq:d6": {
+    "plays": 6,
+    "games": 5
+   },
+   "sq:d7": {
+    "plays": 8,
+    "games": 7
+   },
+   "sq:d8": {
+    "plays": 7,
+    "games": 6
+   },
+   "sq:e1": {
+    "plays": 7,
+    "games": 7
+   },
+   "sq:e2": {
+    "plays": 19,
+    "games": 15
+   },
+   "sq:e3": {
+    "plays": 1,
+    "games": 1
+   },
+   "sq:e4": {
+    "plays": 9,
+    "games": 9
+   },
+   "sq:e5": {
+    "plays": 10,
+    "games": 9
+   },
+   "sq:e6": {
+    "plays": 4,
+    "games": 3
+   },
+   "sq:e7": {
+    "plays": 9,
+    "games": 7
+   },
+   "sq:e8": {
+    "plays": 4,
+    "games": 4
+   },
+   "sq:f1": {
+    "plays": 9,
+    "games": 8
+   },
+   "sq:f2": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:f3": {
+    "plays": 6,
+    "games": 6
+   },
+   "sq:f4": {
+    "plays": 5,
+    "games": 4
+   },
+   "sq:f5": {
+    "plays": 4,
+    "games": 3
+   },
+   "sq:f6": {
+    "plays": 5,
+    "games": 5
+   },
+   "sq:f7": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:f8": {
+    "plays": 7,
+    "games": 4
+   },
+   "sq:g1": {
+    "plays": 5,
+    "games": 4
+   },
+   "sq:g2": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:g3": {
+    "plays": 2,
+    "games": 2
+   },
+   "sq:g4": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:g5": {
+    "plays": 2,
+    "games": 2
+   },
+   "sq:g6": {
+    "plays": 4,
+    "games": 4
+   },
+   "sq:g8": {
+    "plays": 1,
+    "games": 1
+   },
+   "sq:h1": {
+    "plays": 1,
+    "games": 1
+   },
+   "sq:h2": {
+    "plays": 4,
+    "games": 4
+   },
+   "sq:h3": {
+    "plays": 7,
+    "games": 6
+   },
+   "sq:h4": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:h5": {
+    "plays": 3,
+    "games": 3
+   },
+   "sq:h6": {
+    "plays": 1,
+    "games": 1
+   },
+   "sq:h7": {
+    "plays": 2,
+    "games": 2
+   }
+  },
+  "frags": {
+   "f:а мой совет грозит матом|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "а мой совет грозит матом"
+   },
+   "f:а мой совет уводит коня из-под боя|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "а мой совет уводит коня из-под боя"
+   },
+   "f:а мой совет уводит ладью из-под боя|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "а мой совет уводит ладью из-под боя"
+   },
+   "f:а мой совет уводит слона из-под боя|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "а мой совет уводит слона из-под боя"
+   },
+   "f:а после твоего хода пешка соперника бежит к превращению|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "А после твоего хода пешка соперника бежит к превращению"
+   },
+   "f:а после твоего хода получается связка|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "А после твоего хода получается связка"
+   },
+   "f:а после твоего хода появляется угроза мата|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "А после твоего хода появляется угроза мата"
+   },
+   "f:а после твоего хода размен получается невыгодным|.": {
+    "plays": 5,
+    "games": 5,
+    "text": "А после твоего хода размен получается невыгодным"
+   },
+   "f:а после твоего хода соперник ставит вилку|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "А после твоего хода соперник ставит вилку"
+   },
+   "f:а после твоего хода у соперника сильный ответ|—": {
+    "plays": 2,
+    "games": 2,
+    "text": "А после твоего хода у соперника сильный ответ"
+   },
+   "f:а после твоего хода фигура осталась без защиты|.": {
+    "plays": 53,
+    "games": 47,
+    "text": "А после твоего хода фигура осталась без защиты"
+   },
+   "f:безопасно ли твоему королю в центре|?": {
+    "plays": 2,
+    "games": 2,
+    "text": "Безопасно ли твоему королю в центре"
+   },
+   "f:быстрая проверка|:": {
+    "plays": 139,
+    "games": 69,
+    "text": "быстрая проверка"
+   },
+   "f:в центре доски|.": {
+    "plays": 54,
+    "games": 35,
+    "text": "в центре доски"
+   },
+   "f:вот ход посильнее|:": {
+    "plays": 13,
+    "games": 13,
+    "text": "Вот ход посильнее"
+   },
+   "f:всем ли твоим фигурам спокойно|?": {
+    "plays": 19,
+    "games": 15,
+    "text": "Всем ли твоим фигурам спокойно"
+   },
+   "f:главный герой этого хода|—": {
+    "plays": 67,
+    "games": 48,
+    "text": "Главный герой этого хода"
+   },
+   "f:давай вместе|.": {
+    "plays": 103,
+    "games": 60,
+    "text": "Давай вместе"
+   },
+   "f:давай вспомним три вопроса|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "Давай вспомним три вопроса"
+   },
+   "f:его будут гонять кони и слоны|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "его будут гонять кони и слоны"
+   },
+   "f:еще одна фигура выходит в игру|.": {
+    "plays": 11,
+    "games": 9,
+    "text": "Ещё одна фигура выходит в игру"
+   },
+   "f:и какое самое выгодное|?": {
+    "plays": 22,
+    "games": 20,
+    "text": "и какое самое выгодное"
+   },
+   "f:ищи в центре доски, где желтые клетки|.": {
+    "plays": 54,
+    "games": 41,
+    "text": "Ищи в центре доски, где жёлтые клетки"
+   },
+   "f:ищи на королевском фланге, где желтые клетки|.": {
+    "plays": 31,
+    "games": 27,
+    "text": "Ищи на королевском фланге, где жёлтые клетки"
+   },
+   "f:ищи на ферзевом фланге, где желтые клетки|.": {
+    "plays": 34,
+    "games": 28,
+    "text": "Ищи на ферзевом фланге, где жёлтые клетки"
+   },
+   "f:как спрятать его в безопасный домик|?": {
+    "plays": 5,
+    "games": 5,
+    "text": "Как спрятать его в безопасный домик"
+   },
+   "f:как спрятать короля и разбудить ладью одним ходом|?": {
+    "plays": 8,
+    "games": 8,
+    "text": "Как спрятать короля и разбудить ладью одним ходом"
+   },
+   "f:как|?": {
+    "plays": 9,
+    "games": 9,
+    "text": "как"
+   },
+   "f:какая твоя пешка ближе всех к превращению|?": {
+    "plays": 2,
+    "games": 2,
+    "text": "Какая твоя пешка ближе всех к превращению"
+   },
+   "f:какая твоя фигура сейчас под боем|?": {
+    "plays": 17,
+    "games": 16,
+    "text": "Какая твоя фигура сейчас под боем"
+   },
+   "f:какая фигура соперника осталась без защиты|?": {
+    "plays": 65,
+    "games": 47,
+    "text": "Какая фигура соперника осталась без защиты"
+   },
+   "f:какие взятия у тебя есть|—": {
+    "plays": 22,
+    "games": 20,
+    "text": "Какие взятия у тебя есть"
+   },
+   "f:какие твои фигуры еще спят дома|?": {
+    "plays": 19,
+    "games": 17,
+    "text": "Какие твои фигуры ещё спят дома"
+   },
+   "f:какие у тебя есть шахи, взятия и угрозы|?": {
+    "plays": 111,
+    "games": 60,
+    "text": "Какие у тебя есть шахи, взятия и угрозы"
+   },
+   "f:какие шахи у тебя есть|?": {
+    "plays": 10,
+    "games": 8,
+    "text": "Какие шахи у тебя есть"
+   },
+   "f:какой твоей фигуре нужна помощь|?": {
+    "plays": 12,
+    "games": 11,
+    "text": "Какой твоей фигуре нужна помощь"
+   },
+   "f:кого пора разбудить и вывести в игру|?": {
+    "plays": 22,
+    "games": 19,
+    "text": "Кого пора разбудить и вывести в игру"
+   },
+   "f:копытом чую знакомый дебют|:": {
+    "plays": 1,
+    "games": 1,
+    "text": "Копытом чую знакомый дебют"
+   },
+   "f:копытом чую|—": {
+    "plays": 125,
+    "games": 60,
+    "text": "Копытом чую"
+   },
+   "f:королевский фланг|.": {
+    "plays": 30,
+    "games": 23,
+    "text": "королевский фланг"
+   },
+   "f:король прячется в домик, а ладья выходит в игру|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "Король прячется в домик, а ладья выходит в игру"
+   },
+   "f:королю остается только уйти|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "королю остаётся только уйти"
+   },
+   "f:королю придется спасаться|.": {
+    "plays": 11,
+    "games": 9,
+    "text": "королю придётся спасаться"
+   },
+   "f:короткая рокировка|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "короткая рокировка"
+   },
+   "f:красная стрелка|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "красная стрелка"
+   },
+   "f:кто мешает твоей пешке добежать до конца|?": {
+    "plays": 3,
+    "games": 3,
+    "text": "Кто мешает твоей пешке добежать до конца"
+   },
+   "f:кто что заберет в ответ|?": {
+    "plays": 27,
+    "games": 21,
+    "text": "кто что заберёт в ответ"
+   },
+   "f:куда его поставить|?": {
+    "plays": 23,
+    "games": 18,
+    "text": "куда его поставить"
+   },
+   "f:куда ей лучше пойти|?": {
+    "plays": 65,
+    "games": 42,
+    "text": "Куда ей лучше пойти"
+   },
+   "f:куда ей лучше уйти|?": {
+    "plays": 5,
+    "games": 5,
+    "text": "куда ей лучше уйти"
+   },
+   "f:куда ему лучше пойти|?": {
+    "plays": 36,
+    "games": 29,
+    "text": "Куда ему лучше пойти"
+   },
+   "f:куда ему лучше уйти|?": {
+    "plays": 13,
+    "games": 10,
+    "text": "куда ему лучше уйти"
+   },
+   "f:куда он может убежать|?": {
+    "plays": 31,
+    "games": 21,
+    "text": "куда он может убежать"
+   },
+   "f:куда|?": {
+    "plays": 15,
+    "games": 12,
+    "text": "куда"
+   },
+   "f:мат|.": {
+    "plays": 7,
+    "games": 6,
+    "text": "мат"
+   },
+   "f:мой совет ставит двойной шах|—": {
+    "plays": 1,
+    "games": 1,
+    "text": "мой совет ставит двойной шах"
+   },
+   "f:мой совет уводит коня из-под боя|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "мой совет уводит коня из-под боя"
+   },
+   "f:мой совет уводит пешку из-под боя|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "мой совет уводит пешку из-под боя"
+   },
+   "f:на королевском фланге|.": {
+    "plays": 24,
+    "games": 20,
+    "text": "на королевском фланге"
+   },
+   "f:на ферзевом фланге|.": {
+    "plays": 25,
+    "games": 23,
+    "text": "на ферзевом фланге"
+   },
+   "f:на что он напал|?": {
+    "plays": 7,
+    "games": 7,
+    "text": "на что он напал"
+   },
+   "f:найдешь его угрозу|?": {
+    "plays": 125,
+    "games": 60,
+    "text": "Найдёшь его угрозу"
+   },
+   "f:найдешь как|?": {
+    "plays": 28,
+    "games": 22,
+    "text": "найдёшь как"
+   },
+   "f:найдешь какой|?": {
+    "plays": 133,
+    "games": 62,
+    "text": "Найдёшь какой"
+   },
+   "f:найдешь что|?": {
+    "plays": 99,
+    "games": 60,
+    "text": "найдёшь что"
+   },
+   "f:нет ли среди них мата|?": {
+    "plays": 27,
+    "games": 22,
+    "text": "нет ли среди них мата"
+   },
+   "f:никаких ловушек|:": {
+    "plays": 1,
+    "games": 1,
+    "text": "Никаких ловушек"
+   },
+   "f:ничего, играем дальше|!": {
+    "plays": 104,
+    "games": 64,
+    "text": "Ничего, играем дальше"
+   },
+   "f:но рано выходить опасно|:": {
+    "plays": 4,
+    "games": 4,
+    "text": "Но рано выходить опасно"
+   },
+   "f:одной твоей фигуре сейчас неуютно|.": {
+    "plays": 133,
+    "games": 62,
+    "text": "Одной твоей фигуре сейчас неуютно"
+   },
+   "f:он еще не вышел в игру|—": {
+    "plays": 23,
+    "games": 18,
+    "text": "Он ещё не вышел в игру"
+   },
+   "f:он может дать шах|—": {
+    "plays": 13,
+    "games": 10,
+    "text": "Он может дать шах"
+   },
+   "f:он может кое-что забрать|—": {
+    "plays": 47,
+    "games": 40,
+    "text": "Он может кое-что забрать"
+   },
+   "f:он может помочь другой твоей фигуре|—": {
+    "plays": 9,
+    "games": 9,
+    "text": "Он может помочь другой твоей фигуре"
+   },
+   "f:он может поставить мат|—": {
+    "plays": 23,
+    "games": 19,
+    "text": "Он может поставить мат"
+   },
+   "f:он под боем|—": {
+    "plays": 13,
+    "games": 10,
+    "text": "Он под боем"
+   },
+   "f:она может дать шах|—": {
+    "plays": 2,
+    "games": 2,
+    "text": "Она может дать шах"
+   },
+   "f:она может кое-что забрать|—": {
+    "plays": 52,
+    "games": 38,
+    "text": "Она может кое-что забрать"
+   },
+   "f:она может поставить мат|—": {
+    "plays": 5,
+    "games": 5,
+    "text": "Она может поставить мат"
+   },
+   "f:она под боем|—": {
+    "plays": 5,
+    "games": 5,
+    "text": "Она под боем"
+   },
+   "f:она совсем близко к превращению|!": {
+    "plays": 2,
+    "games": 2,
+    "text": "Она совсем близко к превращению"
+   },
+   "f:основная расстановка|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "основная расстановка"
+   },
+   "f:перед ходом|—": {
+    "plays": 139,
+    "games": 69,
+    "text": "Перед ходом"
+   },
+   "f:пешка в центре под защитой, конь, слон, рокировка, второй конь|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "Пешка в центре под защитой, конь, слон, рокировка, второй конь"
+   },
+   "f:подсказываю место|:": {
+    "plays": 116,
+    "games": 66,
+    "text": "Подсказываю место"
+   },
+   "f:подсказываю фигуру|:": {
+    "plays": 70,
+    "games": 47,
+    "text": "Подсказываю фигуру"
+   },
+   "f:подумаем|!": {
+    "plays": 130,
+    "games": 69,
+    "text": "Подумаем"
+   },
+   "f:показываю|:": {
+    "plays": 30,
+    "games": 28,
+    "text": "Показываю"
+   },
+   "f:помни наш секрет|—": {
+    "plays": 6,
+    "games": 6,
+    "text": "Помни наш секрет"
+   },
+   "f:понятно, почему хочется|!": {
+    "plays": 9,
+    "games": 9,
+    "text": "понятно, почему хочется"
+   },
+   "f:посмотри на королевский фланг|—": {
+    "plays": 22,
+    "games": 18,
+    "text": "Посмотри на королевский фланг"
+   },
+   "f:посмотри на короля соперника|:": {
+    "plays": 31,
+    "games": 21,
+    "text": "Посмотри на короля соперника"
+   },
+   "f:посмотри на своего коня|": {
+    "plays": 14,
+    "games": 13,
+    "text": "Посмотри на своего коня"
+   },
+   "f:посмотри на своего короля|": {
+    "plays": 4,
+    "games": 4,
+    "text": "Посмотри на своего короля"
+   },
+   "f:посмотри на своего слона|": {
+    "plays": 14,
+    "games": 12,
+    "text": "Посмотри на своего слона"
+   },
+   "f:посмотри на своего ферзя|": {
+    "plays": 15,
+    "games": 14,
+    "text": "Посмотри на своего ферзя"
+   },
+   "f:посмотри на свою ладью|": {
+    "plays": 7,
+    "games": 7,
+    "text": "Посмотри на свою ладью"
+   },
+   "f:посмотри на свою пешку|": {
+    "plays": 23,
+    "games": 19,
+    "text": "Посмотри на свою пешку"
+   },
+   "f:посмотри на ферзевый фланг|—": {
+    "plays": 27,
+    "games": 22,
+    "text": "Посмотри на ферзевый фланг"
+   },
+   "f:посмотри на центр доски|—": {
+    "plays": 57,
+    "games": 40,
+    "text": "Посмотри на центр доски"
+   },
+   "f:потом ходим|!": {
+    "plays": 8,
+    "games": 7,
+    "text": "потом ходим"
+   },
+   "f:проверь все взятия|:": {
+    "plays": 27,
+    "games": 21,
+    "text": "Проверь все взятия"
+   },
+   "f:проверь все шахи|:": {
+    "plays": 27,
+    "games": 22,
+    "text": "Проверь все шахи"
+   },
+   "f:проверь, всем ли твоим фигурам спокойно|.": {
+    "plays": 137,
+    "games": 64,
+    "text": "Проверь, всем ли твоим фигурам спокойно"
+   },
+   "f:развиваем все фигуры, прячем короля и готовим удар в центре|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "развиваем все фигуры, прячем короля и готовим удар в центре"
+   },
+   "f:самое интересное сейчас|—": {
+    "plays": 103,
+    "games": 56,
+    "text": "Самое интересное сейчас"
+   },
+   "f:сильнее было так|:": {
+    "plays": 12,
+    "games": 11,
+    "text": "Сильнее было так"
+   },
+   "f:сильный ход|—": {
+    "plays": 31,
+    "games": 26,
+    "text": "Сильный ход"
+   },
+   "f:смотри на зеленую стрелку|:": {
+    "plays": 56,
+    "games": 47,
+    "text": "Смотри на зелёную стрелку"
+   },
+   "f:смотри|:": {
+    "plays": 92,
+    "games": 74,
+    "text": "Смотри"
+   },
+   "f:сначала смотрим|—": {
+    "plays": 8,
+    "games": 7,
+    "text": "Сначала смотрим"
+   },
+   "f:соперник будет гонять его и выводить фигуры|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник будет гонять его и выводить фигуры"
+   },
+   "f:соперник теперь выводит коня в игру|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "соперник теперь выводит коня в игру"
+   },
+   "f:соперник теперь выводит слона в игру|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник теперь выводит слона в игру"
+   },
+   "f:соперник теперь выгодно бьет ферзя|": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник теперь выгодно бьёт ферзя"
+   },
+   "f:соперник теперь грозит матом|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник теперь грозит матом"
+   },
+   "f:соперник теперь закрывает угрозу мата|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник теперь закрывает угрозу мата"
+   },
+   "f:соперник теперь закрывается от шаха|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "соперник теперь закрывается от шаха"
+   },
+   "f:соперник теперь меняет коня на слона|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "соперник теперь меняет коня на слона"
+   },
+   "f:соперник теперь меняется ладьями|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "соперник теперь меняется ладьями"
+   },
+   "f:соперник теперь меняется слонами|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "соперник теперь меняется слонами"
+   },
+   "f:соперник теперь нападает на коня|": {
+    "plays": 2,
+    "games": 2,
+    "text": "соперник теперь нападает на коня"
+   },
+   "f:соперник теперь открывает дорогу слону и ферзю|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник теперь открывает дорогу слону и ферзю"
+   },
+   "f:соперник теперь открывает дорогу слону|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "соперник теперь открывает дорогу слону"
+   },
+   "f:соперник теперь открывает дорогу ферзю|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "соперник теперь открывает дорогу ферзю"
+   },
+   "f:соперник теперь рокировка|:": {
+    "plays": 2,
+    "games": 2,
+    "text": "соперник теперь рокировка"
+   },
+   "f:соперник теперь ставит пешку в центр|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "соперник теперь ставит пешку в центр"
+   },
+   "f:соперник теперь ставит шах|—": {
+    "plays": 11,
+    "games": 9,
+    "text": "соперник теперь ставит шах"
+   },
+   "f:соперник теперь уводит коня из-под боя|.": {
+    "plays": 11,
+    "games": 11,
+    "text": "соперник теперь уводит коня из-под боя"
+   },
+   "f:соперник теперь уводит ладью из-под боя|.": {
+    "plays": 7,
+    "games": 7,
+    "text": "соперник теперь уводит ладью из-под боя"
+   },
+   "f:соперник теперь уводит пешку из-под боя|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "соперник теперь уводит пешку из-под боя"
+   },
+   "f:соперник теперь уводит слона из-под боя|.": {
+    "plays": 19,
+    "games": 15,
+    "text": "соперник теперь уводит слона из-под боя"
+   },
+   "f:соперник теперь уводит ферзя из-под боя|.": {
+    "plays": 18,
+    "games": 16,
+    "text": "соперник теперь уводит ферзя из-под боя"
+   },
+   "f:соперник теперь уходит королем от шаха|.": {
+    "plays": 5,
+    "games": 4,
+    "text": "соперник теперь уходит королём от шаха"
+   },
+   "f:соперник что-то задумал|.": {
+    "plays": 125,
+    "games": 60,
+    "text": "соперник что-то задумал"
+   },
+   "f:так все твои фигуры под защитой|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "Так все твои фигуры под защитой"
+   },
+   "f:так конь уходит из-под боя|.": {
+    "plays": 7,
+    "games": 7,
+    "text": "Так конь уходит из-под боя"
+   },
+   "f:так ладья уходит из-под боя|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "Так ладья уходит из-под боя"
+   },
+   "f:так пешка уходит из-под боя|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "Так пешка уходит из-под боя"
+   },
+   "f:так теряется две пешки|.": {
+    "plays": 5,
+    "games": 5,
+    "text": "так теряется две пешки"
+   },
+   "f:так теряется одна пешка|.": {
+    "plays": 20,
+    "games": 19,
+    "text": "так теряется одна пешка"
+   },
+   "f:так теряется пять пешек|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "так теряется пять пешек"
+   },
+   "f:так теряется три пешки|.": {
+    "plays": 5,
+    "games": 5,
+    "text": "так теряется три пешки"
+   },
+   "f:так теряется шесть пешек|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "так теряется шесть пешек"
+   },
+   "f:так тоже можно, но заметно слабее|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "Так тоже можно, но заметно слабее"
+   },
+   "f:так тоже можно, но заметно слабее|:": {
+    "plays": 32,
+    "games": 29,
+    "text": "Так тоже можно, но заметно слабее"
+   },
+   "f:так тоже можно, но чуть слабее|.": {
+    "plays": 6,
+    "games": 6,
+    "text": "Так тоже можно, но чуть слабее"
+   },
+   "f:так тоже можно, но чуть слабее|:": {
+    "plays": 45,
+    "games": 39,
+    "text": "Так тоже можно, но чуть слабее"
+   },
+   "f:так ты идешь прямо к мату|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "Так ты идёшь прямо к мату"
+   },
+   "f:так ферзь уходит из-под боя|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "Так ферзь уходит из-под боя"
+   },
+   "f:так-так-так|…": {
+    "plays": 110,
+    "games": 61,
+    "text": "Так-так-так"
+   },
+   "f:там есть интересное взятие|.": {
+    "plays": 36,
+    "games": 30,
+    "text": "Там есть интересное взятие"
+   },
+   "f:там есть что забрать|.": {
+    "plays": 110,
+    "games": 59,
+    "text": "Там есть что забрать"
+   },
+   "f:там королю будет спокойнее|.": {
+    "plays": 7,
+    "games": 7,
+    "text": "Там королю будет спокойнее"
+   },
+   "f:там можно поймать короля|.": {
+    "plays": 42,
+    "games": 27,
+    "text": "Там можно поймать короля"
+   },
+   "f:там можно усилить позицию|.": {
+    "plays": 149,
+    "games": 64,
+    "text": "Там можно усилить позицию"
+   },
+   "f:там пешка рвется вперед|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "Там пешка рвётся вперёд"
+   },
+   "f:там прячется шах|.": {
+    "plays": 17,
+    "games": 13,
+    "text": "Там прячется шах"
+   },
+   "f:там твоей фигуре нужна помощь|.": {
+    "plays": 44,
+    "games": 30,
+    "text": "Там твоей фигуре нужна помощь"
+   },
+   "f:твой конь|": {
+    "plays": 19,
+    "games": 14,
+    "text": "твой конь"
+   },
+   "f:твой король|": {
+    "plays": 5,
+    "games": 5,
+    "text": "твой король"
+   },
+   "f:твой слон|": {
+    "plays": 22,
+    "games": 19,
+    "text": "твой слон"
+   },
+   "f:твой ферзь|": {
+    "plays": 27,
+    "games": 23,
+    "text": "твой ферзь"
+   },
+   "f:твой ход заметно слабее, чем совет|.": {
+    "plays": 6,
+    "games": 6,
+    "text": "Твой ход заметно слабее, чем совет"
+   },
+   "f:твой ход заметно слабее, чем совет|:": {
+    "plays": 31,
+    "games": 29,
+    "text": "Твой ход заметно слабее, чем совет"
+   },
+   "f:твой ход чуть слабее, чем совет|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "Твой ход чуть слабее, чем совет"
+   },
+   "f:твой ход чуть слабее, чем совет|:": {
+    "plays": 45,
+    "games": 40,
+    "text": "Твой ход чуть слабее, чем совет"
+   },
+   "f:твоя ладья|": {
+    "plays": 12,
+    "games": 11,
+    "text": "твоя ладья"
+   },
+   "f:твоя пешка|": {
+    "plays": 52,
+    "games": 38,
+    "text": "твоя пешка"
+   },
+   "f:тихая итальянка|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "тихая итальянка"
+   },
+   "f:только соперник теперь будет на него нападать и выводить свои фигуры|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "Только соперник теперь будет на него нападать и выводить свои фигуры"
+   },
+   "f:три вопроса мастера|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "Три вопроса мастера"
+   },
+   "f:три вопроса перед каждым ходом|.": {
+    "plays": 6,
+    "games": 6,
+    "text": "три вопроса перед каждым ходом"
+   },
+   "f:туда хорошо вывести фигуру|.": {
+    "plays": 36,
+    "games": 26,
+    "text": "Туда хорошо вывести фигуру"
+   },
+   "f:ты сходил иначе, а сильнее было так|:": {
+    "plays": 6,
+    "games": 5,
+    "text": "Ты сходил иначе, а сильнее было так"
+   },
+   "f:ты сходила иначе, а сильнее было так|:": {
+    "plays": 7,
+    "games": 7,
+    "text": "Ты сходила иначе, а сильнее было так"
+   },
+   "f:ферзевый фланг|.": {
+    "plays": 32,
+    "games": 27,
+    "text": "ферзевый фланг"
+   },
+   "f:ферзем ходить интересно|!": {
+    "plays": 7,
+    "games": 7,
+    "text": "Ферзём ходить интересно"
+   },
+   "f:ферзь сильный|—": {
+    "plays": 9,
+    "games": 9,
+    "text": "Ферзь сильный"
+   },
+   "f:фигура соперника стояла без защиты|.": {
+    "plays": 34,
+    "games": 27,
+    "text": "Фигура соперника стояла без защиты"
+   },
+   "f:хороший момент, чтобы подумать|.": {
+    "plays": 125,
+    "games": 61,
+    "text": "Хороший момент, чтобы подумать"
+   },
+   "f:центр доски|.": {
+    "plays": 54,
+    "games": 41,
+    "text": "центр доски"
+   },
+   "f:что будет, если побеспокоить короля соперника|?": {
+    "plays": 13,
+    "games": 12,
+    "text": "Что будет, если побеспокоить короля соперника"
+   },
+   "f:что у соперника можно забрать бесплатно|?": {
+    "plays": 89,
+    "games": 54,
+    "text": "Что у соперника можно забрать бесплатно"
+   },
+   "f:что у тебя под боем|?": {
+    "plays": 139,
+    "games": 69,
+    "text": "что у тебя под боем"
+   },
+   "f:что хочет соперник, и какая твоя фигура стоит хуже всех|?": {
+    "plays": 86,
+    "games": 52,
+    "text": "Что хочет соперник, и какая твоя фигура стоит хуже всех"
+   },
+   "f:что хочет соперник|?": {
+    "plays": 156,
+    "games": 67,
+    "text": "Что хочет соперник"
+   },
+   "f:что хочет соперник|—": {
+    "plays": 7,
+    "games": 7,
+    "text": "Что хочет соперник"
+   },
+   "f:шах|.": {
+    "plays": 24,
+    "games": 21,
+    "text": "шах"
+   },
+   "f:это бесплатное взятие|.": {
+    "plays": 19,
+    "games": 19,
+    "text": "это бесплатное взятие"
+   },
+   "f:это знакомый план|:": {
+    "plays": 1,
+    "games": 1,
+    "text": "Это знакомый план"
+   },
+   "f:это мат|!": {
+    "plays": 8,
+    "games": 7,
+    "text": "Это мат"
+   },
+   "f:это самое выгодное взятие|.": {
+    "plays": 6,
+    "games": 5,
+    "text": "Это самое выгодное взятие"
+   },
+   "f:это шах, и сопернику придется защищаться|.": {
+    "plays": 6,
+    "games": 6,
+    "text": "Это шах, и сопернику придётся защищаться"
+   },
+   "f:этот ход делает твою позицию крепче|.": {
+    "plays": 49,
+    "games": 36,
+    "text": "Этот ход делает твою позицию крепче"
+   },
+   "f:этот ход заметно слабее|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "этот ход заметно слабее"
+   },
+   "f:этот ход не борется за центр и не меняет фигуры|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "этот ход не борется за центр и не меняет фигуры"
+   },
+   "f:этот ход не борется за центр и не соединяет ладьи|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "этот ход не борется за центр и не соединяет ладьи"
+   },
+   "f:этот ход не борется за центр и не ставит ладью на открытую линию|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "этот ход не борется за центр и не ставит ладью на открытую линию"
+   },
+   "f:этот ход не борется за центр|.": {
+    "plays": 10,
+    "games": 10,
+    "text": "этот ход не борется за центр"
+   },
+   "f:этот ход не выводит коня или слона и не борется за центр|.": {
+    "plays": 12,
+    "games": 12,
+    "text": "этот ход не выводит коня или слона и не борется за центр"
+   },
+   "f:этот ход не выводит коня или слона и не готовит рокировку|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "этот ход не выводит коня или слона и не готовит рокировку"
+   },
+   "f:этот ход не выводит коня или слона и не целится в слабую клетку|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "этот ход не выводит коня или слона и не целится в слабую клетку"
+   },
+   "f:этот ход не готовит рокировку и не меняет фигуры|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "этот ход не готовит рокировку и не меняет фигуры"
+   },
+   "f:этот ход не готовит рокировку|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "этот ход не готовит рокировку"
+   },
+   "f:этот ход не готовит центр и не открывает дорогу фигурам|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "этот ход не готовит центр и не открывает дорогу фигурам"
+   },
+   "f:этот ход не двигает проходную и не меняет фигуры|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "этот ход не двигает проходную и не меняет фигуры"
+   },
+   "f:этот ход не занимает центр и не борется за центр|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "этот ход не занимает центр и не борется за центр"
+   },
+   "f:этот ход не занимает центр и не открывает дорогу фигурам|.": {
+    "plays": 25,
+    "games": 24,
+    "text": "этот ход не занимает центр и не открывает дорогу фигурам"
+   },
+   "f:этот ход не занимает центр|.": {
+    "plays": 3,
+    "games": 3,
+    "text": "этот ход не занимает центр"
+   },
+   "f:этот ход не меняет фигуры|.": {
+    "plays": 8,
+    "games": 8,
+    "text": "этот ход не меняет фигуры"
+   },
+   "f:этот ход не открывает дорогу фигурам|.": {
+    "plays": 7,
+    "games": 6,
+    "text": "этот ход не открывает дорогу фигурам"
+   },
+   "f:этот ход не прячет короля|.": {
+    "plays": 6,
+    "games": 5,
+    "text": "этот ход не прячет короля"
+   },
+   "f:этот ход не пускает ладью на седьмую|.": {
+    "plays": 1,
+    "games": 1,
+    "text": "этот ход не пускает ладью на седьмую"
+   },
+   "f:этот ход не ставит ладью на открытую линию|.": {
+    "plays": 2,
+    "games": 2,
+    "text": "этот ход не ставит ладью на открытую линию"
+   },
+   "f:этот ход чуть слабее|.": {
+    "plays": 4,
+    "games": 4,
+    "text": "этот ход чуть слабее"
+   },
+   "f:я бы сыграл так|:": {
+    "plays": 48,
+    "games": 39,
+    "text": "Я бы сыграл так"
+   },
+   "f:я подсветил клетки желтым|.": {
+    "plays": 106,
+    "games": 57,
+    "text": "я подсветил клетки жёлтым"
+   },
+   "f:я подсветил синим твоего коня|": {
+    "plays": 18,
+    "games": 17,
+    "text": "Я подсветил синим твоего коня"
+   },
+   "f:я подсветил синим твоего короля|": {
+    "plays": 2,
+    "games": 2,
+    "text": "Я подсветил синим твоего короля"
+   },
+   "f:я подсветил синим твоего слона|": {
+    "plays": 13,
+    "games": 12,
+    "text": "Я подсветил синим твоего слона"
+   },
+   "f:я подсветил синим твоего ферзя|": {
+    "plays": 16,
+    "games": 15,
+    "text": "Я подсветил синим твоего ферзя"
+   },
+   "f:я подсветил синим твою ладью|": {
+    "plays": 11,
+    "games": 10,
+    "text": "Я подсветил синим твою ладью"
+   },
+   "f:я подсветил синим твою пешку|": {
+    "plays": 26,
+    "games": 23,
+    "text": "Я подсветил синим твою пешку"
+   }
+  }
+ },
+ "holdout": {
+  "games": 120,
+  "teacherGames": 85,
+  "blitzGames": 66,
+  "events": 5363,
+  "byKind": {
+   "encourage": {
+    "events": 89,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 89
+    }
+   },
+   "explainBest": {
+    "events": 9,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 9
+    }
+   },
+   "gameEnd": {
+    "events": 120,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 120
+    }
+   },
+   "gameStart": {
+    "events": 120,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 120
+    }
+   },
+   "greeting": {
+    "events": 164,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 164
+    }
+   },
+   "hint": {
+    "events": 571,
+    "generic": 2,
+    "mismatch": 0,
+    "levels": {
+     "1": 569,
+     "5": 2
+    }
+   },
+   "praise": {
+    "events": 576,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 576
+    }
+   },
+   "takebackOffer": {
+    "events": 85,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 85
+    }
+   },
+   "teachReaction": {
+    "events": 177,
+    "generic": 102,
+    "mismatch": 100,
+    "levels": {
+     "1": 75,
+     "5": 102
+    }
+   },
+   "teachTurn": {
+    "events": 3256,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 3256
+    }
+   },
+   "thinkingRoutine": {
+    "events": 4,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 4
+    }
+   },
+   "threatWarning": {
+    "events": 192,
+    "generic": 0,
+    "mismatch": 0,
+    "levels": {
+     "1": 192
+    }
+   }
+  }
+ }
+}

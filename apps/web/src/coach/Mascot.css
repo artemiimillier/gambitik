@@ -1,0 +1,296 @@
+/*
+ * «Гамбитик» — pose + lip-sync styles for Mascot.tsx.
+ *
+ * Rule (research 08): a POSE only sets the individual transform
+ * properties `rotate` / `translate` / `scale` (with transitions), while looping keyframes
+ * live on a DIFFERENT element of the nested group chain (or animate a different property).
+ * That way a background animation can never wipe a pose transform.
+ *
+ * All pivots are given in viewBox user units (transform-box: view-box is the SVG default).
+ */
+
+.gmb-mascot {
+  /* palette — overridable from the outside; scarf and pedestal follow the app accent
+     (ui/tokens.css --color-primary, or set --mascot-accent on any ancestor) */
+  --gmb-hide: #f7a93f;
+  --gmb-hide-shade: #e78f2b;
+  --gmb-cream: #ffebcb;
+  --gmb-nostril: #c9822b;
+  --gmb-mane: #5a3526;
+  --gmb-mane-light: #7d4d36;
+  --gmb-hoof: #4a2c20;
+  --gmb-pink: #ff8fa3;
+  --gmb-ink: #26304f;
+  --gmb-mouth-dark: #7a2e3b;
+  --gmb-accent: var(--mascot-accent, var(--color-primary, #0f6f69));
+  --gmb-scarf: color-mix(in srgb, var(--gmb-accent) 84%, #ffffff);
+  --gmb-scarf-dark: color-mix(in srgb, var(--gmb-accent) 78%, #0b2a33);
+  --gmb-scarf-light: color-mix(in srgb, var(--gmb-accent) 45%, #ffffff);
+  --gmb-base: color-mix(in srgb, var(--gmb-accent) 88%, #0b2a33);
+  --gmb-base-dark: color-mix(in srgb, var(--gmb-accent) 64%, #0b2a33);
+  --gmb-base-light: color-mix(in srgb, var(--gmb-accent) 70%, #ffffff);
+  --gmb-star: #ffd23f;
+  --gmb-drop: #4db5ff;
+
+  /* lip-sync: --mouth comes from outside (0..1); a pose may force a minimum opening */
+  --mouth: 0;
+  --gmb-pose-mouth: 0;
+  --gmb-m: max(var(--mouth), var(--gmb-pose-mouth));
+
+  display: block;
+  overflow: visible;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gmb-mascot * {
+  transform-box: view-box;
+}
+
+/* ───────── fills ───────── */
+.gmb-fill-hide { fill: var(--gmb-hide); }
+.gmb-fill-hide-shade { fill: var(--gmb-hide-shade); }
+.gmb-fill-cream { fill: var(--gmb-cream); }
+.gmb-fill-nostril { fill: var(--gmb-nostril); }
+.gmb-fill-mane { fill: var(--gmb-mane); }
+.gmb-fill-mane-light { fill: var(--gmb-mane-light); }
+.gmb-fill-hoof { fill: var(--gmb-hoof); }
+.gmb-fill-pink { fill: var(--gmb-pink); }
+.gmb-fill-ink { fill: var(--gmb-ink); }
+.gmb-fill-mouth { fill: var(--gmb-mouth-dark); }
+.gmb-fill-scarf { fill: var(--gmb-scarf); }
+.gmb-fill-scarf-dark { fill: var(--gmb-scarf-dark); }
+.gmb-fill-base { fill: var(--gmb-base); }
+.gmb-fill-base-dark { fill: var(--gmb-base-dark); }
+.gmb-fill-base-light { fill: var(--gmb-base-light); }
+.gmb-gloss { fill: #fff; opacity: 0.28; }
+.gmb-shadow { fill: var(--gmb-ink); opacity: 0.14; transform-origin: 120px 270px; }
+.gmb-eye-white { fill: #fff; }
+.gmb-cheek { fill: var(--gmb-pink); opacity: 0.6; transition: opacity 0.3s; }
+.gmb-scarf-stripe { fill: none; stroke: var(--gmb-scarf-light); stroke-width: 3; stroke-linecap: round; opacity: 0.9; }
+.gmb-brow { fill: none; stroke: var(--gmb-mane); stroke-width: 5.5; stroke-linecap: round; }
+.gmb-lash { fill: none; stroke: var(--gmb-mane); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+.gmb-smile { fill: none; stroke: #9a5a2c; stroke-width: 4; stroke-linecap: round; }
+
+/* ───────── pivots + pose transitions ───────── */
+.gmb-hopper { transform-origin: 120px 270px; }
+.gmb-body { transform-origin: 120px 236px; }
+.gmb-tail { transform-origin: 90px 226px; }
+.gmb-head { transform-origin: 120px 178px; transition: rotate 0.4s cubic-bezier(0.3, 1.4, 0.5, 1), translate 0.4s ease; }
+.gmb-head-talk { transform-origin: 120px 178px; }
+.gmb-mane { transform-origin: 176px 60px; transition: rotate 0.5s ease; }
+.gmb-ear { transform-origin: 0 0; transition: rotate 0.25s ease, scale 0.25s ease, translate 0.25s ease; }
+.gmb-arm { transform-origin: 145.5px 200px; transition: rotate 0.38s cubic-bezier(0.3, 1.3, 0.5, 1), translate 0.38s ease, scale 0.38s ease; }
+.gmb-arm-anim { transform-origin: 145.5px 200px; }
+.gmb-pupils { transition: translate 0.3s ease; }
+.gmb-pupil { transition: scale 0.2s ease; }
+.gmb-pupil-l { transform-origin: 90px 100px; }
+.gmb-pupil-r { transform-origin: 150px 100px; }
+.gmb-eye-white { transition: scale 0.2s ease; }
+.gmb-eye-white-l { transform-origin: 88px 98px; }
+.gmb-eye-white-r { transform-origin: 152px 98px; }
+.gmb-brow { transition: rotate 0.25s ease, translate 0.25s ease; }
+.gmb-brow-l { transform-origin: 88px 70px; }
+.gmb-brow-r { transform-origin: 152px 70px; }
+.gmb-scarf-tails { transform-origin: 86px 192px; }
+.gmb-forelock { transform-origin: 122px 40px; }
+.gmb-star { transform-origin: 0 0; }
+
+/* ───────── always-on life: breathing, blinking ───────── */
+.gmb-body { animation: gmb-breathe-body 3.4s ease-in-out infinite; }
+.gmb-head-breathe { animation: gmb-breathe-head 3.4s ease-in-out infinite; }
+.gmb-tail { animation: gmb-tail-swish 5.2s ease-in-out infinite; }
+
+.gmb-lid { scale: 1 0; animation: gmb-blink 4.6s infinite; }
+.gmb-lid-l { transform-origin: 88px 77px; }
+.gmb-lid-r { transform-origin: 152px 77px; }
+.gmb-eye-happy { opacity: 0; }
+
+/* ───────── mouth (independent channel) ───────── */
+.gmb-mouth-open {
+  transform-origin: 120px 155px;
+  scale: var(--gmb-mouth-width, 1) calc(0.08 + 0.92 * var(--gmb-m));
+  opacity: clamp(0, calc(var(--gmb-m) * 9 - 0.45), 1);
+}
+.gmb-smile {
+  opacity: clamp(0, calc(1.7 - var(--gmb-m) * 9), 1);
+}
+.gmb-muzzle {
+  transform-origin: 120px 112px;
+  scale: 1 calc(1 + var(--gmb-m) * 0.045);
+}
+/* talking: a small head bob on top of any pose */
+.gmb-mascot[data-talking='true'] .gmb-head-talk { animation: gmb-talk-bob 0.62s ease-in-out infinite; }
+.gmb-mascot[data-talking='true'] .gmb-brows { animation: gmb-brow-bounce 1.24s ease-in-out infinite; }
+
+/* ───────── effects are hidden unless a pose shows them ───────── */
+.gmb-fx > * { opacity: 0; transition: opacity 0.25s; }
+.gmb-fx-zzz { fill: var(--gmb-base-light); font-family: 'Nunito Variable', 'Nunito', system-ui, sans-serif; font-weight: 900; }
+.gmb-fx-drop { fill: var(--gmb-drop); }
+.gmb-fx-dots { fill: var(--gmb-base-light); }
+.gmb-fx-stars { fill: var(--gmb-star); }
+.gmb-fx-waves { fill: none; stroke: var(--gmb-base-light); stroke-width: 5; stroke-linecap: round; }
+
+/* ═════════ POSES ═════════ */
+
+/* idle — occasional ear flick and a glance at the board (to the left) */
+.gmb-mascot[data-pose='idle'] .gmb-ear-r { animation: gmb-ear-flick 7.3s ease-in-out infinite; }
+.gmb-mascot[data-pose='idle'] .gmb-pupils { animation: gmb-glance 9.2s ease-in-out infinite; }
+
+/* wave */
+.gmb-mascot[data-pose='wave'] { --gmb-pose-mouth: 0.42; }
+.gmb-mascot[data-pose='wave'] .gmb-arm { rotate: -136deg; translate: 12px -12px; scale: 1.18 1.26; }
+.gmb-mascot[data-pose='wave'] .gmb-arm-anim { animation: gmb-wave 0.5s ease-in-out infinite; }
+.gmb-mascot[data-pose='wave'] .gmb-head { rotate: -5deg; }
+.gmb-mascot[data-pose='wave'] .gmb-head-talk { animation: gmb-wave-bob 1s ease-in-out infinite; }
+.gmb-mascot[data-pose='wave'] .gmb-brow { translate: 0 -3px; }
+
+/* talk */
+.gmb-mascot[data-pose='talk'] .gmb-arm { rotate: -72deg; translate: 7px -7px; scale: 1.1 1.16; }
+.gmb-mascot[data-pose='talk'] .gmb-arm-anim { animation: gmb-gesture 1.3s ease-in-out infinite; }
+.gmb-mascot[data-pose='talk'] .gmb-head-talk { animation: gmb-talk-bob 0.62s ease-in-out infinite; }
+
+/* think — tilt, hoof to chin, looking up */
+.gmb-mascot[data-pose='think'] .gmb-head { rotate: 7deg; }
+.gmb-mascot[data-pose='think'] .gmb-arm { rotate: -176deg; }
+.gmb-mascot[data-pose='think'] .gmb-pupils { translate: 4px -6px; }
+.gmb-mascot[data-pose='think'] .gmb-brow-r { translate: 0 -5px; rotate: -8deg; }
+.gmb-mascot[data-pose='think'] .gmb-brow-l { translate: 0 1px; rotate: -4deg; }
+.gmb-mascot[data-pose='think'] .gmb-smile { translate: 4px 0; scale: 0.8 0.55; transform-origin: 120px 160px; }
+.gmb-mascot[data-pose='think'] .gmb-fx-dots { opacity: 1; }
+.gmb-mascot[data-pose='think'] .gmb-fx-dots circle { animation: gmb-pulse 1.4s ease-in-out infinite; }
+.gmb-mascot[data-pose='think'] .gmb-fx-dots circle:nth-child(2) { animation-delay: 0.22s; }
+.gmb-mascot[data-pose='think'] .gmb-fx-dots circle:nth-child(3) { animation-delay: 0.44s; }
+
+/* cheer — jump, sparkles, happy eyes */
+.gmb-mascot[data-pose='cheer'] { --gmb-pose-mouth: 0.78; }
+.gmb-mascot[data-pose='cheer'] .gmb-hopper { animation: gmb-hop 2.6s cubic-bezier(0.3, 0.7, 0.4, 1) infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-shadow { animation: gmb-hop-shadow 2.6s cubic-bezier(0.3, 0.7, 0.4, 1) infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-arm { rotate: -152deg; translate: 12px -12px; scale: 1.18 1.26; }
+.gmb-mascot[data-pose='cheer'] .gmb-arm-anim { animation: gmb-wave 0.43s ease-in-out infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-eye-open { opacity: 0; }
+.gmb-mascot[data-pose='cheer'] .gmb-eye-happy { opacity: 1; }
+.gmb-mascot[data-pose='cheer'] .gmb-brow { translate: 0 -5px; }
+.gmb-mascot[data-pose='cheer'] .gmb-cheek { opacity: 0.95; }
+.gmb-mascot[data-pose='cheer'] .gmb-ear-l { rotate: -8deg; }
+.gmb-mascot[data-pose='cheer'] .gmb-ear-r { rotate: 8deg; }
+.gmb-mascot[data-pose='cheer'] .gmb-scarf-tails { animation: gmb-flutter 0.43s ease-in-out infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-tail { animation: gmb-tail-wag 0.43s ease-in-out infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-mane { animation: gmb-mane-bounce 0.87s ease-in-out infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-fx-stars { opacity: 1; }
+.gmb-mascot[data-pose='cheer'] .gmb-star { animation: gmb-twinkle 0.9s ease-in-out infinite; }
+.gmb-mascot[data-pose='cheer'] .gmb-fx-stars g:nth-child(2) .gmb-star { animation-delay: 0.2s; }
+.gmb-mascot[data-pose='cheer'] .gmb-fx-stars g:nth-child(3) .gmb-star { animation-delay: 0.45s; }
+.gmb-mascot[data-pose='cheer'] .gmb-fx-stars g:nth-child(4) .gmb-star { animation-delay: 0.65s; }
+
+/* oops — wide eyes, ears back, worried brows, a drop of sweat */
+.gmb-mascot[data-pose='oops'] { --gmb-pose-mouth: 0.4; --gmb-mouth-width: 0.58; }
+.gmb-mascot[data-pose='oops'] .gmb-hopper { animation: gmb-startle 0.5s ease-out 1; }
+.gmb-mascot[data-pose='oops'] .gmb-head-talk { animation: gmb-shake 0.36s ease-in-out 3; }
+.gmb-mascot[data-pose='oops'] .gmb-ear-l { rotate: -42deg; translate: -2px 6px; }
+.gmb-mascot[data-pose='oops'] .gmb-ear-r { rotate: 42deg; translate: 2px 6px; }
+.gmb-mascot[data-pose='oops'] .gmb-eye-white { scale: 1.12; }
+.gmb-mascot[data-pose='oops'] .gmb-pupil { scale: 0.7; }
+.gmb-mascot[data-pose='oops'] .gmb-brow-l { rotate: -16deg; translate: 0 -5px; }
+.gmb-mascot[data-pose='oops'] .gmb-brow-r { rotate: 16deg; translate: 0 -5px; }
+.gmb-mascot[data-pose='oops'] .gmb-lid { animation: none; }
+.gmb-mascot[data-pose='oops'] .gmb-fx-drop { opacity: 1; animation: gmb-drip 1.6s ease-in infinite; }
+
+/* sleep — closed eyes, drooping ears, Zzz */
+.gmb-mascot[data-pose='sleep'] .gmb-head { rotate: 9deg; translate: 0 8px; }
+.gmb-mascot[data-pose='sleep'] .gmb-head-breathe { animation-duration: 5s; }
+.gmb-mascot[data-pose='sleep'] .gmb-body { animation-duration: 5s; }
+.gmb-mascot[data-pose='sleep'] .gmb-lid { animation: none; scale: 1 1; transition: scale 0.5s ease; }
+.gmb-mascot[data-pose='sleep'] .gmb-ear-l { rotate: -34deg; translate: -2px 8px; }
+.gmb-mascot[data-pose='sleep'] .gmb-ear-r { rotate: 34deg; translate: 2px 8px; }
+.gmb-mascot[data-pose='sleep'] .gmb-brow { translate: 0 4px; }
+.gmb-mascot[data-pose='sleep'] .gmb-tail { animation: none; }
+.gmb-mascot[data-pose='sleep'] .gmb-smile { scale: 0.7 0.7; transform-origin: 120px 160px; }
+.gmb-mascot[data-pose='sleep'] .gmb-fx-zzz { opacity: 1; }
+.gmb-mascot[data-pose='sleep'] .gmb-fx-zzz text { animation: gmb-float 3s ease-in-out infinite; }
+.gmb-mascot[data-pose='sleep'] .gmb-fx-zzz text:nth-child(2) { animation-delay: 0.5s; }
+.gmb-mascot[data-pose='sleep'] .gmb-fx-zzz text:nth-child(3) { animation-delay: 1s; }
+
+/* listen — ear up, leaning towards the child */
+.gmb-mascot[data-pose='listen'] .gmb-head { rotate: -6deg; translate: -5px 0; }
+.gmb-mascot[data-pose='listen'] .gmb-ear-l { rotate: 12deg; scale: 1.08 1.2; }
+.gmb-mascot[data-pose='listen'] .gmb-ear-r { rotate: -6deg; scale: 1 1.06; }
+.gmb-mascot[data-pose='listen'] .gmb-pupils { translate: -4px 0; }
+.gmb-mascot[data-pose='listen'] .gmb-brow { translate: 0 -4px; }
+.gmb-mascot[data-pose='listen'] .gmb-fx-waves { opacity: 1; }
+.gmb-mascot[data-pose='listen'] .gmb-fx-waves path { animation: gmb-pulse 1.1s ease-in-out infinite; }
+.gmb-mascot[data-pose='listen'] .gmb-fx-waves path:nth-child(2) { animation-delay: 0.25s; }
+
+/* ═════════ keyframes ═════════ */
+@keyframes gmb-breathe-body { 50% { scale: 1.012 1.03; } }
+@keyframes gmb-breathe-head { 50% { translate: 0 -2.6px; } }
+@keyframes gmb-blink { 0%, 93%, 100% { scale: 1 0; } 95.5%, 97% { scale: 1 1; } }
+@keyframes gmb-tail-swish { 0%, 100% { rotate: 0deg; } 40% { rotate: -7deg; } 60% { rotate: 4deg; } }
+@keyframes gmb-tail-wag { 0%, 100% { rotate: -12deg; } 50% { rotate: 10deg; } }
+@keyframes gmb-ear-flick { 0%, 88%, 100% { rotate: 0deg; } 90% { rotate: 14deg; } 92% { rotate: -4deg; } 94% { rotate: 10deg; } 96% { rotate: 0deg; } }
+@keyframes gmb-glance { 0%, 62%, 82%, 100% { translate: 0 0; } 66%, 78% { translate: -5px 1px; } }
+@keyframes gmb-talk-bob { 0%, 100% { rotate: -1.6deg; } 50% { rotate: 1.8deg; translate: 0 -1px; } }
+@keyframes gmb-brow-bounce { 0%, 100% { translate: 0 0; } 35% { translate: 0 -2.5px; } }
+@keyframes gmb-wave { 0%, 100% { rotate: 14deg; } 50% { rotate: -20deg; } }
+@keyframes gmb-wave-bob { 0%, 100% { rotate: -2deg; } 50% { rotate: 3deg; } }
+@keyframes gmb-gesture { 0%, 100% { rotate: 12deg; } 45% { rotate: -16deg; } 70% { rotate: -2deg; } }
+@keyframes gmb-hop {
+  0%, 27%, 54%, 81%, 100% { translate: 0 0; scale: 1 1; }
+  3%, 30%, 57% { translate: 0 0; scale: 1.05 0.93; }
+  13%, 40%, 67% { translate: 0 -30px; scale: 0.97 1.04; }
+  24%, 51%, 78% { translate: 0 0; scale: 1.04 0.95; }
+}
+@keyframes gmb-hop-shadow {
+  0%, 27%, 54%, 81%, 100% { scale: 1 1; opacity: 0.14; }
+  13%, 40%, 67% { scale: 0.74 0.8; opacity: 0.08; }
+}
+@keyframes gmb-startle { 0% { translate: 0 0; } 30% { translate: 0 -9px; } 60% { translate: 0 1px; } 100% { translate: 0 0; } }
+@keyframes gmb-shake { 0%, 100% { rotate: 0deg; } 25% { rotate: -5deg; } 75% { rotate: 5deg; } }
+@keyframes gmb-flutter { 0%, 100% { rotate: -8deg; } 50% { rotate: 12deg; } }
+@keyframes gmb-mane-bounce { 0%, 100% { rotate: 0deg; } 50% { rotate: 5deg; } }
+@keyframes gmb-twinkle { 0%, 100% { scale: 0.7; opacity: 0.7; } 50% { scale: 1.1; opacity: 1; } }
+@keyframes gmb-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes gmb-drip { 0% { translate: 0 -4px; opacity: 0; } 20% { opacity: 1; } 80% { translate: 0 12px; opacity: 1; } 100% { translate: 0 16px; opacity: 0; } }
+@keyframes gmb-float { 0% { translate: -4px 10px; opacity: 0; } 30% { opacity: 1; } 100% { translate: 6px -14px; opacity: 0; } }
+
+/*
+ * ═════════ reduced motion ═════════
+ * Only the mouth (a CSS variable, not an animation) and blinking stay; poses remain as static
+ * transforms. Two triggers, mirroring ui/global.css: the OS setting (unless the parent forced
+ * animations on with <html data-reduced-motion="false">) and the parent switch
+ * <html data-reduced-motion="true">. The blink rule must out-rank the kit's global
+ * `animation-duration: 0.01ms !important`, hence the extra specificity + !important.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-reduced-motion='false']) .gmb-mascot *:not(.gmb-lid) {
+    animation: none !important;
+    transition: none !important;
+  }
+  html:not([data-reduced-motion='false']) .gmb-mascot .gmb-lid {
+    animation-duration: 4.6s !important;
+    animation-iteration-count: infinite !important;
+  }
+  html:not([data-reduced-motion='false']) .gmb-mascot[data-pose='cheer'] .gmb-star,
+  html:not([data-reduced-motion='false']) .gmb-mascot[data-pose='think'] .gmb-fx-dots circle,
+  html:not([data-reduced-motion='false']) .gmb-mascot[data-pose='listen'] .gmb-fx-waves path,
+  html:not([data-reduced-motion='false']) .gmb-mascot[data-pose='sleep'] .gmb-fx-zzz text,
+  html:not([data-reduced-motion='false']) .gmb-mascot[data-pose='oops'] .gmb-fx-drop {
+    opacity: 1;
+  }
+}
+
+html[data-reduced-motion='true'] .gmb-mascot *:not(.gmb-lid) {
+  animation: none !important;
+  transition: none !important;
+}
+html[data-reduced-motion='true'] .gmb-mascot .gmb-lid {
+  animation-duration: 4.6s !important;
+  animation-iteration-count: infinite !important;
+}
+html[data-reduced-motion='true'] .gmb-mascot[data-pose='cheer'] .gmb-star,
+html[data-reduced-motion='true'] .gmb-mascot[data-pose='think'] .gmb-fx-dots circle,
+html[data-reduced-motion='true'] .gmb-mascot[data-pose='listen'] .gmb-fx-waves path,
+html[data-reduced-motion='true'] .gmb-mascot[data-pose='sleep'] .gmb-fx-zzz text,
+html[data-reduced-motion='true'] .gmb-mascot[data-pose='oops'] .gmb-fx-drop {
+  opacity: 1;
+}

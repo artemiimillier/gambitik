@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Гамбитик · админка</title>
+<style>
+  :root {
+    --bg: #fbf6ec; --card: #ffffff; --ink: #1d2b2a; --muted: #6b7472; --line: #ebe3d3;
+    --accent: #0b7a70; --accent-soft: #d8efe9; --warm: #d9822b; --warm-soft: #f8e6cf;
+    --win: #2f9e5b; --loss: #d0493c; --draw: #9aa3a1; --bar: #0b7a70; --bar2: #d9822b; --bar3: #7b68c9;
+    --dot-on: #22b35e; --dot-off: #c9c3b6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141a19; --card: #1c2423; --ink: #e8efed; --muted: #95a19e; --line: #2b3533;
+      --accent: #3cc2b1; --accent-soft: #1e3b37; --warm: #eba25a; --warm-soft: #3a2d1f;
+      --win: #4cc47d; --loss: #ee6d60; --draw: #7e8987; --bar: #3cc2b1; --bar2: #eba25a; --bar3: #a595ea;
+      --dot-on: #3fd67c; --dot-off: #45504e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  h1 { font-size: 24px; margin: 0; }
+  h2 { font-size: 15px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .updated { color: var(--muted); font-size: 13px; }
+  .grid { display: grid; gap: 14px; }
+  .kpis { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: 14px; }
+  .two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-bottom: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; min-width: 0; }
+  .kpi .label { color: var(--muted); font-size: 13px; }
+  .kpi .value { font-size: 34px; font-weight: 700; line-height: 1.1; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .kpi .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .kpi.live .value { color: var(--accent); }
+  .kpi.play .value { color: var(--warm); }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .hbar { display: grid; grid-template-columns: 110px 1fr 40px; align-items: center; gap: 8px; margin: 6px 0; font-size: 14px; }
+  .hbar .track { background: var(--accent-soft); border-radius: 6px; height: 14px; overflow: hidden; }
+  .hbar .fill { background: var(--accent); height: 100%; border-radius: 6px; }
+  .hbar .n { text-align: right; font-variant-numeric: tabular-nums; }
+  .empty { color: var(--muted); font-size: 14px; }
+  .results { display: flex; height: 18px; border-radius: 9px; overflow: hidden; background: var(--line); margin: 6px 0 8px; }
+  .results div { height: 100%; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; cursor: pointer; user-select: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .table-wrap { overflow-x: auto; }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--dot-off); margin-right: 6px; }
+  .dot.on { background: var(--dot-on); box-shadow: 0 0 0 3px color-mix(in srgb, var(--dot-on) 25%, transparent); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; background: var(--accent-soft); color: var(--accent); }
+  .pill.play { background: var(--warm-soft); color: var(--warm); }
+  .muted { color: var(--muted); }
+  .notice { max-width: 520px; margin: 80px auto; text-align: center; }
+  .notice a { color: var(--accent); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div id="denied" class="notice card" hidden>
+    <h1>Нет доступа</h1>
+    <p class="muted" id="denied-text">Войдите на сайте под аккаунтом владельца и откройте эту страницу снова.</p>
+    <p><a href="/">На главную «Гамбитика»</a></p>
+  </div>
+  <div id="app" hidden>
+    <header>
+      <h1>Гамбитик · админка</h1>
+      <span class="updated" id="updated">…</span>
+    </header>
+    <section class="grid kpis" id="kpis"></section>
+    <section class="grid two">
+      <div class="card chart">
+        <h2>Последние 48 часов</h2>
+        <div id="hourly"></div>
+      </div>
+      <div class="card">
+        <h2>Где сейчас дети</h2>
+        <div id="screens"></div>
+      </div>
+    </section>
+    <section class="grid two">
+      <div class="card">
+        <h2>Контроль времени</h2>
+        <div id="tc"></div>
+      </div>
+      <div class="card">
+        <h2>Соперники-боты</h2>
+        <div id="bots"></div>
+      </div>
+    </section>
+    <section class="grid two">
+      <div class="card">
+        <h2>Итоги партий детей</h2>
+        <div id="results"></div>
+      </div>
+      <div class="card">
+        <h2>Ступени учеников</h2>
+        <div id="stages"></div>
+      </div>
+    </section>
+    <section class="card" style="margin-bottom:14px">
+      <h2>Коды приглашения</h2>
+      <div class="table-wrap"><table id="invites"></table></div>
+      <p class="muted" style="font-size:13px;margin:10px 0 0">Новый код для семьи: <code>deploy/docker-ssh/invite.sh new «метка» [сколько раз]</code> · выключить: <code>invite.sh off «метка»</code></p>
+    </section>
+    <section class="card">
+      <h2>Ученики</h2>
+      <div class="table-wrap"><table id="table"></table></div>
+    </section>
+  </div>
+</main>
+<script src="/admin/admin.js"></script>
+</body>
+</html>

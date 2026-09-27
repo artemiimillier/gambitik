@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Уязвимость / Security vulnerability
+    url: https://github.com/artemiimillier/gambitik/security/policy
+    about: Не пишите об уязвимостях в открытых issues — сообщите приватно (Security → Report a vulnerability). Please report vulnerabilities privately.

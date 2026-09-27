@@ -1,0 +1,42 @@
+# The image build context: sources, manifests and the lockfile only. deploy.sh sends `git archive HEAD` (already without
+# ignored files); this list keeps a `docker build .` from a working tree just as clean — and keeps the child's data,
+# keys and the paid voice masters out of every image.
+
+# dependencies and build output (the image installs and builds its own)
+**/node_modules
+apps/web/dist
+apps/web/public/engine/*
+!apps/web/public/engine/.gitkeep
+**/*.tsbuildinfo
+**/.vite
+
+# the child's data, databases, logs
+data
+**/*.sqlite
+**/*.sqlite-wal
+**/*.sqlite-shm
+**/*.log
+**/*.log.*
+
+# secrets
+**/.env
+**/.env.*
+
+# local voice-recording work: masters, harvest, a stray overlay copy
+tools/voice-clips/.masters
+tools/voice-clips/.harvest
+voice-overlay
+
+# not needed to build or run the server
+.git
+.claude
+.idea
+.vscode
+**/.DS_Store
+docs
+e2e
+test-results
+playwright-report
+coverage
+*.command
+deploy

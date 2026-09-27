@@ -1,0 +1,103 @@
+.wrap {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  /* room for the chunky board shadow from boardThemeStyles */
+  margin-bottom: 8px;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.frame[data-interactive] {
+  cursor: pointer;
+}
+
+/* ── promotion chooser: four big pieces over the dimmed board ── */
+.promotion {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-4, 1rem);
+  border-radius: 16px;
+  background: rgba(29, 53, 64, 0.55);
+}
+
+.promotionTitle {
+  color: #ffffff;
+  font-size: var(--text-lg, 1.25rem);
+  font-weight: var(--font-weight-black, 900);
+  text-align: center;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.promotionChoices {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3, 0.75rem);
+  width: min(100%, 420px);
+}
+
+.promotionButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 88px;
+  padding: var(--space-2, 0.5rem);
+  border: 0;
+  border-radius: var(--radius-lg, 20px);
+  background: var(--color-surface, #ffffff);
+  box-shadow: 0 6px 0 var(--color-step, #d2c4a6);
+  color: var(--color-ink, #1d3540);
+  font: inherit;
+  font-size: var(--text-sm, 1rem);
+  font-weight: var(--font-weight-bold, 800);
+  cursor: pointer;
+  transition: transform var(--duration-fast, 120ms) var(--ease-out, ease-out);
+}
+
+.promotionButton > svg {
+  width: 100%;
+  max-width: 64px;
+  height: auto;
+}
+
+.promotionButton:hover {
+  background: var(--color-sunny-soft, #fff0cc);
+}
+
+.promotionButton:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--color-step, #d2c4a6);
+}
+
+.promotionName {
+  line-height: 1.1;
+}
+
+.promotionCancel {
+  min-height: 48px;
+  padding: 0 var(--space-5, 1.25rem);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-pill, 999px);
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-weight: var(--font-weight-bold, 800);
+  cursor: pointer;
+}
+
+.promotionCancel:hover {
+  background: rgba(255, 255, 255, 0.16);
+}

@@ -1,0 +1,670 @@
+/* One viewport, no page scroll on a laptop: the board takes every pixel the strips leave.
+   The bottom-right corner (--mascot-dock-size) stays empty for the global mascot dock. */
+.screen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(280px, 28vw, 380px);
+  gap: var(--space-5, 1.25rem);
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--space-4, 1rem) var(--screen-gutter, 1.5rem);
+  background: var(--color-bg, #fff8ec);
+  color: var(--color-ink, #1d3540);
+  font-family: var(--font-family, 'Nunito Variable', system-ui, sans-serif);
+  font-weight: var(--font-weight-text, 650);
+  overflow: hidden;
+}
+
+.loading {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-6, 1.5rem);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-bg, #fff8ec);
+}
+
+/* ── board column ── */
+.boardColumn {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--space-3, 0.75rem);
+  min-width: 0;
+  min-height: 0;
+}
+
+.boardArea {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ── player strips ── */
+.strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+  width: min(100%, 880px);
+  min-height: 72px;
+  margin-inline: auto;
+  padding: var(--space-1, 0.25rem) var(--space-3, 0.75rem);
+  border: 3px solid transparent;
+  border-radius: var(--radius-lg, 20px);
+  background: var(--color-surface, #fff);
+  box-shadow: var(--shadow-card, 0 2px 0 rgba(29, 53, 64, 0.05));
+  transition: border-color var(--duration-base, 200ms) var(--ease-out, ease-out);
+}
+
+.strip[data-active='true'] {
+  border-color: var(--color-sunny, #ffb938);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+}
+
+.childBadge {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-primary-soft, #d8f0eb);
+  color: var(--color-ink, #1d3540);
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.childBadge[data-color='b'] {
+  background: var(--color-sunny-soft, #fff0cc);
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  font-size: var(--text-lg, 1.4rem);
+  font-weight: var(--font-weight-bold, 800);
+  line-height: var(--line-height-tight, 1.15);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail {
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-sm, 1rem);
+}
+
+.captured {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-ink, #1d3540);
+  font-size: 1.5rem;
+  letter-spacing: -0.12em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.advantage {
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-sm, 1rem);
+  font-weight: var(--font-weight-bold, 800);
+  letter-spacing: 0;
+}
+
+.clock {
+  flex: none;
+  min-width: 5.2ch;
+  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  border-radius: var(--radius-md, 16px);
+  background: var(--color-surface-2, #fff1db);
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-xl, 1.8rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-black, 900);
+  line-height: 1;
+  text-align: center;
+}
+
+.clock[data-running='true'] {
+  background: var(--color-primary, #0f6f69);
+  color: var(--color-on-primary, #fff);
+}
+
+.clock[data-paused='true'] {
+  background: var(--color-sunny-soft, #fff0cc);
+  color: var(--color-ink, #1d3540);
+}
+
+.clock[data-low='true'][data-running='true'] {
+  background: var(--color-coral, #ff6b5e);
+  color: var(--color-ink, #1d3540);
+}
+
+/* While the bot speaks, its words take the place of the name — nothing may peek out from under the bubble. */
+.strip[data-bubble='true'] .who,
+.strip[data-bubble='true'] .captured {
+  visibility: hidden;
+}
+
+/* bots speak in text only: a bubble that grows out of the avatar and floats over the strip */
+.bubble {
+  position: absolute;
+  top: 50%;
+  left: 84px;
+  z-index: 3;
+  /* never over the clock at the right end of the strip */
+  max-width: min(calc(100% - 84px - 8.5rem), 520px);
+  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+  border: 0;
+  border-radius: var(--radius-lg, 20px);
+  border-bottom-left-radius: 6px;
+  background: var(--color-ink, #1d3540);
+  color: #fff;
+  font: inherit;
+  font-size: var(--text-md, 1.15rem);
+  line-height: 1.3;
+  text-align: left;
+  transform: translateY(-50%);
+  box-shadow: var(--shadow-pop, 0 12px 30px -12px rgba(29, 53, 64, 0.55));
+  cursor: pointer;
+  animation: bubble-in var(--duration-base, 200ms) var(--ease-spring, ease-out);
+}
+
+.bubble:disabled {
+  cursor: default;
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.85);
+  }
+}
+
+/* ── side panel ── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  min-width: 0;
+  min-height: 0;
+}
+
+.panelHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+}
+
+.status {
+  margin: 0;
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  border-radius: var(--radius-lg, 20px);
+  background: var(--color-surface, #fff);
+  font-size: var(--text-lg, 1.4rem);
+  font-weight: var(--font-weight-bold, 800);
+  line-height: var(--line-height-tight, 1.15);
+  box-shadow: var(--shadow-card, 0 2px 0 rgba(29, 53, 64, 0.05));
+}
+
+.status[data-phase='childTurn'] {
+  background: var(--color-primary, #0f6f69);
+  color: var(--color-on-primary, #fff);
+}
+
+.status[data-phase='coachIntervention'] {
+  background: var(--color-sunny, #ffb938);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+}
+
+/* the big «Звук вкл / выкл»: at the end of the tags row (the panel head keeps its height budget) */
+.tags .soundToggle {
+  margin-left: auto;
+}
+
+/* ≤ 899 px: the sound switch and the question card sit above the board (the panel goes below it) */
+.narrowTop {
+  display: none;
+}
+
+.takeback {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  animation: bubble-pop var(--duration-base, 200ms) var(--ease-spring, ease-out);
+}
+
+@keyframes bubble-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.takeback .choice {
+  /* two long Russian labels in a narrow column: let them wrap instead of clipping */
+  height: auto;
+  padding-block: var(--space-3, 0.75rem);
+  font-size: var(--text-lg, 1.4rem);
+  line-height: var(--line-height-tight, 1.15);
+  white-space: normal;
+}
+
+.takebackTitle {
+  margin: 0;
+  font-size: var(--text-lg, 1.4rem);
+  font-weight: var(--font-weight-black, 900);
+  text-align: center;
+}
+
+.moves {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 72px;
+  overflow: hidden;
+}
+
+.opening {
+  margin: 0 0 var(--space-2, 0.5rem);
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-sm, 1rem);
+}
+
+.movesEmpty {
+  margin: auto;
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-md, 1.15rem);
+}
+
+.moveRows {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+}
+
+.moveRow {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: 2px var(--space-1, 0.25rem);
+  font-size: var(--text-md, 1.15rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.moveNumber {
+  color: var(--color-ink-muted, #52667a);
+  text-align: right;
+}
+
+.moveSan {
+  padding: 2px var(--space-2, 0.5rem);
+  border-radius: var(--radius-sm, 12px);
+  font-weight: var(--font-weight-bold, 800);
+}
+
+.moveSan[data-last='true'] {
+  background: var(--color-sunny-soft, #fff0cc);
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  padding-bottom: var(--step, 6px);
+}
+
+.hintDots {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: var(--space-3, 0.75rem);
+  vertical-align: middle;
+}
+
+.hintDot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.45;
+}
+
+.hintDot[data-on='true'] {
+  background: currentColor;
+  opacity: 1;
+}
+
+.pulse {
+  animation: hint-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    box-shadow: 0 var(--step, 6px) 0 var(--color-sunny-deep, #c77f00), 0 0 0 0 rgba(255, 185, 56, 0.7);
+  }
+  50% {
+    box-shadow: 0 var(--step, 6px) 0 var(--color-sunny-deep, #c77f00), 0 0 0 14px rgba(255, 185, 56, 0);
+  }
+}
+
+.note {
+  margin: 0;
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-sm, 1rem);
+  line-height: 1.35;
+}
+
+/* Room for the mascot dock rendered by the shell: always Гамбитик himself (150 px wide ≈ 183 px tall), on a tall
+   window his speech bubble as well. On a low window the bubble may briefly cover the move list above — the
+   buttons sit at the top of the panel and stay clear. */
+.dockSpace {
+  flex: none;
+  height: clamp(190px, calc(100dvh - 600px), 360px);
+}
+
+/* After the game Гамбитик says his longest phrase (result + praise + one idea): at 1180×820 the bubble would
+   cover the last fact of the result card. More room for it; the facts of the card scroll instead (.resultBody). */
+.screen[data-phase='gameOver'] .dockSpace {
+  height: clamp(240px, calc(100dvh - 540px), 360px);
+}
+
+/* ── «почему оставляем ход?» — three quiet choices, smaller than the take-back buttons ── */
+.reasons {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+  animation: bubble-pop var(--duration-base, 200ms) var(--ease-spring, ease-out);
+}
+
+.reasonsTitle {
+  margin: 0;
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-sm, 1rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.reasons .reasonChoice {
+  height: auto;
+  min-height: 48px;
+  padding-block: var(--space-2, 0.5rem);
+  line-height: var(--line-height-tight, 1.15);
+  white-space: normal;
+}
+
+/* ── the lesson's lines on the result card: the ONE takeaway, the quiz score ── */
+.lesson {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  width: 100%;
+}
+
+.takeaway {
+  margin: 0;
+  font-size: var(--text-sm, 1rem);
+  font-weight: var(--font-weight-bold, 800);
+  line-height: 1.3;
+}
+
+.quizScore {
+  margin: 0;
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-sm, 1rem);
+}
+
+/* ── one sentence for the diary (result card) ── */
+.diary {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+  width: 100%;
+  text-align: left;
+}
+
+.diaryLabel {
+  font-size: var(--text-md, 1.15rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1.25;
+}
+
+.diaryInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  border: 2px solid var(--color-line-strong, #b9a98a);
+  border-radius: var(--radius-md, 14px);
+  background: var(--color-surface, #fff);
+  color: var(--color-ink, #1d3540);
+  font: inherit;
+  font-size: var(--text-md, 1.15rem);
+  line-height: 1.3;
+  resize: none;
+}
+
+.diaryInput:focus-visible {
+  border-color: var(--color-primary, #0f6f69);
+  outline: 3px solid color-mix(in srgb, var(--color-primary, #0f6f69) 35%, transparent);
+  outline-offset: 1px;
+}
+
+/* ── result ── */
+.result {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  min-height: 0;
+  text-align: center;
+}
+
+.resultBody {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: var(--space-2, 0.5rem);
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.resultTitle {
+  margin: 0;
+  font-size: var(--text-xl, 1.8rem);
+  font-weight: var(--font-weight-black, 900);
+  line-height: var(--line-height-tight, 1.15);
+}
+
+.resultReason,
+.resultFact {
+  margin: 0;
+  color: var(--color-ink-muted, #52667a);
+  font-size: var(--text-md, 1.15rem);
+}
+
+.effort {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.effortLine {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  font-size: var(--text-sm, 1rem);
+  line-height: 1.3;
+}
+
+.effortLine[data-earned='true'] svg {
+  color: var(--color-sunny-deep, #c77f00);
+}
+
+.effortLine[data-earned='false'] {
+  color: var(--color-ink-muted, #52667a);
+}
+
+.progress {
+  flex: none;
+  width: 100%;
+}
+
+.resultButtons {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  width: 100%;
+  padding-bottom: var(--step, 6px);
+}
+
+.resultRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3, 0.75rem);
+}
+
+.resultRow button {
+  padding-inline: var(--space-2, 0.5rem);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.modalText {
+  margin: 0;
+  font-size: var(--text-md, 1.15rem);
+  line-height: var(--line-height-text, 1.45);
+}
+
+/* ── narrow windows: board on top, panel below, the page scrolls ── */
+@media (max-width: 899px) {
+  /* the question and the sound switch go above the board; their panel copies step aside */
+  .narrowTop {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2, 0.5rem);
+    width: min(100%, 880px);
+    margin-inline: auto;
+  }
+
+  .narrowTop .soundToggle {
+    align-self: flex-end;
+  }
+
+  .wideOnly {
+    display: none !important;
+  }
+
+  .screen {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .boardColumn {
+    grid-template-rows: auto auto auto;
+  }
+
+  .boardArea {
+    width: min(100%, 78dvh);
+    aspect-ratio: 1 / 1;
+    margin-inline: auto;
+  }
+
+  .moves {
+    flex: none;
+    max-height: 220px;
+  }
+
+  .strip {
+    min-height: 64px;
+  }
+
+  .clock {
+    font-size: var(--text-lg, 1.4rem);
+  }
+}
+
+/* short laptop windows: tighter strips leave more room for the board */
+@media (min-width: 900px) and (max-height: 760px) {
+  .strip {
+    min-height: 60px;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    overflow: hidden;
+  }
+
+  .dockSpace {
+    /* the dock shrinks Гамбитик to 124 px on a low window (coach/MascotDock.css) */
+    height: 160px;
+  }
+
+  .screen[data-phase='gameOver'] .dockSpace {
+    height: 190px;
+  }
+
+  /* after the game Гамбитик's bubble (three lines at most here, MascotDock) stands right under the result card: its
+     fixed part is tighter on a low window, so «Ещё партию» / «Домой» stay above the bubble (1280×690) */
+  .result {
+    gap: 6px;
+  }
+
+  .resultButtons {
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .resultReason,
+  .resultFact {
+    font-size: var(--text-sm, 1rem);
+    line-height: 1.3;
+  }
+}

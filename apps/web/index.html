@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff8ec" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="Гамбитик — шахматный тренер для детей" />
+    <!-- a local, offline app: nothing here may be indexed or translated by the browser -->
+    <meta name="robots" content="noindex" />
+    <meta name="google" content="notranslate" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%9E%3C/text%3E%3C/svg%3E"
+    />
+    <title>Гамбитик — шахматный тренер</title>
+    <style>
+      /* first paint before the bundle arrives: the same warm paper as --color-bg, no white flash */
+      html,
+      body {
+        margin: 0;
+        background: #fff8ec;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>Чтобы Гамбитик заработал, включите JavaScript в браузере.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+/*
+ * «Звук вкл / Звук выкл» — the ui-kit Button (ui/Button.tsx: 64 px 'lg' / 56 px 'md', icon sized by the button) with a
+ * steady width, so the panel head does not jump when the label changes. Off = the sunny accent: a child sees at once
+ * that the sound is off.
+ */
+.gmb-sound-toggle {
+  min-width: 10.5rem;
+  flex-shrink: 0;
+}
+
+.gmb-sound-toggle[data-size='md'] {
+  min-width: 9rem;
+  padding-inline: var(--space-4, 1rem);
+}
+
+@media (max-width: 420px) {
+  .gmb-sound-toggle,
+  .gmb-sound-toggle[data-size='md'] {
+    min-width: 0;
+    padding-inline: var(--space-4, 1rem);
+  }
+}

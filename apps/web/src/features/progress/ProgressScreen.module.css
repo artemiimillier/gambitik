@@ -1,0 +1,508 @@
+.center {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.empty {
+  color: var(--color-ink-muted);
+}
+
+.lead {
+  margin-bottom: var(--space-3);
+}
+
+.subTitle {
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+/* ── hero ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.heroStage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.heroPawn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 2.6rem;
+}
+
+.heroKicker {
+  color: var(--color-primary-deep);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.heroTitle {
+  font-size: var(--text-xl);
+}
+
+.heroGoal {
+  margin-top: var(--space-1);
+  font-size: var(--text-md);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--space-3);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.statValue {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-tight);
+}
+
+.statLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.statHint {
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+}
+
+.bestWin {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-md);
+}
+
+/* ── charts ── */
+.chartPair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+@media (min-width: 1000px) {
+  .chartPair {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.chart {
+  min-width: 0;
+  margin: var(--space-3) 0 0;
+}
+
+.chart figcaption {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--space-2);
+}
+
+.chart figcaption strong {
+  font-weight: var(--font-weight-black);
+}
+
+.chart figcaption span {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.tooltip {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+}
+
+.tooltipTitle {
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.tooltipValue {
+  font-weight: var(--font-weight-black);
+}
+
+/* ── themes ── */
+.themeTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.themeTable th,
+.themeTable td {
+  padding: var(--space-2) var(--space-2);
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.themeTable thead th {
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.themeTable tbody th {
+  font-weight: var(--font-weight-bold);
+}
+
+.barCell {
+  display: grid;
+  grid-template-columns: minmax(80px, 1fr) 3.2em;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 150px;
+}
+
+.num {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .themeTable thead {
+    display: none;
+  }
+
+  .themeTable tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .themeTable th,
+  .themeTable td {
+    padding: 0;
+    border: 0;
+  }
+
+  .themeTable td:has(.barCell) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── prose cards ── */
+.prose p + p {
+  margin-top: var(--space-3);
+}
+
+/* ── lists ── */
+.twoCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: 1.3em;
+  list-style: disc;
+}
+
+.games {
+  display: flex;
+  flex-direction: column;
+}
+
+.game {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.game:last-child {
+  border-bottom: 0;
+}
+
+.gameText {
+  flex: 1;
+  min-width: 0;
+}
+
+.gameTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--font-weight-black);
+}
+
+.gameMeta {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 640px) {
+  .game {
+    flex-wrap: wrap;
+  }
+}
+
+/* ── parent notes: calmer, denser, «adult» ── */
+.parent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.parent h4 {
+  margin-top: var(--space-2);
+  font-size: var(--text-md);
+}
+
+.parent code {
+  padding: 0.05em 0.35em;
+  border-radius: 6px;
+  background: var(--color-surface-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em;
+}
+
+/* ── every game: marks and the parent's tools ── */
+.gamesCount {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+/* a game that does not count in the progress (played by an adult / archived) stays readable, just calmer */
+.game[data-excluded='true'] .gameTitle,
+.game[data-excluded='true'] .gameMeta {
+  opacity: 0.72;
+}
+
+.gameParent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+}
+
+.parentTools {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--color-line);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.parentEntry,
+.parentActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.parentEntry p {
+  flex: 1;
+  min-width: 14rem;
+  color: var(--color-ink-muted);
+}
+
+.parentOpen {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.parentNote {
+  padding: var(--space-3) var(--space-4);
+  border-left: 6px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ── the inline parent gate (logic: app/parentGate.ts) ── */
+.lock {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.lockTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-md);
+}
+
+.lockHelp {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.lockHelp[data-problem='true'] {
+  color: var(--color-coral-deep);
+  font-weight: var(--font-weight-bold);
+}
+
+.holdButton {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: var(--control-lg);
+  border: 3px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-primary-deep);
+  font: inherit;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-black);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.holdFill {
+  position: absolute;
+  inset: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--color-primary-soft);
+  transition: transform 150ms var(--ease-out);
+}
+
+/* the fill IS the three-second clock: it runs even with «меньше анимации» — it carries information */
+.holdButton[data-holding='true'] .holdFill {
+  transform: scaleX(1);
+  transition: transform 3000ms linear;
+}
+
+.holdLabel {
+  position: relative;
+}
+
+.lockForm {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.lockLabel {
+  font-weight: var(--font-weight-bold);
+}
+
+.lockRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.lockInput {
+  flex: 1;
+  min-width: 8rem;
+  min-height: var(--control-md);
+  padding: 0 var(--space-4);
+  border: 3px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+}
+
+.lockInput:focus-visible {
+  border-color: var(--color-primary);
+}
+
+.lockInput[aria-invalid='true'] {
+  border-color: var(--color-coral-deep);
+}
+
+/* ── the journal of one game (read-only) ── */
+.journal {
+  display: grid;
+  gap: var(--space-2);
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  /* a document, not a dialog question: the modal centres its text */
+  text-align: left;
+}
+
+/* FEN strings and file names are long words */
+.journal code {
+  word-break: break-all;
+}
+
+.journalFile {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.journalFile code {
+  padding: 0.05em 0.35em;
+  border-radius: 6px;
+  background: var(--color-surface-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.journalError {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+/* a phone: the text takes the row, «Разбор» moves under it (the parent's buttons made the squeeze visible) */
+@media (max-width: 640px) {
+  .gameText {
+    flex-basis: 60%;
+  }
+}

@@ -1,0 +1,18 @@
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-bg);
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--screen-gutter);
+  border-bottom: 2px solid var(--color-line);
+  background: var(--color-surface);
+}

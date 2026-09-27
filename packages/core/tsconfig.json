@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Isomorphic package: no Node types, no `node:` imports. "DOM" is listed only for the
+    // globals shared by browsers and Node 26 (console, setTimeout, crypto, performance, fetch).
+    // Real DOM usage is caught by `@gambit/server` typecheck, which compiles these sources
+    // without the DOM lib.
+    "lib": ["ES2023", "DOM"],
+    "types": []
+  },
+  "include": ["src"]
+}
