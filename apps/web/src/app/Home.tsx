@@ -1,17 +1,32 @@
 /**
- * Home — four big doors, a soft plan for today and the last game. Little text, no scrolling on a
- * laptop screen; Гамбитик lives in his corner (the global dock) and does the talking.
+ * Home — the child's hub: four big doors, «Продолжить партию» when a game waits, and a soft plan for today whose last
+ * step opens the last game's review. One clear way to every place and little text. A laptop (1280×640 and up,
+ * «Продолжить партию» included) and a tablet show it all without scrolling; a phone shows the four doors and the start
+ * of the plan on its first screen. Гамбитик lives in his corner (the global dock) and does the talking; the grown-ups'
+ * door is the small «Для взрослых» in the top corner.
  */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { getCurriculumStage, getPersona, CURRICULUM } from '@gambit/content';
 import type { GameListItem, StudentProfile } from '@gambit/shared';
-import { TIME_CONTROLS } from '@gambit/shared';
-import { Badge, BigChoice, Button, Card, Icon, PersonaAvatar, cx, pluralRu } from '../ui/index.ts';
+import { Badge, BigChoice, Button, Icon, PersonaAvatar, cx, pluralRu } from '../ui/index.ts';
 import styles from './Home.module.css';
 import type { ResumeTile } from './resumeGame.ts';
 import type { Route } from './router.ts';
+import { getBrowserStorage, loadShellSettings } from './shellSettings.ts';
 import { buildTodayPlan } from './todayPlan.ts';
 import type { PlanStep } from './todayPlan.ts';
+import { useMediaQuery } from './useMediaQuery.ts';
+
+/**
+ * Where the four doors stand 2 × 2 with the icon on the left instead of in one row: a window too narrow for four next
+ * to Гамбитик's strip (a small laptop window, an iPad on its side), and any computer with the parent's bigger text —
+ * the page column never gets wider than ~900 px, and «Путь пешки» / «Мои успехи» in bigger letters do not fit a
+ * quarter of it. So the titles never run out of their doors and the page stays one screen high. Phones (below 900 px)
+ * keep their own 2 × 2 of upright doors.
+ */
+export function rowTilesQuery(fontScale: number): string {
+  return fontScale > 1 ? '(min-width: 900px)' : '(min-width: 900px) and (max-width: 1239.98px)';
+}
 
 export interface HomeProps {
   profile: StudentProfile;
@@ -24,35 +39,6 @@ export interface HomeProps {
   resume?: ResumeTile | null;
   onNavigate: (route: Route) => void;
   now?: Date;
-}
-
-type Outcome = 'win' | 'loss' | 'draw' | 'unfinished';
-
-export function gameOutcome(game: Pick<GameListItem, 'result' | 'childColor'>): Outcome {
-  if (game.result === '1/2-1/2') return 'draw';
-  if (game.result === '*') return 'unfinished';
-  return (game.result === '1-0') === (game.childColor === 'w') ? 'win' : 'loss';
-}
-
-/** Neutral words: a loss is never announced in red capitals (research 08 §9). */
-const OUTCOME_RU: Record<Outcome, string> = {
-  win: 'Победа!',
-  draw: 'Ничья',
-  loss: 'Победил соперник',
-  unfinished: 'Не доиграна',
-};
-
-const OUTCOME_TONE: Record<Outcome, 'green' | 'blue' | 'neutral'> = { win: 'green', draw: 'blue', loss: 'neutral', unfinished: 'neutral' };
-
-function formatGameDate(iso: string, now: Date): string {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return '';
-  const dayMs = 24 * 60 * 60 * 1000;
-  const startOfDay = (d: Date): number => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-  const days = Math.round((startOfDay(now) - startOfDay(date)) / dayMs);
-  if (days === 0) return 'сегодня';
-  if (days === 1) return 'вчера';
-  return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
 }
 
 function helloFor(hour: number): string {
@@ -96,32 +82,6 @@ function PlanStepButton({ step, index, onNavigate }: { step: PlanStep; index: nu
   );
 }
 
-function LastGameCard({ game, now, onNavigate }: { game: GameListItem; now: Date; onNavigate: (route: Route) => void }) {
-  const persona = getPersona(game.personaId);
-  const outcome = gameOutcome(game);
-  const reviewReady = game.reviewStatus === 'ready' || game.reviewStatus === 'template';
-  return (
-    <Card as="section" title="Последняя партия" padding="md" className={styles.lastGame}>
-      <div className={styles.lastGameRow}>
-        {persona ? <PersonaAvatar persona={persona} size={72} mood="happy" label="" /> : null}
-        <div className={styles.lastGameText}>
-          <p className={styles.lastGameTitle}>
-            {persona ? `Соперник: ${persona.name}` : 'Партия'} <Badge tone={OUTCOME_TONE[outcome]}>{OUTCOME_RU[outcome]}</Badge>
-          </p>
-          <p className={styles.lastGameMeta}>
-            {[formatGameDate(game.startedAt, now), TIME_CONTROLS[game.timeControlId].label.toLowerCase(), reviewReady ? 'разбор готов' : 'разбор готовится']
-              .filter((part) => part !== '')
-              .join(' · ')}
-          </p>
-        </div>
-        <Button variant="secondary" size="lg" icon={<Icon name="bulb" />} onClick={() => onNavigate({ name: 'review', gameId: game.id })}>
-          Разбор
-        </Button>
-      </div>
-    </Card>
-  );
-}
-
 function ResumeGameTile({ resume, onNavigate }: { resume: ResumeTile; onNavigate: (route: Route) => void }) {
   const persona = getPersona(resume.personaId);
   const moves = `${resume.movesPlayed} ${pluralRu(resume.movesPlayed, 'ход', 'хода', 'ходов')}`;
@@ -131,7 +91,7 @@ function ResumeGameTile({ resume, onNavigate }: { resume: ResumeTile; onNavigate
       className={styles.resumeTile}
       icon={persona ? <PersonaAvatar persona={persona} size={64} mood="happy" label="" /> : '♟️'}
       title={<span className={styles.tileTitle}>Продолжить партию</span>}
-      subtitle={persona ? `Соперник: ${persona.name} · уже сыграно: ${moves}` : `Уже сыграно: ${moves}`}
+      subtitle={persona ? `Соперник: ${persona.name} · ${moves}` : `Уже сыграно: ${moves}`}
       badge={
         <Badge tone="sunny" variant="solid" size="sm">
           партия ждёт
@@ -146,8 +106,10 @@ export function Home({ profile, games, reviewedToday, puzzlesToday = 0, resume =
   const moment = useMemo(() => now ?? new Date(), [now]);
   const plan = useMemo(() => buildTodayPlan({ now: moment, games, reviewedToday, puzzlesToday }), [moment, games, reviewedToday, puzzlesToday]);
   const stage = getCurriculumStage(profile.stage);
-  const lastGame = games[0];
   const nickname = profile.nickname.trim();
+  // the parent's text size is read once per mount: it is changed on another screen (Settings)
+  const [fontScale] = useState(() => loadShellSettings(getBrowserStorage()).fontScale);
+  const tileLayout = useMediaQuery(rowTilesQuery(fontScale)) ? 'row' : 'column';
 
   return (
     <div className={styles.page}>
@@ -156,50 +118,55 @@ export function Home({ profile, games, reviewedToday, puzzlesToday = 0, resume =
           <h1 className={styles.title}>{nickname === '' ? `${helloFor(moment.getHours())}!` : `${helloFor(moment.getHours())}, ${nickname}!`}</h1>
           <p className={styles.subtitle}>Во что поиграем сегодня?</p>
         </div>
-        <Button variant="ghost" icon={<Icon name="gear" />} aria-label="Настройки для родителей" title="Настройки для родителей" onClick={() => onNavigate({ name: 'settings' })} />
+        {/* settings, sound, the account: behind the parent gate. A word, not just a cogwheel, so a grown-up finds it at
+            once; on a phone only the cogwheel shows, the word stays its name */}
+        <Button variant="ghost" icon={<Icon name="gear" />} className={styles.parentButton} onClick={() => onNavigate({ name: 'settings' })}>
+          <span className={styles.parentLabel}>Для взрослых</span>
+        </Button>
       </header>
 
       <main className={styles.main}>
         {resume ? <ResumeGameTile resume={resume} onNavigate={onNavigate} /> : null}
-        <nav className={styles.tiles} aria-label="Главное меню">
+        <nav className={styles.tiles} data-doors={tileLayout} aria-label="Главное меню">
           <BigChoice
-            layout="column"
+            layout={tileLayout}
             accent="sunny"
             className={cx(styles.tile, styles.playTile)}
             icon={<span className={styles.playGlyph}>♞</span>}
             title={<span className={styles.tileTitle}>Играть</span>}
-            subtitle={<span className={styles.playSubtitle}>Партия с соперником</span>}
+            subtitle={<span className={cx(styles.tileSubtitle, styles.playSubtitle)}>С соперником</span>}
             onClick={() => onNavigate({ name: 'new' })}
           />
           <BigChoice
-            layout="column"
+            layout={tileLayout}
             accent="coral"
             className={styles.tile}
             icon="🧩"
             title={<span className={styles.tileTitle}>Задачи</span>}
-            subtitle="Найди лучший ход"
+            subtitle={<span className={styles.tileSubtitle}>Найди лучший ход</span>}
             onClick={() => onNavigate({ name: 'puzzles' })}
           />
           <BigChoice
-            layout="column"
+            layout={tileLayout}
             accent="green"
             className={styles.tile}
             icon="🗺️"
             title={<span className={styles.tileTitle}>Путь пешки</span>}
-            subtitle={`Ступень ${stage.stage} из ${CURRICULUM.length}`}
+            subtitle={<span className={styles.tileSubtitle}>{`Ступень ${stage.stage} из ${CURRICULUM.length}`}</span>}
             onClick={() => onNavigate({ name: 'path' })}
           />
           <BigChoice
-            layout="column"
+            layout={tileLayout}
             accent="blue"
             className={styles.tile}
             icon="⭐"
             title={<span className={styles.tileTitle}>Мои успехи</span>}
-            subtitle="Графики и партии"
+            subtitle={<span className={styles.tileSubtitle}>Графики и партии</span>}
             onClick={() => onNavigate({ name: 'progress' })}
           />
         </nav>
 
+        {/* the routine of a good chess day; it names the last game, and its «Разбор» opens that game's review (no separate card) */}
         <section className={styles.plan} aria-label="План на сегодня" data-all-done={plan.allDone ? 'true' : 'false'}>
           <h2 className={styles.planHeadline}>{plan.headline}</h2>
           <ol className={styles.planSteps}>
@@ -208,8 +175,6 @@ export function Home({ profile, games, reviewedToday, puzzlesToday = 0, resume =
             ))}
           </ol>
         </section>
-
-        {lastGame ? <LastGameCard game={lastGame} now={moment} onNavigate={onNavigate} /> : null}
       </main>
     </div>
   );

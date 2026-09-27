@@ -178,8 +178,17 @@ describe('Home', () => {
   });
 
   it('counts the warm-up puzzles in the plan', () => {
-    expect(renderToStaticMarkup(<Home {...base} puzzlesToday={1} />)).toContain('Ещё две задачи для разгона');
-    expect(renderToStaticMarkup(<Home {...base} />)).toContain('Три задачи для разгона');
+    expect(renderToStaticMarkup(<Home {...base} puzzlesToday={1} />)).toContain('Ещё две задачи');
+    expect(renderToStaticMarkup(<Home {...base} />)).toContain('Три задачи');
+  });
+
+  it('has one way to each place: the plan names the last game, the door for grown-ups says what it is', () => {
+    const html = renderToStaticMarkup(<Home {...base} />);
+    expect(html).toContain('Победа над Соней!');
+    expect(html).not.toContain('Последняя партия');
+    expect(html.match(/>Разбор</g)).toHaveLength(1);
+    expect(html).toContain('Для взрослых');
+    for (const door of ['Играть', 'Задачи', 'Путь пешки', 'Мои успехи']) expect(html).toContain(door);
   });
 });
 

@@ -4,8 +4,10 @@
  *
  * Nothing is ever locked: every step can be opened at any time, the plan only marks what is
  * already done today and points at one next step. When all three are done the strip suggests a
- * natural stopping point instead of "one more".
+ * natural stopping point instead of "one more". The steps name the last game («Победа над Петей!», «Прошлая партия
+ * с Петей»): the review step is the home screen's only way to that game's review.
  */
+import { getPersona } from '@gambit/content';
 import type { GameListItem } from '@gambit/shared';
 import type { Route } from './router.ts';
 import { readJsonObject, writeJson } from './shellSettings.ts';
@@ -45,11 +47,44 @@ export interface TodayPlanInput {
   puzzlesToday: number;
 }
 
+/**
+ * «с Петей», «с Соней», «с Гришей», «с Никой»: the instrumental case of an opponent's name. Every opponent's name
+ * ends in -а / -я (the first declension); anything else stays as it is.
+ */
+export function withName(name: string): string {
+  const stem = name.slice(0, -1);
+  if (name.endsWith('я')) return `${stem}ей`;
+  // after ж ш ч щ ц an unstressed ending is written -ей: Гриша → Гришей, Саша → Сашей
+  if (name.endsWith('а')) return /[жшчщц]$/.test(stem) ? `${stem}ей` : `${stem}ой`;
+  return name;
+}
+
+/**
+ * The game step once a game was played today: with whom and — kindly — how it went. A loss is never announced
+ * (research 08 §9): it only says with whom.
+ */
+function playedHint(game: GameListItem): string {
+  const persona = getPersona(game.personaId);
+  const name = persona ? withName(persona.name) : null;
+  if (name === null) return 'Сыграна!';
+  if (game.result === '1/2-1/2') return `Ничья с ${name}`;
+  const won = (game.result === '1-0') === (game.childColor === 'w');
+  return won ? `Победа над ${name}!` : `Сыграна с ${name}`;
+}
+
+/** The review step: today's game is named by the game step next to it; an older one is named here. */
+function reviewHint(game: GameListItem | undefined, today: boolean): string {
+  if (!game) return 'Появится после партии';
+  if (today) return 'Посмотрим партию вместе';
+  const persona = getPersona(game.personaId);
+  return persona ? `Прошлая партия с ${withName(persona.name)}` : 'Прошлая партия';
+}
+
 function warmupHint(puzzlesToday: number): string {
   const left = WARMUP_PUZZLES - puzzlesToday;
-  if (left === 2) return 'Ещё две задачи для разгона';
-  if (left === 1) return 'Ещё одна задача для разгона';
-  return 'Три задачи для разгона';
+  if (left === 2) return 'Ещё две задачи';
+  if (left === 1) return 'Ещё одна задача';
+  return 'Три задачи';
 }
 
 /** Local calendar day, e.g. '2026-09-21'. */
@@ -68,14 +103,15 @@ function isSameLocalDay(iso: string | null | undefined, now: Date): boolean {
 export function buildTodayPlan(input: TodayPlanInput): TodayPlan {
   const { now, games, reviewedToday } = input;
   const puzzlesToday = Number.isFinite(input.puzzlesToday) ? Math.max(0, Math.trunc(input.puzzlesToday)) : 0;
-  const todaysGames = games.filter((game) => isSameLocalDay(game.startedAt, now));
-  const latestToday = todaysGames[0];
-  const latestAny = games[0];
+  // a game left in the middle («*») is not the day's game: it neither ticks «Партия» nor asks for a review
+  const finished = games.filter((game) => game.result !== '*');
+  const latestToday = finished.find((game) => isSameLocalDay(game.startedAt, now));
+  const reviewGame = latestToday ?? finished[0] ?? games[0];
 
   const warmupDone = puzzlesToday >= WARMUP_PUZZLES;
   const gameDone = latestToday !== undefined;
-  const reviewDone = todaysGames.some((game) => reviewedToday.includes(game.id));
-  const reviewGame = latestToday ?? latestAny;
+  // the review of THE game the step opens: after a reviewed game and a new one, the new one waits for its review
+  const reviewDone = latestToday !== undefined && reviewedToday.includes(latestToday.id);
 
   const steps: PlanStep[] = [
     {
@@ -90,7 +126,7 @@ export function buildTodayPlan(input: TodayPlanInput): TodayPlan {
     {
       id: 'game',
       title: 'Партия',
-      hint: 'Сыграй с соперником',
+      hint: latestToday ? playedHint(latestToday) : 'Сыграй с соперником',
       done: gameDone,
       suggested: false,
       target: { name: 'new' },
@@ -98,15 +134,16 @@ export function buildTodayPlan(input: TodayPlanInput): TodayPlan {
     {
       id: 'review',
       title: 'Разбор',
-      hint: reviewGame ? 'Посмотрим партию вместе' : 'Появится после партии',
+      hint: reviewHint(reviewGame, reviewGame !== undefined && isSameLocalDay(reviewGame.startedAt, now)),
       done: reviewDone,
       suggested: false,
       target: reviewGame ? { name: 'review', gameId: reviewGame.id } : null,
     },
   ];
 
-  // the review is only worth suggesting once there is a game from today to look at
-  const next = steps.find((step) => !step.done && step.target !== null && (step.id !== 'review' || gameDone));
+  // after a game today its review comes first — that is where the game teaches; never back to the warm-up before it.
+  // Otherwise the first open step (the review is not the next step without a game from today)
+  const next = gameDone && !reviewDone ? steps[2] : steps.find((step) => !step.done && step.id !== 'review');
   if (next) next.suggested = true;
 
   const allDone = steps.every((step) => step.done);
@@ -114,7 +151,7 @@ export function buildTodayPlan(input: TodayPlanInput): TodayPlan {
   const headline = allDone
     ? 'На сегодня отлично! Продолжим завтра?'
     : doneCount === 0
-      ? 'План на сегодня — можно начать с любого шага'
+      ? 'План на сегодня — начни с любого шага'
       : 'План на сегодня — уже кое-что сделано!';
 
   return { steps, allDone, headline };

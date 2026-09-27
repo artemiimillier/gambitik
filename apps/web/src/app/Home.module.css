@@ -8,6 +8,21 @@
     var(--color-bg);
 }
 
+/* a window taller than the hub: it stands a little above the middle instead of leaving the lower half empty (the free
+   height is shared 1 : 2 above and below it); nothing moves where the hub fills the screen */
+.page::before,
+.page::after {
+  content: '';
+}
+
+.page::before {
+  flex: 1 1 0;
+}
+
+.page::after {
+  flex: 2 1 0;
+}
+
 .header {
   display: flex;
   align-items: flex-start;
@@ -19,8 +34,10 @@
   padding: var(--space-6) var(--screen-gutter) var(--space-3);
 }
 
+/* the greeting never runs under «Для взрослых» in the corner */
 .hello {
   min-width: 0;
+  max-width: calc(100% - 13rem);
 }
 
 .title {
@@ -31,6 +48,44 @@
   margin-top: var(--space-2);
   color: var(--color-ink-muted);
   font-size: var(--text-lg);
+}
+
+/* ───────── «Для взрослых»: settings, sound, the account — behind the parent gate ───────── */
+/* small and quiet in the top corner, where it stays even when the hub moves down a tall window; but a word a grown-up
+   reads at once */
+.page {
+  position: relative;
+}
+
+.header .parentButton.parentButton {
+  --btn-pad: var(--space-4);
+  --btn-font: var(--text-sm);
+  position: absolute;
+  top: var(--parent-button-top, var(--space-6));
+  right: max(var(--screen-gutter), calc(50% - var(--screen-max-width) / 2));
+  color: var(--color-ink-muted);
+}
+
+/* a phone: only the cogwheel shows, «Для взрослых» stays the button's name */
+@media (max-width: 599.98px) {
+  .hello {
+    max-width: calc(100% - var(--control-md) - var(--space-2));
+  }
+
+  .header .parentButton.parentButton {
+    width: var(--control-md);
+    padding: 0;
+    gap: 0;
+  }
+
+  .parentLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 .main {
@@ -59,19 +114,14 @@
   gap: var(--space-5);
 }
 
-@media (min-width: 1100px) {
-  .tiles {
+/* one row of four only where each door is wide enough for its title — Home.tsx decides (rowTilesQuery), 2 × 2 below */
+@media (min-width: 900px) {
+  .tiles[data-doors='column'] {
     grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 480px) {
-  .tiles {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* a little more compact than the stock column tile, so the whole home fits a laptop screen */
+/* a little more compact than the stock column tile */
 .tiles .tile.tile {
   min-height: 0;
   gap: var(--space-3);
@@ -80,6 +130,10 @@
 
 .tileTitle {
   white-space: nowrap;
+}
+
+.tileSubtitle {
+  display: block;
 }
 
 /* «Играть» is THE primary action: brand teal, white text */
@@ -97,6 +151,9 @@
 
 .playGlyph {
   color: var(--color-primary-deep);
+  /* a text glyph draws smaller than an emoji of the same size: it would be the weakest icon of the four */
+  font-size: 1.5em;
+  line-height: 1;
 }
 
 .playSubtitle {
@@ -104,7 +161,7 @@
   opacity: 0.92;
 }
 
-/* ───────── plan for today ───────── */
+/* ───────── plan for today: разминка → партия → разбор (the last game's review) ───────── */
 .plan {
   display: grid;
   gap: var(--space-3);
@@ -150,12 +207,14 @@
   pointer-events: none;
 }
 
+/* the three steps of a row are one height, whatever their words */
 .planStep {
   position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
   width: 100%;
+  height: 100%;
   min-height: var(--control-xl);
   padding: var(--space-3) var(--space-4);
   border: 3px solid var(--color-line);
@@ -185,9 +244,9 @@
   border-color: var(--color-sunny-deep);
 }
 
+/* a done step is calm (its tick says it all); the eye goes to the step Гамбитик suggests */
 .planStep[data-done='true'] {
-  border-color: var(--color-success-deep);
-  background: var(--color-success-soft);
+  border-color: var(--color-success);
 }
 
 .planMark {
@@ -238,10 +297,11 @@
   position: absolute;
   top: 0;
   right: var(--space-3);
-  transform: translateY(-60%);
+  transform: translateY(-70%);
 }
 
-@media (max-width: 760px) {
+/* a narrow window: the steps become a list (three in a row would squeeze their words) */
+@media (max-width: 899.98px) {
   .planSteps {
     grid-template-columns: 1fr;
   }
@@ -249,36 +309,6 @@
   .planItem + .planItem::before {
     display: none;
   }
-}
-
-/* ───────── last game ───────── */
-/* kept narrow on purpose: the bottom-right area belongs to Гамбитик's speech bubble */
-.lastGame {
-  min-width: 0;
-  width: min(100%, 640px);
-}
-
-.lastGameRow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-}
-
-.lastGameText {
-  flex: 1;
-  display: grid;
-  gap: var(--space-1);
-  min-width: 12rem;
-}
-
-.lastGameTitle {
-  font-weight: var(--font-weight-bold);
-}
-
-.lastGameMeta {
-  color: var(--color-ink-muted);
-  font-size: var(--text-sm);
 }
 
 .srOnly {
@@ -294,4 +324,214 @@
 .main .resumeTile.resumeTile {
   min-height: 0;
   padding-block: var(--space-3);
+}
+
+/* ───────── a phone or a tablet held upright, a phone on its side ─────────
+   The doors stand 2 × 2 and every size follows the window's height: on a phone the four doors come first on the
+   screen and the plan follows. */
+@media (max-width: 899.98px), (max-height: 540.98px) {
+  .page {
+    --parent-button-top: clamp(var(--space-2), 2.4vh - 8px, var(--space-5));
+  }
+
+  .header {
+    padding-top: clamp(var(--space-3), 2.4vh, var(--space-6));
+    padding-bottom: 0;
+  }
+
+  .title {
+    font-size: clamp(1.5rem, 1.1rem + 2.4vw, 2.25rem);
+  }
+
+  .subtitle {
+    margin-top: 2px;
+    font-size: var(--text-md);
+  }
+
+  .main {
+    gap: clamp(var(--space-3), 1.8vh, var(--space-5));
+    padding-top: clamp(var(--space-2), 1.6vh, var(--space-4));
+  }
+
+  .tiles {
+    gap: clamp(var(--space-2), 1.6vh, var(--space-4));
+    /* 50 px on a 390×664 phone, 72 px on an upright tablet */
+    --big-choice-icon: clamp(40px, calc(12vh - 30px), 72px);
+  }
+
+  .tiles .tile.tile[data-layout='column'] {
+    gap: 6px;
+    padding: clamp(var(--space-2), 1.6vh, var(--space-5)) var(--space-2);
+  }
+
+  /* between its two words, if it must: the parent's bigger text on a 320 px phone */
+  .tiles .tileTitle {
+    font-size: clamp(1.125rem, 0.75rem + 1.9vw, 1.75rem);
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .tileSubtitle {
+    font-size: var(--text-sm);
+    line-height: 1.25;
+  }
+
+  .plan {
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+  }
+
+  .planHeadline {
+    font-size: var(--text-md);
+  }
+
+  /* a column of three: room between the steps for the «Гамбитик советует» label on the step's top edge */
+  .planSteps {
+    row-gap: var(--space-4);
+  }
+
+  .planStep {
+    gap: 10px;
+    min-height: 52px;
+    padding: 6px var(--space-3);
+  }
+
+  .planMark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .planMark > svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* the title and its hint share a line while they fit */
+  .planText {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-2);
+    row-gap: 0;
+  }
+
+  .planBadge {
+    transform: translateY(-50%);
+  }
+
+  .main .resumeTile.resumeTile {
+    --big-choice-icon: 48px;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+/* 900–1239 px (an iPad on its side, a small laptop window): the shell shows a smaller Гамбитик with a narrower bubble here
+   (App.tsx: dockSizeFor / bubbleWidthFor), so the strip kept free for him is narrower too — 256 px bubble + 12 px offset +
+   air; the doors and the plan get the width */
+@media (min-width: 900px) and (max-width: 1239.98px) {
+  .main {
+    --mascot-dock-size: 276px;
+  }
+}
+
+/* ───────── a laptop or a desktop: the whole home is ONE screen, «Продолжить партию» included ─────────
+   Children under 9 find scrolling with a mouse or a trackpad hard (docs/research/08: «Дом … Без скролла»), and a
+   14" MacBook in Chrome shows only ~1512×790 of it. Heights follow the window: the door icons give way first (they are
+   the most generous part), a tall screen gets the full-size doors back. */
+@media (min-width: 900px) and (min-height: 541px) {
+  .page {
+    --parent-button-top: clamp(var(--space-2), 3vh - 8px, var(--space-4));
+  }
+
+  .header {
+    align-items: center;
+    padding-top: clamp(var(--space-3), 3vh, var(--space-6));
+    padding-bottom: 0;
+  }
+
+  /* «Доброе утро, Тигр! Во что поиграем сегодня?» reads as one line; a long name moves the question under it */
+  .hello {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-4);
+  }
+
+  .title {
+    font-size: min(var(--text-2xl), 6.2vh);
+  }
+
+  .subtitle {
+    margin-top: 0;
+    font-size: var(--text-md);
+  }
+
+  .main {
+    gap: clamp(var(--space-3), 2.2vh, var(--space-5));
+    padding-top: clamp(var(--space-2), 1.8vh, var(--space-4));
+    padding-bottom: clamp(var(--space-3), 3vh, var(--space-8));
+  }
+
+  .tiles {
+    gap: clamp(var(--space-3), 2vh, var(--space-5));
+    /* 79 px on a 640 px high window, the full 96 px from 700 px on (a 14" MacBook in Chrome shows ~790). One size with
+       and without «Продолжить партию»: that tile arrives a moment after the page, and the doors must not jump */
+    --big-choice-icon: clamp(56px, calc(28vh - 100px), 96px);
+  }
+
+  .tiles .tile.tile[data-layout='column'] {
+    gap: clamp(var(--space-2), 1.4vh, var(--space-4));
+    padding: clamp(var(--space-3), calc(4vh - 12px), var(--space-6)) var(--space-3);
+  }
+
+  /* a door is ~200 px wide next to Гамбитик's strip: «Путь пешки» / «Мои успехи» must stay inside it (the parent's
+     bigger text grows the title and puts the doors 2 × 2 — rowTilesQuery in Home.tsx) */
+  .tiles .tileTitle {
+    font-size: min(var(--text-xl), calc(30px * var(--font-scale, 1)), calc(2.25vw * var(--font-scale, 1)));
+  }
+
+  /* one line in a ~200 px door: «Найди лучший ход» */
+  .tileSubtitle {
+    font-size: clamp(var(--text-sm), 0.5rem + 0.8vw, 1.125rem);
+  }
+
+  /* 2 × 2, icon on the left (rowTilesQuery in Home.tsx) */
+  .tiles .tile.tile[data-layout='row'] {
+    --big-choice-icon: clamp(48px, 8vh, 64px);
+    gap: var(--space-4);
+    padding: clamp(var(--space-2), 1.6vh, var(--space-4)) var(--space-5);
+  }
+
+  .plan {
+    gap: var(--space-5);
+    padding: clamp(var(--space-3), 1.8vh, var(--space-4)) var(--space-4);
+  }
+
+  .planHeadline {
+    font-size: var(--text-md);
+  }
+
+  /* a little narrower padding keeps the hints on one line next to Гамбитик's strip */
+  .planStep {
+    gap: var(--space-2);
+    min-height: clamp(56px, 8.4vh, var(--control-xl));
+    padding: var(--space-2) 10px;
+  }
+
+  .planMark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .planMark > svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .main .resumeTile.resumeTile {
+    --big-choice-icon: 52px;
+    padding-block: clamp(var(--space-2), 1.2vh, var(--space-3));
+  }
 }

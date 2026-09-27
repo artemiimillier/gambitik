@@ -119,12 +119,15 @@ test('the playground pages (mascot, ui kit) open without errors', async ({ page 
   guard.assertClean();
 });
 
-test('home lists the last game and opens its review', async ({ page, request }) => {
+test('the plan names the last game, and its «Разбор» opens the review', async ({ page, request }) => {
   const games = (await (await request.get('/api/games?limit=1')).json()) as { id: string }[];
   test.skip(games.length === 0, 'no game was saved in this run (run 02-game.spec.ts first)');
   const guard = watchConsole(page);
   await openApp(page);
-  await page.getByRole('button', { name: 'Разбор' }).first().click();
+  const plan = page.getByRole('region', { name: 'План на сегодня' });
+  // today's game (02-game.spec.ts) is named in «Партия»; an older one would be named in «Разбор»
+  await expect(plan).toContainText(/Победа над |Сыграна с |Ничья с |Прошлая партия с /);
+  await plan.getByRole('button', { name: /Разбор/ }).click();
   await expect(page).toHaveURL(/#\/review\//);
   await expect(page.locator('[data-square]').first()).toBeVisible();
   await expectSilentRun(page);

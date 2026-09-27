@@ -62,8 +62,10 @@ const ROUTE_TITLES: Record<RouteName, string> = {
 };
 
 /** Гамбитик is the host of the home screen, a quiet helper on the parent pages. */
-function dockSizeFor(route: Route, onboarding: boolean, roomyWindow: boolean): number {
-  if (onboarding || route.name === 'home') return 200;
+function dockSizeFor(route: Route, onboarding: boolean, roomyWindow: boolean, wideWindow: boolean): number {
+  if (onboarding) return 200;
+  // below 1240 px the home's doors stand 2 × 2 and the page needs the width — see Home.module.css (--mascot-dock-size: 276px)
+  if (route.name === 'home') return wideWindow ? 200 : 160;
   if (route.name === 'progress' || route.name === 'settings') return 120;
   // in a game the panel above him needs the height: move list, «Подсказка», the take-back choice
   if (route.name === 'play') return 150;
@@ -76,6 +78,8 @@ function dockSizeFor(route: Route, onboarding: boolean, roomyWindow: boolean): n
 function bubbleWidthFor(route: Route, onboarding: boolean, wideWindow: boolean, roomyWindow: boolean): number | undefined {
   if (onboarding) return undefined;
   if (wideWindow && route.name === 'play') return 340;
+  // the home keeps only a 276 px strip free on windows below 1240 px: the bubble must fit into it
+  if (route.name === 'home' && !wideWindow) return 256;
   // the review keeps only a 276 px strip free on windows below 1280 px: the bubble must fit into it
   if (route.name === 'review' && !roomyWindow) return 256;
   return undefined;
@@ -331,7 +335,7 @@ export function App() {
       <ServerBanner online={serverOnline} onRetry={() => appController.refresh()} compact={route.name === 'play'} />
       {showDock ? (
         <MascotDock
-          size={dockSizeFor(route, showOnboarding, roomyWindow)}
+          size={dockSizeFor(route, showOnboarding, roomyWindow, wideWindow)}
           bubbleWidth={bubbleWidthFor(route, showOnboarding, wideWindow, roomyWindow)}
           compactOnLowWindow={!showOnboarding && route.name === 'play'}
         />
