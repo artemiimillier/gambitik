@@ -127,9 +127,10 @@ describe('«Спроси» — answered by the game, the clock held', () => {
     expect(answer?.kind).toBe('answer');
     expect(answer?.text).toMatch(/^Соперник вывел коня\./);
     expect(answer?.clip?.sentences[0]?.items).toEqual([{ line: 'opp.developed', piece: 'n' }]);
-    // 5 minutes: the child's clock does not run while the answer is being said
+    // 5 minutes: the child's clock does not run while the answer is being said. It does run from the bot's move until
+    // the question — a few ms here, a few tens on a busy CI runner; a clock that did not stand would lose all 120 ms
     await new Promise((resolve) => setTimeout(resolve, 120));
-    expect(game.store.getState().clock.w).toBeGreaterThanOrEqual(before - 30);
+    expect(game.store.getState().clock.w).toBeGreaterThanOrEqual(before - 80);
     coach.releaseSpeech();
     await new Promise((resolve) => setTimeout(resolve, 120));
     expect(game.store.getState().clock.w).toBeLessThan(before - 50);
