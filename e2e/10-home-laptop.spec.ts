@@ -2,8 +2,8 @@
  * (h) The home screen is the child's hub and fits the screen: a 14" MacBook in Chrome shows ~1512×790 of the page, a
  * 1366×768 laptop ~1366×648. With the tallest home there is («Продолжить партию» + the four doors + the plan, which
  * names the last game that 02-game.spec.ts leaves behind in a full run):
- *  - nothing to scroll on the usual laptop windows and on an iPad on its side;
- *  - on a phone the four doors are on the first screen;
+ *  - nothing to scroll on the usual laptop windows, on an iPad on its side and upright;
+ *  - on a phone the four doors are on the first screen, above Гамбитик's bar;
  *  - no door title runs out of its door, the parent's bigger text included (the doors then stand 2 × 2);
  *  - the grown-ups' door is there, with its name, and covers nothing.
  */
@@ -19,6 +19,7 @@ const ONE_SCREEN: readonly (readonly [number, number])[] = [
   [1280, 640],
   [1180, 760], // iPad Air on its side
   [1024, 700], // iPad on its side
+  [768, 1024], // iPad upright
 ];
 
 interface HomeLayout {
@@ -26,10 +27,13 @@ interface HomeLayout {
   doors: { name: string; fits: boolean; bottom: number; layout: string }[];
   /** what «Для взрослых» overlaps among the greeting, its question and «Продолжить партию» */
   parentOverlaps: string[];
+  /** top of Гамбитик's bar on a phone; null elsewhere */
+  barTop: number | null;
 }
 
 async function homeLayout(page: Page): Promise<HomeLayout> {
   return page.evaluate(() => {
+    const bar = [...document.querySelectorAll('.gmb-dock[data-layout="bar"] .gmb-dock-mascot, .gmb-dock[data-layout="bar"] .gmb-round')];
     return {
       scrollHeight: document.documentElement.scrollHeight,
       doors: [...document.querySelectorAll<HTMLElement>('nav[aria-label="Главное меню"] > button')].map((door) => ({
@@ -50,6 +54,7 @@ async function homeLayout(page: Page): Promise<HomeLayout> {
           })
           .map((el) => el.textContent ?? '');
       })(),
+      barTop: bar.length > 0 ? Math.min(...bar.map((e) => e.getBoundingClientRect().top)) : null,
     };
   });
 }
@@ -83,10 +88,11 @@ test('the home fits the screen, «Продолжить партию» included',
     expect(layout.scrollHeight, `${width}×${height}: the home needs no scrolling`).toBeLessThanOrEqual(height);
   }
 
-  // a phone held upright: the doors come first
+  // a phone held upright: the doors come first, above Гамбитик's bar
   for (const [width, height] of [[390, 664], [360, 640]] as const) {
     const layout = await home(width, height);
-    for (const door of layout.doors) expect(door.bottom, `${width}×${height}: «${door.name}» is on the first screen`).toBeLessThanOrEqual(height);
+    expect(layout.barTop, `${width}×${height}: Гамбитик stands in the bar`).not.toBeNull();
+    for (const door of layout.doors) expect(door.bottom, `${width}×${height}: «${door.name}» is above the bar`).toBeLessThanOrEqual(layout.barTop ?? 0);
   }
 
   // the parent's biggest text: the doors stand 2 × 2 on a computer, and every title still fits

@@ -37,7 +37,7 @@ import { Settings } from './Settings.tsx';
 import styles from './shell.module.css';
 import { getBrowserStorage } from './shellSettings.ts';
 import { WARMUP_PUZZLES, loadDayLog, markReviewedToday, notePuzzleDoneToday } from './todayPlan.ts';
-import { useMediaQuery } from './useMediaQuery.ts';
+import { SHORT_LANDSCAPE_QUERY, STACKED_GAME_QUERY, useMediaQuery } from './useMediaQuery.ts';
 
 
 const GameScreen = lazy(() => import('../features/game/GameScreen.tsx').then((module) => ({ default: module.GameScreen })));
@@ -103,6 +103,17 @@ function gameSettingsProps(route: PlayRoute): Pick<PlayRoute, 'personaId' | 'tim
   return { personaId: route.personaId, timeControlId: route.timeControlId, childColor: route.childColor, coachStyle: route.coachStyle, examMode: route.examMode };
 }
 
+/** The window's width in CSS px (the bar's bubble takes what the buttons and Гамбитик leave). */
+function useViewportWidth(): number {
+  const [width, setWidth] = useState(() => (typeof window === 'undefined' ? 390 : window.innerWidth));
+  useEffect(() => {
+    const update = (): void => setWidth(window.innerWidth);
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+  return width;
+}
+
 function LoadingScreen() {
   return (
     <div className={styles.loading}>
@@ -127,6 +138,10 @@ export function App() {
   const [gateOpen, setGateOpen] = useState(() => isGateOpen(getGateStorage(), Date.now()));
   const wideWindow = useMediaQuery('(min-width: 1240px)');
   const roomyWindow = useMediaQuery('(min-width: 1280px)');
+  const stackedWindow = useMediaQuery(STACKED_GAME_QUERY);
+  const shortLandscape = useMediaQuery(SHORT_LANDSCAPE_QUERY);
+  const tabletWidth = useMediaQuery('(min-width: 600px)');
+  const viewportWidth = useViewportWidth();
   const routeNameRef = useRef(route.name);
   routeNameRef.current = route.name;
   const greetingHandled = useRef(false);
@@ -324,6 +339,18 @@ export function App() {
     }
   }
 
+  // a phone held upright: Гамбитик in a bar across the bottom — the game keeps that strip free itself, every other
+  // page gets room under its content (html[data-dock-bar='page'], ui/global.css), so his words never cover anything
+  // a phone on its side: the same bar, in the right-hand column only (MascotDock.css)
+  const dockBar = (stackedWindow || shortLandscape) && !showOnboarding && route.name !== 'playground';
+  // a 320–379 px phone gives the words the room: a smaller Гамбитик
+  useEffect(() => {
+    const root = document.documentElement;
+    if (dockBar && route.name !== 'play') root.dataset.dockBar = 'page';
+    else delete root.dataset.dockBar;
+  }, [dockBar, route.name]);
+  const barMascot = shortLandscape ? 64 : tabletWidth ? 112 : viewportWidth < 380 ? 64 : 84;
+  const barWidth = shortLandscape ? Math.round(viewportWidth * 0.42) : viewportWidth;
   // the mascot playground brings its own live dock — never show two Гамбитиks
   const showDock = !(Playground !== null && route.name === 'playground' && route.tool === 'mascot');
 
@@ -334,11 +361,15 @@ export function App() {
       </ErrorBoundary>
       <ServerBanner online={serverOnline} onRetry={() => appController.refresh()} compact={route.name === 'play'} />
       {showDock ? (
-        <MascotDock
-          size={dockSizeFor(route, showOnboarding, roomyWindow, wideWindow)}
-          bubbleWidth={bubbleWidthFor(route, showOnboarding, wideWindow, roomyWindow)}
-          compactOnLowWindow={!showOnboarding && route.name === 'play'}
-        />
+        dockBar ? (
+          <MascotDock layout="bar" size={barMascot} bubbleWidth={Math.max(150, barWidth - 16 - 48 - barMascot - 2 * 8)} />
+        ) : (
+          <MascotDock
+            size={dockSizeFor(route, showOnboarding, roomyWindow, wideWindow)}
+            bubbleWidth={bubbleWidthFor(route, showOnboarding, wideWindow, roomyWindow)}
+            compactOnLowWindow={!showOnboarding && route.name === 'play'}
+          />
+        )
       ) : null}
     </ErrorBoundary>
   );

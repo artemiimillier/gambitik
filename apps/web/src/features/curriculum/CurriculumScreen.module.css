@@ -240,7 +240,7 @@
 
 .skills {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: var(--space-1) var(--space-6);
   padding-left: 1.3em;
   list-style: disc;
@@ -265,7 +265,7 @@
 
 .criteria {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: var(--space-4);
 }
 

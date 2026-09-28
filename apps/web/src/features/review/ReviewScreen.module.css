@@ -294,7 +294,7 @@
 /* ── move list ── */
 .moveList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr));
   gap: var(--space-1) var(--space-4);
   max-height: 340px;
   overflow-y: auto;

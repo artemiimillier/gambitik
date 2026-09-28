@@ -94,6 +94,13 @@ export interface MascotDockProps {
   bubbleWidth?: number;
   /** shrink Гамбитик to 124 px on a low window (≤ 760 px): for screens that need every pixel of height (the game) */
   compactOnLowWindow?: boolean;
+  /**
+   * 'corner' (default): the bubble above his head in the bottom-right corner. 'bar' (the game on a phone held upright):
+   * a strip across the bottom — the bubble (three lines a page) to the left of Гамбитик, «Спроси» and the speaker in a
+   * column before it. The game keeps that strip free (GameScreen .dockBar), so his words never cover the board.
+   * The bar has no «Подсказка»: the game's own button row has it right above.
+   */
+  layout?: 'corner' | 'bar';
   /** dependency injection for the playground / tests; the app uses the singletons */
   coach?: CoachController;
   store?: CoachStore;
@@ -292,6 +299,7 @@ export function MascotDock({
   side = 'right',
   bubbleWidth = DEFAULT_BUBBLE_WIDTH,
   compactOnLowWindow = false,
+  layout = 'corner',
   coach = defaultCoach,
   store = defaultStore,
   initialAskOpen = false,
@@ -364,7 +372,9 @@ export function MascotDock({
 
   const shownText = needsUserGesture ? GESTURE_PROMPT : bubbleText;
   const lowWindow = useLowWindow(compactOnLowWindow);
-  const { page, index, count } = useBubblePages(shownText, bubblePageChars(bubbleWidth, lowWindow ? 3 : 4));
+  const bar = layout === 'bar';
+  // the bar's bubble speaks at 16 px (the corner's at 19): as many characters as the wider bubble would hold, three lines
+  const { page, index, count } = useBubblePages(shownText, bar ? bubblePageChars(Math.round((bubbleWidth * 19) / 16), 3) : bubblePageChars(bubbleWidth, lowWindow ? 3 : 4));
   const shownPose = needsUserGesture && pose !== 'listen' ? 'wave' : pose;
 
   const onMascotClick = useCallback(() => {
@@ -534,7 +544,7 @@ export function MascotDock({
   const talkLabel = voiceLimitReached ? VOICE_LIMIT_LABEL : conversationButtonLabel(conversationState, { micBlocked, cutsIn });
   // teacher mode: «Совет» (repeats the advice); an exam has no help at all
   const hintText = hintButtonText(coachStyle);
-  const showHint = hasToolHost && hintAvailable && coachStyle !== 'exam';
+  const showHint = hasToolHost && hintAvailable && coachStyle !== 'exam' && !bar;
 
   return (
     <aside
@@ -542,6 +552,7 @@ export function MascotDock({
       data-side={side}
       data-gesture={needsUserGesture ? 'true' : 'false'}
       data-compact={compactOnLowWindow ? 'true' : 'false'}
+      data-layout={layout}
       aria-label="Тренер Гамбитик"
       aria-describedby={statusId}
       title={parentStatus}

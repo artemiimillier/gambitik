@@ -16,7 +16,7 @@ import { TIME_CONTROLS } from '@gambit/shared';
 import { getGame, getGameReview, getStudent, isApiError } from '../../api/client.ts';
 import type { GameReviewWithAdvice } from '../../api/client.ts';
 import { coach } from '../../coach/index.ts';
-import { Badge, Button, Card, Icon, PersonaAvatar, ProgressBar, Screen, Spinner, cx, playSound, pluralRu } from '../../ui/index.ts';
+import { Badge, Button, Card, Icon, PersonaAvatar, ProgressBar, Screen, Spinner, cx, playSound, pluralRu, scrollIntoViewWithin } from '../../ui/index.ts';
 import { ConceptCardModal } from '../curriculum/ConceptCardModal.tsx';
 import { MiniBoard } from '../puzzles/MiniBoard.tsx';
 import type { MiniBoardMove } from '../puzzles/MiniBoard.tsx';
@@ -248,7 +248,8 @@ export function ReviewScreen({ gameId, onExit, onStartPuzzles }: ReviewScreenPro
   }, [model, session]);
 
   useEffect(() => {
-    currentMoveRef.current?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+    // only the move list scrolls: on a phone the page must stay on the board
+    scrollIntoViewWithin(currentMoveRef.current);
     // arrows drawn for one position must not reappear on another
     setExtraMarks((marks) => (marks && marks.cursor !== nav.cursor ? null : marks));
   }, [nav.cursor]);
