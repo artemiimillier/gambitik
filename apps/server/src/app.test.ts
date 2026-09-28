@@ -494,7 +494,8 @@ describe('puzzles', () => {
       expect(p.themes).toContain('mateIn1');
       expect(p.solutionUci.length).toBeGreaterThan(0);
       expect(p.lastMoveUci).toMatch(/^[a-h][1-8][a-h][1-8][qrbn]?$/);
-      expect(Math.abs(p.rating - 550)).toBeLessThanOrEqual(150);
+      // a new child (600 ± 300) is aimed at the easy end of the scale: 400 ± 150
+      expect(p.rating).toBeLessThanOrEqual(550);
     }
 
     const first = puzzles[0];

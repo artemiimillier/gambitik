@@ -1,21 +1,35 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
 import { Chess } from 'chess.js';
-import { describe, expect, it } from 'vitest';
+import { glicko2 } from 'glicko2-lite';
+import { afterAll, describe, expect, it } from 'vitest';
 import type { Puzzle, StudentProfile, ThemeSkill } from '@gambit/shared';
+import { openDb } from '../storage/db.ts';
 import { BUILTIN_PUZZLE_ROWS } from './builtinPuzzles.ts';
 import { defaultProfile } from './profile.ts';
 import {
+  MIN_FITTING_SUCCESS,
   MemoryPuzzleSource,
+  PUZZLE_RATING_FLOOR,
+  PUZZLE_RD,
+  SqlitePuzzleSource,
+  TARGET_SUCCESS,
+  WINDOW_HALF_WIDTH,
   applyAttemptToProfile,
   attemptScore,
   builtinPuzzles,
   convertRawPuzzle,
+  expectedScore,
   isMatePuzzle,
   parseStarterPuzzles,
+  puzzleRatingFor,
   rateAttempt,
   selectNextPuzzles,
   skillThemes,
+  targetRating,
 } from './puzzles.ts';
 
 describe('built-in puzzles', () => {
@@ -129,22 +143,73 @@ describe('Glicko-2 rating', () => {
   });
 });
 
+describe('difficulty target', () => {
+  /** E = 1 / (1 + 10^(−g(RD)·Δ/400)), g(RD) = 1 / √(1 + 3q²RD²/π²), q = ln 10 / 400 */
+  const closedForm = (delta: number, rd: number) => {
+    const q = Math.LN10 / 400;
+    const g = 1 / Math.sqrt(1 + (3 * q * q * rd * rd) / (Math.PI * Math.PI));
+    return 1 / (1 + 10 ** ((-g * delta) / 400));
+  };
+
+  it('is the Glicko expected score — the very one glicko2-lite rates an attempt against', () => {
+    for (const [rating, puzzle] of [[600, 400], [1000, 750], [1500, 1600], [2000, 1200]] as const) {
+      const e = expectedScore({ rating, rd: 0 }, puzzle);
+      expect(e).toBeCloseTo(closedForm(rating - puzzle, PUZZLE_RD), 7); // glicko2-lite rounds 400 / ln 10 to 173.7178
+      // scoring exactly the expectation leaves the rating where it was
+      expect(glicko2(rating, 120, 0.06, [[puzzle, PUZZLE_RD, e]], { tau: 0.5 }).rating).toBeCloseTo(rating, 6);
+    }
+    // the student's own deviation flattens the forecast: g(√(RD² + RDⱼ²))
+    expect(expectedScore({ rating: 1000, rd: 300 }, 750)).toBeCloseTo(closedForm(250, Math.hypot(300, PUZZLE_RD)), 7);
+  });
+
+  it('aims at four puzzles of five — «50 below the rating» gave only 57 %', () => {
+    expect(expectedScore({ rating: 1000, rd: 0 }, 950)).toBeCloseTo(0.57, 2);
+    expect(TARGET_SUCCESS).toBe(0.8);
+    for (const rd of [45, 80, 150, 300]) {
+      const skill = { rating: 1500, rd };
+      expect(expectedScore(skill, targetRating(skill))).toBeCloseTo(0.8, 9);
+    }
+    // a settled rating: about 250 below it — where the rating update itself expects 80.2 %
+    expect(1500 - targetRating({ rating: 1500, rd: 45 })).toBeCloseTo(250.8, 1);
+    expect(expectedScore({ rating: 1500, rd: 0 }, 1500 - 250.8)).toBeCloseTo(0.802, 3);
+  });
+
+  it('aims lower while the rating is uncertain, but never below the easy end of the scale', () => {
+    const gap = (rd: number) => 1500 - targetRating({ rating: 1500, rd });
+    expect(gap(80)).toBeCloseTo(255.9, 1);
+    expect(gap(150)).toBeCloseTo(273.6, 1);
+    expect(gap(300)).toBeCloseTo(338.1, 1);
+    // a new child (600 ± 300) and a struggling one are aimed at the easiest band, not below the easiest puzzle
+    expect(targetRating(defaultProfile().puzzleRating)).toBe(PUZZLE_RATING_FLOOR);
+    expect(targetRating({ rating: 450, rd: 45 })).toBe(PUZZLE_RATING_FLOOR);
+  });
+
+  it('puzzleRatingFor solves expectedScore for the puzzle', () => {
+    for (const skill of [{ rating: 600, rd: 300 }, { rating: 1200, rd: 45 }, { rating: 1800, rd: 150 }]) {
+      for (const success of [MIN_FITTING_SUCCESS, 0.5, TARGET_SUCCESS, 0.9]) expect(expectedScore(skill, puzzleRatingFor(skill, success))).toBeCloseTo(success, 9);
+    }
+    expect(puzzleRatingFor({ rating: 900, rd: 60 }, 0.5)).toBeCloseTo(900, 9);
+  });
+});
+
 describe('adaptive selection', () => {
   const pool: Puzzle[] = [];
   for (let rating = 300; rating <= 2000; rating += 20) {
     for (const theme of ['fork', 'pin']) pool.push({ id: `${theme}-${rating}`, fen: 'x', lastMoveUci: 'a1a2', solutionUci: ['a2a3'], rating, themes: [theme] });
   }
   const source = () => new MemoryPuzzleSource('starter', pool);
+  const skill = (r: number): ThemeSkill => ({ rating: r, rd: 100, vol: 0.06, attempts: 20, solved: 10, lastSeen: null });
   const profileAt = (rating: number, themes: Record<string, number> = {}): StudentProfile => {
     const base = defaultProfile();
-    const skill = (r: number) => ({ rating: r, rd: 100, vol: 0.06, attempts: 20, solved: 10, lastSeen: null });
     return { ...base, puzzleRating: skill(rating), themeSkills: Object.fromEntries(Object.entries(themes).map(([t, r]) => [t, skill(r)])) };
   };
+  /** where a batch for a student rated `r` is centred */
+  const target = (r: number) => targetRating(skill(r));
 
-  it('stays inside the ±150 window around (rating − 50) and sorts easier first', () => {
+  it('stays inside the ±150 window around the target and sorts easier first', () => {
     const picked = selectNextPuzzles(source(), profileAt(1000), { count: 8, recentIds: [] });
     expect(picked).toHaveLength(8);
-    for (const p of picked) expect(Math.abs(p.rating - 950)).toBeLessThanOrEqual(150);
+    for (const p of picked) expect(Math.abs(p.rating - target(1000))).toBeLessThanOrEqual(WINDOW_HALF_WIDTH);
     expect(picked.map((p) => p.rating)).toEqual([...picked.map((p) => p.rating)].sort((a, b) => a - b));
     expect(new Set(picked.map((p) => p.id)).size).toBe(8);
   });
@@ -154,22 +219,34 @@ describe('adaptive selection', () => {
     expect(picked).toHaveLength(5);
     for (const p of picked) {
       expect(p.themes).toEqual(['pin']);
-      expect(Math.abs(p.rating - 1450)).toBeLessThanOrEqual(150);
+      expect(Math.abs(p.rating - target(1500))).toBeLessThanOrEqual(WINDOW_HALF_WIDTH);
     }
   });
 
   it('widens the window when there are not enough puzzles', () => {
-    const picked = selectNextPuzzles(source(), profileAt(2600), { theme: 'fork', count: 4, recentIds: [] });
-    // ±600 reaches 1960–2000 (three puzzles); only the fourth comes from the next, wider window
+    // the target is 2410: ±450 reaches 1960–2000 (three puzzles); only the fourth comes from the next, wider window
+    const picked = selectNextPuzzles(source(), profileAt(2410 + (1000 - target(1000))), { theme: 'fork', count: 4, recentIds: [] });
     const ratings = picked.map((p) => p.rating);
     expect(ratings).toHaveLength(4);
     expect(ratings.slice(1)).toEqual([1960, 1980, 2000]);
-    expect(ratings[0]).toBeGreaterThanOrEqual(1800);
+    expect(ratings[0]).toBeGreaterThanOrEqual(1810);
     expect(ratings[0]).toBeLessThan(1960);
   });
 
+  it('starts a new child at the easy end, and a theme that only starts far above is still served', () => {
+    const picked = selectNextPuzzles(source(), defaultProfile(), { count: 10, recentIds: [] });
+    expect(picked).toHaveLength(10);
+    for (const p of picked) expect(p.rating).toBeLessThanOrEqual(PUZZLE_RATING_FLOOR + WINDOW_HALF_WIDTH);
+
+    const hard = new MemoryPuzzleSource('starter', pool.filter((p) => p.rating >= 1200));
+    const late = selectNextPuzzles(hard, defaultProfile(), { theme: 'pin', count: 3, recentIds: [] });
+    expect(late).toHaveLength(3);
+    // the first window that reaches the theme (400 ± 900) — its easiest band
+    for (const p of late) expect(p.rating).toBeLessThanOrEqual(1300);
+  });
+
   it('excludes recently attempted puzzles, but repeats rather than returning nothing', () => {
-    const near = pool.filter((p) => p.themes[0] === 'fork' && Math.abs(p.rating - 950) <= 150).map((p) => p.id);
+    const near = pool.filter((p) => p.themes[0] === 'fork' && Math.abs(p.rating - target(1000)) <= WINDOW_HALF_WIDTH).map((p) => p.id);
     const picked = selectNextPuzzles(source(), profileAt(1000), { theme: 'fork', count: 5, recentIds: near });
     expect(picked).toHaveLength(5);
     for (const p of picked) expect(near).not.toContain(p.id);
@@ -204,6 +281,35 @@ describe('adaptive selection', () => {
     expect(mate.every(isMatePuzzle)).toBe(true);
   });
 
+  it('stage 1: looks past the easy mates for puzzles that win material, but not at ever harder ones', () => {
+    const puzzles: Puzzle[] = [];
+    const add = (id: string, rating: number, themes: string[]) => puzzles.push({ id, fen: 'x', lastMoveUci: 'a1a2', solutionUci: ['a2a3'], rating, themes });
+    // as in the Lichess database: the easy `hangingPiece` puzzles are mates, the ones that win a piece start higher
+    for (let i = 0; i < 40; i += 1) add(`mate-${i}`, 400 + i * 5, ['hangingPiece', 'mate', 'mateIn1']);
+    for (const rating of [560, 610, 650, 690]) add(`free-${rating}`, rating, ['hangingPiece', 'short']);
+    for (const rating of [800, 900, 1000]) add(`hard-${rating}`, rating, ['hangingPiece', 'short']);
+    const src = new MemoryPuzzleSource('starter', puzzles);
+    const child = profileAt(600);
+    const ceiling = puzzleRatingFor(child.puzzleRating, MIN_FITTING_SUCCESS);
+    expect(target(600)).toBe(PUZZLE_RATING_FLOOR);
+    expect(ceiling).toBeGreaterThan(690);
+    expect(ceiling).toBeLessThan(800);
+
+    // every fitting puzzle within reach and none of the too hard ones; mates near the target fill the rest
+    const batch = selectNextPuzzles(src, child, { theme: 'hangingPiece', count: 10, recentIds: [] });
+    expect(batch).toHaveLength(10);
+    expect(batch.filter((p) => !isMatePuzzle(p)).map((p) => p.id).sort()).toEqual(['free-560', 'free-610', 'free-650', 'free-690']);
+    for (const p of batch.filter(isMatePuzzle)) expect(p.rating).toBeLessThanOrEqual(PUZZLE_RATING_FLOOR + WINDOW_HALF_WIDTH);
+
+    // used up: they come back as repeats — not a mate, not a puzzle beyond reach
+    const free = ['free-560', 'free-610', 'free-650', 'free-690'];
+    expect(selectNextPuzzles(src, child, { theme: 'hangingPiece', count: 4, recentIds: free }).map((p) => p.id).sort()).toEqual(free);
+
+    // the stage mix takes its «free piece» picks from the fitting ones too
+    const mix = selectNextPuzzles(src, child, { count: 4, preferredThemes: ['hangingPiece'], recentIds: [] });
+    expect(mix.filter((p) => p.id.startsWith('free-'))).toHaveLength(2);
+  });
+
   it('mixes in the themes of the current curriculum stage', () => {
     const picked = selectNextPuzzles(source(), profileAt(1000), { count: 6, preferredThemes: ['pin'], recentIds: [] });
     expect(picked.filter((p) => p.themes[0] === 'pin').length).toBeGreaterThanOrEqual(3);
@@ -211,6 +317,54 @@ describe('adaptive selection', () => {
 
   it('returns an empty list for an unknown theme', () => {
     expect(selectNextPuzzles(source(), profileAt(1000), { theme: 'zugzwang', count: 3, recentIds: [] })).toEqual([]);
+  });
+});
+
+describe('SqlitePuzzleSource', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'gambit-puzzles-'));
+  afterAll(() => rmSync(dir, { recursive: true, force: true }));
+  // one legal Lichess line filed under different tags
+  const FEN = 'r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24';
+  const MOVES = 'f2g3 e6e7 b2b1 b3c1 b1c1 h6c1';
+  const TAGS: Record<string, string> = {
+    free: 'crushing hangingPiece long middlegame',
+    mate: 'hangingPiece mate mateIn2 short',
+    back: 'backRankMate hangingPiece mate mateIn1 oneMove',
+    // a pattern or a length tag alone still means a mate; look-alike words do not
+    pattern: 'hangingPiece smotheredMate',
+    length: 'hangingPiece mateIn3',
+    lookalike: 'hangingPiece matey mated',
+  };
+
+  function build(name: string, withThemeTable: boolean): SqlitePuzzleSource {
+    const path = join(dir, `${name}.sqlite`);
+    const db = new DatabaseSync(path);
+    db.exec('CREATE TABLE puzzle (id TEXT PRIMARY KEY, fen TEXT NOT NULL, moves TEXT NOT NULL, rating INTEGER NOT NULL, popularity INTEGER, nb_plays INTEGER, themes TEXT NOT NULL)');
+    if (withThemeTable) db.exec('CREATE TABLE puzzle_theme (theme TEXT NOT NULL, rating INTEGER NOT NULL, puzzle_id TEXT NOT NULL, PRIMARY KEY (theme, rating, puzzle_id)) WITHOUT ROWID');
+    for (const [id, themes] of Object.entries(TAGS)) {
+      db.prepare('INSERT INTO puzzle VALUES (?, ?, ?, 600, 95, 1000, ?)').run(id, FEN, MOVES, themes);
+      if (withThemeTable) for (const theme of themes.split(' ')) db.prepare('INSERT INTO puzzle_theme VALUES (?, 600, ?)').run(theme, id);
+    }
+    db.close();
+    return new SqlitePuzzleSource(openDb(path, { readOnly: true }));
+  }
+
+  it.each([true, false])('leaves out exactly what isMatePuzzle calls a mate (theme table: %s)', (withThemeTable) => {
+    const source = build(`tags-${withThemeTable}`, withThemeTable);
+    try {
+      const query = { lo: 0, hi: 3000, exclude: new Set<string>(), limit: 100 };
+      const notMates = Object.entries(TAGS)
+        .filter(([, themes]) => !isMatePuzzle({ themes: themes.split(' ') }))
+        .map(([id]) => id)
+        .sort();
+      expect(notMates).toEqual(['free', 'lookalike']);
+      for (const theme of [undefined, 'hangingPiece']) {
+        expect(source.candidates({ ...query, theme, noMates: true }).map((p) => p.id).sort()).toEqual(notMates);
+        expect(source.candidates({ ...query, theme })).toHaveLength(Object.keys(TAGS).length);
+      }
+    } finally {
+      source.close();
+    }
   });
 });
 
