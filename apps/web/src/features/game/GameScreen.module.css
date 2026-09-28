@@ -242,11 +242,6 @@
   margin-left: auto;
 }
 
-/* ≤ 899 px: the sound switch and the question card sit above the board (the panel goes below it) */
-.narrowTop {
-  display: none;
-}
-
 .takeback {
   display: flex;
   flex: none;
@@ -580,54 +575,320 @@
   line-height: var(--line-height-text, 1.45);
 }
 
-/* ── narrow windows: board on top, panel below, the page scrolls ── */
-@media (max-width: 899px) {
-  /* the question and the sound switch go above the board; their panel copies step aside */
-  .narrowTop {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-2, 0.5rem);
-    width: min(100%, 880px);
-    margin-inline: auto;
+/* ── a phone held upright / a narrow tablet (STACKED_GAME_QUERY): ONE column that fits the screen, no page scroll ──
+   opponent · board (as big as the rest allows) · the child · the panel (buttons, a question, the take-back choice) ·
+   the strip Гамбитик's bar stands on (MascotDock layout="bar"). Nothing of the game ever goes under his words, and
+   nothing moves the page after a move. */
+.screen[data-stacked='true'] {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100vh;
+  height: 100dvh;
+  padding: max(6px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) 0 max(8px, env(safe-area-inset-left));
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.screen[data-stacked='true'] .boardColumn {
+  /* the strips hug the board; a tall phone's spare height goes below the buttons, not around the board */
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  /* the result card and the diary question scroll inside the panel: the board keeps a real size under them */
+  min-height: min(52%, calc(100vw + 110px));
+}
+
+.screen[data-stacked='true'] .boardColumn > .boardArea {
+  flex: 0 1 auto;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+}
+
+.screen[data-stacked='true'] .boardColumn > .strip {
+  flex: none;
+}
+
+.screen[data-stacked='true'] .panel {
+  flex: 0 1 auto;
+  gap: 6px;
+  /* a tall card (the result, the diary question) scrolls inside, the board keeps its place */
+  max-height: 48%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+/* the status and the tags: the child strip says «Твой ход!», the rest is in the review */
+.screen[data-stacked='true'] .panelHead {
+  display: none;
+}
+
+.screen[data-stacked='true'] .strip {
+  min-height: 48px;
+  gap: var(--space-2, 0.5rem);
+  padding: 2px var(--space-2, 0.5rem);
+  border-width: 2px;
+  border-radius: var(--radius-md, 16px);
+}
+
+.screen[data-stacked='true'] .avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.screen[data-stacked='true'] .childBadge {
+  width: 38px;
+  height: 38px;
+  font-size: 1.45rem;
+}
+
+.screen[data-stacked='true'] .name {
+  font-size: var(--text-md, 1.15rem);
+}
+
+.screen[data-stacked='true'] .detail {
+  font-size: 0.875rem;
+  line-height: 1.15;
+}
+
+.screen[data-stacked='true'] .strip[data-side='child'][data-active='true'] .detail {
+  color: var(--color-primary, #0f6f69);
+  font-weight: var(--font-weight-black, 900);
+}
+
+.screen[data-stacked='true'] .captured {
+  font-size: 1.15rem;
+}
+
+.screen[data-stacked='true'] .clock {
+  padding: 6px var(--space-2, 0.5rem);
+  font-size: var(--text-lg, 1.4rem);
+}
+
+/* the bot's words sit on its strip (three short lines at most), clear of the clock */
+.screen[data-compact='true'] .bubble {
+  left: 50px;
+  max-width: calc(100% - 50px - 6.5rem);
+  padding: 4px 12px;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.screen[data-compact='true'] .strip:not(:has(.clock)) .bubble {
+  max-width: calc(100% - 58px);
+}
+
+/* one row: «Подсказка» (widest) · «Вернуть» · the flag */
+.actions[data-compact='true'] {
+  flex-direction: row;
+  gap: 6px;
+  padding-bottom: var(--step, 6px);
+}
+
+.actions[data-compact='true'] > * {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  min-height: 48px;
+  height: 48px;
+  gap: 6px;
+  padding-inline: var(--space-2, 0.5rem);
+  font-size: 1rem;
+  --btn-icon: 20px;
+}
+
+.actions[data-compact='true'] > :first-child {
+  flex-grow: 1.6;
+}
+
+.actions[data-compact='true'] > :last-child:not(:first-child) {
+  flex: 0 0 52px;
+}
+
+.actions[data-compact='true'] .hintDots {
+  margin-left: 6px;
+  gap: 3px;
+}
+
+.actions[data-compact='true'] .hintDot {
+  width: 8px;
+  height: 8px;
+}
+
+/* a 320–379 px phone: the words stay, the ladder dots go (the hint itself still climbs step by step) */
+@media (max-width: 379px) {
+  .actions[data-compact='true'] .hintDots {
+    display: none;
   }
 
-  .narrowTop .soundToggle {
-    align-self: flex-end;
+  .actions[data-compact='true'] > * {
+    font-size: 0.9375rem;
   }
 
-  .wideOnly {
-    display: none !important;
+  .actions[data-compact='true'] .undo svg {
+    display: none;
   }
+}
 
+.actions[data-compact='true'] > * {
+  white-space: nowrap;
+}
+
+
+/* the take-back choice: the two answers side by side, so the board keeps most of its size */
+.screen[data-stacked='true'] .takeback {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: var(--space-2, 0.5rem);
+}
+
+.screen[data-stacked='true'] .takebackTitle {
+  grid-column: 1 / -1;
+  font-size: var(--text-md, 1.15rem);
+}
+
+.screen[data-stacked='true'] .takeback .choice {
+  min-height: 60px;
+  padding: var(--space-2, 0.5rem);
+  font-size: 1rem;
+  /* whole words only: «подумаю» never splits into «подума-ю» */
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@media (max-width: 379px) {
+  .screen[data-stacked='true'] .takeback .choice svg {
+    display: none;
+  }
+}
+
+.screen[data-stacked='true'] .reasons {
+  padding: var(--space-2, 0.5rem);
+}
+
+/* Гамбитик's bar (MascotDock layout="bar", fixed to the bottom) stands on this strip */
+.dockBar {
+  flex: none;
+  margin-top: auto;
+  height: calc(var(--dock-bar-height, 108px) + max(4px, env(safe-area-inset-bottom)));
+}
+
+@media (min-width: 600px) {
+  .dockBar {
+    --dock-bar-height: 140px;
+  }
+}
+
+/* «почему?» on a phone: three low buttons that wrap in two rows */
+.reasons[data-compact='true'] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.reasons[data-compact='true'] .reasonsTitle {
+  flex: 1 1 100%;
+}
+
+.reasons[data-compact='true'] .reasonChoice {
+  flex: 1 1 auto;
+  width: auto;
+  min-height: 44px;
+  font-size: 1rem;
+}
+
+/* the lesson's question on a phone: over the bottom strip (the bar and the button row), above Гамбитик's bar */
+.quizDock {
+  position: fixed;
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(4px, env(safe-area-inset-bottom));
+  left: max(8px, env(safe-area-inset-left));
+  z-index: calc(var(--z-dock, 30) + 1);
+  /* covers the button row too (the answers are the only thing to press now) */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(var(--dock-bar-height, 108px) + 58px);
+}
+
+@media (min-width: 600px) {
+  .quizDock {
+    --dock-bar-height: 140px;
+  }
+}
+
+.quizDock::before {
+  content: '';
+  position: absolute;
+  inset: -6px calc(-1 * max(8px, env(safe-area-inset-right))) calc(-1 * max(4px, env(safe-area-inset-bottom))) calc(-1 * max(8px, env(safe-area-inset-left)));
+  z-index: -1;
+  background: var(--color-bg, #fff8ec);
+}
+
+/* a phone on its side: the side panel scrolls rather than slide under the mascot */
+@media (max-height: 540px) and (orientation: landscape) {
   .screen {
-    grid-template-columns: minmax(0, 1fr);
-    height: auto;
-    min-height: 100dvh;
-    overflow: visible;
+    /* the right column is exactly as wide as Гамбитик's bar under it (MascotDock.css) */
+    grid-template-columns: minmax(0, 1fr) calc(42vw - 12px);
+    gap: var(--space-3, 0.75rem);
+    padding: 6px max(12px, env(safe-area-inset-right)) 6px max(12px, env(safe-area-inset-left));
   }
 
   .boardColumn {
-    grid-template-rows: auto auto auto;
-  }
-
-  .boardArea {
-    width: min(100%, 78dvh);
-    aspect-ratio: 1 / 1;
-    margin-inline: auto;
-  }
-
-  .moves {
-    flex: none;
-    max-height: 220px;
+    gap: 4px;
   }
 
   .strip {
-    min-height: 64px;
+    min-height: 44px;
   }
 
-  .clock {
-    font-size: var(--text-lg, 1.4rem);
+  .avatar {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+  }
+
+  .panel {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .moves {
+    display: none;
+  }
+
+  .dockSpace,
+  .screen[data-phase='gameOver'] .dockSpace {
+    height: calc(104px + max(4px, env(safe-area-inset-bottom)));
+  }
+
+  .panel {
+    gap: 6px;
+  }
+
+  .tags {
+    display: none;
+  }
+
+  .status {
+    padding: 6px var(--space-3, 0.75rem);
+    font-size: var(--text-md, 1.15rem);
+  }
+
+  .takeback .choice {
+    padding-block: 6px;
+    font-size: 1rem;
   }
 }
 

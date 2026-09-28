@@ -66,3 +66,35 @@
   line-height: 1;
   text-align: center;
 }
+
+/* a phone (GameScreen stacked): three answers in one row, the icon above the words */
+.quiz[data-compact='true'] {
+  gap: 6px;
+}
+
+.quiz[data-compact='true'] .options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-auto-flow: column;
+  gap: 6px;
+}
+
+.quiz[data-compact='true'] .option {
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 64px;
+  padding: 6px 4px;
+  font-size: 0.9375rem;
+  text-align: center;
+  overflow-wrap: normal;
+  text-wrap: wrap;
+}
+
+.quiz[data-compact='true'] .option > span {
+  text-wrap: wrap;
+}
+
+.quiz[data-compact='true'] .glyph {
+  font-size: 1.25em;
+}

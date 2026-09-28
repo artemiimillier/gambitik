@@ -166,3 +166,25 @@ html[data-reduced-motion='true'] *::after {
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
+
+/*
+ * A phone held upright: Гамбитик stands in a bar across the bottom (MascotDock layout="bar"). Every page except the
+ * game (which keeps its own strip) ends with room for that bar, so the last button scrolls clear of his words.
+ * --page-min-height: a full-height page is one screen minus that room, so a short page does not scroll into emptiness.
+ */
+html[data-dock-bar='page'] #root {
+  --page-min-height: calc(100dvh - var(--dock-bar-height, 108px) - max(4px, env(safe-area-inset-bottom)));
+  padding-bottom: calc(var(--dock-bar-height, 108px) + max(4px, env(safe-area-inset-bottom)));
+}
+
+@media (min-width: 600px) {
+  html[data-dock-bar='page'] #root {
+    --dock-bar-height: 140px;
+  }
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  html[data-dock-bar='page'] #root {
+    --dock-bar-height: 104px;
+  }
+}

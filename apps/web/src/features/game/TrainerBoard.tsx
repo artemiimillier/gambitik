@@ -41,7 +41,7 @@ export interface TrainerBoardProps {
 
 const ANIMATION_MS = 200;
 const DRAG_ACTIVATION_PX = 6;
-const MIN_BOARD_PX = 160;
+const MIN_BOARD_PX = 120;
 
 /** Largest multiple of 8 px that fits the element (whole-pixel squares keep the grid crisp). */
 function useBoardSize(): { ref: React.RefObject<HTMLDivElement | null>; size: number } {

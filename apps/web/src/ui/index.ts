@@ -10,6 +10,7 @@ export type { ButtonProps, ButtonSize, ButtonVariant } from './Button.tsx';
 export { Card } from './Card.tsx';
 export type { CardPadding, CardProps, CardTone } from './Card.tsx';
 export { Screen } from './Screen.tsx';
+export { scrollIntoViewWithin } from './scrollWithin.ts';
 export type { ScreenDockSpace, ScreenProps } from './Screen.tsx';
 export { BigChoice } from './BigChoice.tsx';
 export type { BigChoiceAccent, BigChoiceProps } from './BigChoice.tsx';

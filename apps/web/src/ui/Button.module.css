@@ -182,3 +182,16 @@
     transform: rotate(360deg);
   }
 }
+
+/* a phone: a long label wraps onto a second line instead of pushing the page wider than the screen */
+@media (max-width: 520px) {
+  .button {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .label {
+    min-width: 0;
+    text-wrap: balance;
+  }
+}

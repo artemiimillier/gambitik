@@ -31,13 +31,15 @@ export interface QuizCardProps {
   quiz: GameQuiz;
   onAnswer(optionId: string): void;
   className?: string;
+  /** a phone: the three answers side by side (icon over the words), so the card stays low under the board */
+  compact?: boolean;
 }
 
-export function QuizCard({ quiz, onAnswer, className }: QuizCardProps): ReactElement {
+export function QuizCard({ quiz, onAnswer, className, compact = false }: QuizCardProps): ReactElement {
   const answered = quiz.answeredId !== null;
   const streak = quizStreakText(quiz.streak);
   return (
-    <Card tone="sunny" padding="sm" className={[styles.quiz, className].filter(Boolean).join(' ')} role="group" aria-label={quiz.question} data-quiz={quiz.kind} data-answered={answered}>
+    <Card tone="sunny" padding="sm" className={[styles.quiz, className].filter(Boolean).join(' ')} role="group" aria-label={quiz.question} data-quiz={quiz.kind} data-answered={answered} data-compact={compact}>
       {streak ? (
         <p className={styles.streak} aria-live="polite">
           {streak}

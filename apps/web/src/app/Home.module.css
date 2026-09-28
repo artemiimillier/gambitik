@@ -2,10 +2,16 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-height: 100dvh;
   background:
     radial-gradient(circle at 96% -4%, var(--color-sunny-soft) 0 220px, transparent 221px),
     var(--color-bg);
+}
+
+/* one screen high — minus Гамбитик's bar on a phone (--page-min-height, ui/global.css) */
+@supports (height: 100dvh) {
+  .page {
+    min-height: var(--page-min-height, 100dvh);
+  }
 }
 
 /* a window taller than the hub: it stands a little above the middle instead of leaving the lower half empty (the free
@@ -105,6 +111,11 @@
     padding-bottom: var(--space-8);
     padding-right: max(var(--screen-gutter), calc(var(--mascot-dock-size) + var(--space-4)));
   }
+}
+
+/* a phone: Гамбитик stands in the bar and #root already keeps its strip free (ui/global.css) — no second empty screen */
+:global(html[data-dock-bar='page']) .main {
+  padding-bottom: var(--space-3);
 }
 
 /* ───────── the four doors ───────── */
@@ -327,8 +338,8 @@
 }
 
 /* ───────── a phone or a tablet held upright, a phone on its side ─────────
-   The doors stand 2 × 2 and every size follows the window's height: on a phone the four doors come first on the
-   screen and the plan follows. */
+   The doors stand 2 × 2 and every size follows the window's height: on a phone the four doors and the start of the plan
+   are on the first screen (Гамбитик's bar takes the bottom), a tablet shows the whole home. */
 @media (max-width: 899.98px), (max-height: 540.98px) {
   .page {
     --parent-button-top: clamp(var(--space-2), 2.4vh - 8px, var(--space-5));

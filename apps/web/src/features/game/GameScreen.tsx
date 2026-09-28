@@ -8,6 +8,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement } from 'react';
 import { useStore } from 'zustand';
+import { SHORT_LANDSCAPE_QUERY, STACKED_GAME_QUERY as STACKED_QUERY, useMediaQuery } from '../../app/useMediaQuery.ts';
 import { PERSONAS } from '@gambit/content';
 import { TAKEBACK_DECLINE_REASONS, childOutcome, declineReasonLabelRu, sanToBubbleRu } from '@gambit/core';
 import { TIME_CONTROLS } from '@gambit/shared';
@@ -256,9 +257,27 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
   const over = phase === 'gameOver';
   const playing = phase !== 'idle' && !over;
   const childDiff = childColor === 'w' ? captured.diff : -captured.diff;
-  // the question with three buttons: the top of the panel — on a narrow screen above the board (never under the bubble)
-  const quizCard = (placement: 'panel' | 'narrow'): ReactElement | null =>
-    quiz && !over && !takeback ? <QuizCard key={quiz.id} quiz={quiz} onAnswer={(id) => game.answerQuiz(id)} className={placement === 'panel' ? styles.wideOnly : undefined} /> : null;
+  // a phone held upright (or a narrow tablet): one column that fits the screen, Гамбитик in a bar at the bottom
+  const stacked = useMediaQuery(STACKED_QUERY);
+  // a phone on its side: the side panel is low — compact buttons, the speaker lives in Гамбитик's bar
+  const shortLandscape = useMediaQuery(SHORT_LANDSCAPE_QUERY);
+  const compact = stacked || shortLandscape;
+  // the question with three buttons: the top of the panel — on a phone right under the board (never under the bubble)
+  const quizCard = quiz && !over && !takeback ? <QuizCard key={quiz.id} quiz={quiz} compact={stacked} onAnswer={(id) => game.answerQuiz(id)} /> : null;
+  // «почему?» after «Оставлю свой ход»: three taps instead of typing; it never blocks the game and goes away by itself
+  const reasonsCard =
+    declineReasons && !over && !takeback ? (
+      <Card tone="surface" padding="sm" className={styles.reasons} data-compact={stacked} role="group" aria-label="Почему оставляем ход?">
+        <p className={styles.reasonsTitle}>Расскажешь, почему?</p>
+        {TAKEBACK_DECLINE_REASONS.map((reason) => (
+          <Button key={reason} variant="secondary" size="md" block className={styles.reasonChoice} onClick={() => game.giveDeclineReason(reason)}>
+            {declineReasonLabelRu(reason, profile?.address ?? 'm')}
+          </Button>
+        ))}
+      </Card>
+    ) : null;
+  // a phone: a question the child answers with a tap stands over the bottom strip (the lesson's question first)
+  const bottomCard = quizCard ?? reasonsCard;
 
   const openResign = (): void => {
     game.setModalOpen(true);
@@ -282,13 +301,13 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
   }, [over, resignOpen, game]);
 
   return (
-    <div className={styles.screen} data-phase={phase}>
+    <div className={styles.screen} data-phase={phase} data-stacked={stacked} data-compact={compact}>
       <div className={styles.boardColumn}>
         <PlayerStrip
           side="bot"
           name={persona.name}
           detail={`рейтинг ${persona.nominalElo}`}
-          avatar={<PersonaAvatar persona={persona} size={64} mood={over ? 'happy' : 'neutral'} />}
+          avatar={<PersonaAvatar persona={persona} size={compact ? 40 : 64} mood={over ? 'happy' : 'neutral'} />}
           active={playing && turn === botColor}
           lost={captured.lost[childColor]}
           lostColor={childColor}
@@ -296,12 +315,6 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
           clock={<ClockFace game={game} color={botColor} timed={timeControl.initialMs !== null} />}
           bubble={botBubble ? { text: botBubble.text, onDismiss: over ? undefined : () => game.dismissBotBubble() } : null}
         />
-
-        {/* narrow windows (≤ 899 px, the panel goes below the board): the sound switch and the question above the board */}
-        <div className={styles.narrowTop}>
-          {quizCard('narrow')}
-          <SoundToggle size="md" className={styles.soundToggle} />
-        </div>
 
         <div className={styles.boardArea}>
           <TrainerBoard
@@ -327,7 +340,7 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
         <PlayerStrip
           side="child"
           name={profile?.nickname ?? 'Ты'}
-          detail={childColor === 'w' ? 'белые' : 'чёрные'}
+          detail={stacked && playing && turn === childColor ? 'Твой ход!' : childColor === 'w' ? 'белые' : 'чёрные'}
           avatar={
             <span className={styles.childBadge} data-color={childColor} aria-hidden="true">
               <PieceIcon code={`${childColor}P`} size="1.4em" label="" />
@@ -368,12 +381,12 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
                 Тема: {themeBadge}
               </Badge>
             ) : null}
-            {/* the big «Звук вкл / выкл» (voice and move sounds together, until midnight) */}
-            <SoundToggle size="md" className={cx(styles.soundToggle, styles.wideOnly)} />
+            {/* the big «Звук вкл / выкл» (voice and move sounds together, until midnight); on a phone the bar's speaker */}
+            {compact ? null : <SoundToggle size="md" className={styles.soundToggle} />}
           </div>
         </div>
 
-        {quizCard('panel')}
+        {stacked ? null : quizCard}
 
         {/* Order matters: everything a child has to PRESS sits at the top of the panel. Гамбитик's speech bubble
             grows upwards from the bottom-right corner and may briefly cover the move list — never a button. */}
@@ -390,24 +403,16 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
         ) : null}
 
         {/* «почему?» after «Оставлю свой ход»: three taps instead of typing; it never blocks the game and goes away by itself */}
-        {declineReasons && !over && !takeback ? (
-          <Card tone="surface" padding="sm" className={styles.reasons} role="group" aria-label="Почему оставляем ход?">
-            <p className={styles.reasonsTitle}>Расскажешь, почему?</p>
-            {TAKEBACK_DECLINE_REASONS.map((reason) => (
-              <Button key={reason} variant="secondary" size="md" block className={styles.reasonChoice} onClick={() => game.giveDeclineReason(reason)}>
-                {declineReasonLabelRu(reason, profile?.address ?? 'm')}
-              </Button>
-            ))}
-          </Card>
-        ) : null}
+        {stacked ? null : reasonsCard}
 
         {over ? (
           <ResultCard game={game} childColor={childColor} onExit={onExit} onRematch={onRematch} />
         ) : takeback ? null : (
           // while the coach waits for the take-back answer the two big choices are the only buttons
           <>
-            <Actions game={game} onResign={openResign} onLeave={() => onExit()} />
-            <MoveList moves={moves} openingName={openingName} />
+            <Actions game={game} compact={compact} onResign={openResign} onLeave={() => onExit()} />
+            {/* a phone has no room for the list: the review shows every move */}
+            {stacked ? null : <MoveList moves={moves} openingName={openingName} />}
           </>
         )}
 
@@ -418,8 +423,12 @@ function GameView({ game, personaId, timeControlId, childColor, examMode, onExit
           <p className={styles.note}>Сегодня играем без проверки ходов. Когда партия закончится, я попробую посмотреть её ещё раз.</p>
         ) : null}
         {botUnavailable && !over ? <p className={styles.note}>{persona.name} сегодня ходит наугад: шахматный мотор соперника не завёлся.</p> : null}
-        <div className={styles.dockSpace} aria-hidden="true" />
+        {stacked ? null : <div className={styles.dockSpace} aria-hidden="true" />}
       </aside>
+      {/* the phone's Гамбитик bar (MascotDock layout="bar") stands on this strip: nothing of the game goes under it */}
+      {stacked ? <div className={styles.dockBar} aria-hidden="true" /> : null}
+      {/* a phone: the question stands where Гамбитик's bar is (his bubble only repeats it) — the board keeps its size */}
+      {stacked && bottomCard ? <div className={styles.quizDock}>{bottomCard}</div> : null}
 
       <Modal
         open={resignOpen}
@@ -504,9 +513,11 @@ function ClockFace({ game, color, timed }: { game: GameController; color: Color;
 // ───────────────────────── move list ─────────────────────────
 
 function MoveList({ moves, openingName }: { moves: readonly MoveEntry[]; openingName: string | null }): ReactElement {
-  const end = useRef<HTMLLIElement | null>(null);
+  // scroll the list itself, never the page (scrollIntoView pulled the whole page down after every move on a phone)
+  const list = useRef<HTMLOListElement | null>(null);
   useEffect(() => {
-    end.current?.scrollIntoView({ block: 'nearest' });
+    const element = list.current;
+    if (element) element.scrollTop = element.scrollHeight;
   }, [moves.length]);
 
   const rows: { number: number; white?: MoveEntry; black?: MoveEntry }[] = [];
@@ -524,9 +535,9 @@ function MoveList({ moves, openingName }: { moves: readonly MoveEntry[]; opening
       {rows.length === 0 ? (
         <p className={styles.movesEmpty}>Здесь появятся ходы</p>
       ) : (
-        <ol className={styles.moveRows}>
+        <ol ref={list} className={styles.moveRows}>
           {rows.map((row, index) => (
-            <li key={row.number} className={styles.moveRow} ref={index === rows.length - 1 ? end : undefined}>
+            <li key={row.number} className={styles.moveRow}>
               <span className={styles.moveNumber}>{row.number}.</span>
               <span className={styles.moveSan} data-last={row.white !== undefined && row.white === last}>
                 {row.white ? sanToBubbleRu(row.white.san) : '…'}
@@ -544,7 +555,8 @@ function MoveList({ moves, openingName }: { moves: readonly MoveEntry[]; opening
 
 // ───────────────────────── buttons ─────────────────────────
 
-function Actions({ game, onResign, onLeave }: { game: GameController; onResign(): void; onLeave(): void }): ReactElement {
+/** `compact` (a phone): one row of three — «Подсказка» first and widest, «Вернуть», the flag. */
+function Actions({ game, compact, onResign, onLeave }: { game: GameController; compact: boolean; onResign(): void; onLeave(): void }): ReactElement {
   const phase = useStore(game.store, (s) => s.phase);
   const hintsEnabled = useStore(game.store, (s) => s.hintsEnabled);
   const hintLevel = useStore(game.store, (s) => s.hintLevel);
@@ -557,7 +569,7 @@ function Actions({ game, onResign, onLeave }: { game: GameController; onResign()
   const undoPossible = useStore(game.store, (s) => s.timeControl?.initialMs === null && s.config?.examMode === false);
 
   return (
-    <div className={styles.actions}>
+    <div className={styles.actions} data-compact={compact}>
       {hintsEnabled && teacher ? (
         <Button
           variant="accent"
@@ -591,8 +603,8 @@ function Actions({ game, onResign, onLeave }: { game: GameController; onResign()
         </Button>
       ) : null}
       {undoPossible && phase !== 'idle' ? (
-        <Button variant="secondary" size="md" block icon={<Icon name="undo" />} disabled={!canUndo || phase !== 'childTurn'} onClick={() => game.undoLastMove()}>
-          Вернуть ход
+        <Button variant="secondary" size="md" block className={styles.undo} icon={<Icon name="undo" />} disabled={!canUndo || phase !== 'childTurn'} onClick={() => game.undoLastMove()}>
+          {compact ? 'Вернуть' : 'Вернуть ход'}
         </Button>
       ) : null}
       {phase === 'idle' ? (
@@ -601,8 +613,8 @@ function Actions({ game, onResign, onLeave }: { game: GameController; onResign()
           Назад
         </Button>
       ) : (
-        <Button variant="ghost" size="md" block icon={<Icon name="flag" />} onClick={onResign}>
-          Сдаться
+        <Button variant="ghost" size="md" block icon={<Icon name="flag" />} onClick={onResign} aria-label={compact ? 'Сдаться' : undefined}>
+          {compact ? null : 'Сдаться'}
         </Button>
       )}
     </div>

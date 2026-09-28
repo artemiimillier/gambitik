@@ -2,8 +2,14 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-height: 100dvh;
   background: var(--color-bg);
+}
+
+/* one screen high — minus Гамбитик's bar on a phone (--page-min-height, ui/global.css) */
+@supports (height: 100dvh) {
+  .screen {
+    min-height: var(--page-min-height, 100dvh);
+  }
 }
 
 .header {
@@ -79,6 +85,12 @@
 
 .screen[data-dock='side'] .main {
   padding-bottom: calc(var(--mascot-dock-size) + var(--space-4));
+}
+
+/* a phone: Гамбитик stands in his bar (html[data-dock-bar='page'], ui/global.css), and #root already keeps it free —
+   no dock room under the content as well, or every page scrolls into emptiness */
+:global(html[data-dock-bar='page']) .screen[data-dock] .main {
+  padding-bottom: var(--space-8);
 }
 
 @media (min-width: 900px) {
