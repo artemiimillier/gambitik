@@ -81,6 +81,8 @@ export function isPlayablePuzzle(puzzle: Puzzle): boolean {
 
 export interface CandidateQuery {
   theme?: string;
+  /** leave mating puzzles out (`isMatePuzzle`) */
+  noMates?: boolean;
   lo: number;
   hi: number;
   exclude: ReadonlySet<string>;
@@ -128,7 +130,12 @@ export class MemoryPuzzleSource implements PuzzleSource {
 
   candidates(query: CandidateQuery): Puzzle[] {
     const matching = this.puzzles.filter(
-      (p) => p.rating >= query.lo && p.rating <= query.hi && !query.exclude.has(p.id) && (query.theme === undefined || p.themes.includes(query.theme)),
+      (p) =>
+        p.rating >= query.lo &&
+        p.rating <= query.hi &&
+        !query.exclude.has(p.id) &&
+        (query.theme === undefined || p.themes.includes(query.theme)) &&
+        !(query.noMates === true && isMatePuzzle(p)),
     );
     return shuffle(matching, this.rng).slice(0, query.limit);
   }
@@ -147,6 +154,9 @@ interface PuzzleSqlRow {
   rating: number;
   themes: string;
 }
+
+/** `isMatePuzzle` as an SQL condition on the puzzle row `p` — rows are dropped before the costly conversion */
+const SQL_NOT_MATE = `NOT ((' ' || p.themes || ' ') GLOB '* mate *' OR (' ' || p.themes || ' ') GLOB '* mateIn[0-9]*' OR (' ' || p.themes || ' ') GLOB '*Mate *')`;
 
 export class SqlitePuzzleSource implements PuzzleSource {
   readonly kind = 'sqlite' as const;
@@ -168,11 +178,12 @@ export class SqlitePuzzleSource implements PuzzleSource {
 
   candidates(query: CandidateQuery): Puzzle[] {
     const exclude = JSON.stringify([...query.exclude]);
+    const noMates = query.noMates === true ? `AND ${SQL_NOT_MATE}` : '';
     let rows: PuzzleSqlRow[];
     if (query.theme === undefined) {
       rows = this.db.all<PuzzleSqlRow>(
-        `SELECT id, fen, moves, rating, themes FROM puzzle
-          WHERE rating BETWEEN ? AND ? AND id NOT IN (SELECT value FROM json_each(?))
+        `SELECT p.id, p.fen, p.moves, p.rating, p.themes FROM puzzle p
+          WHERE p.rating BETWEEN ? AND ? AND p.id NOT IN (SELECT value FROM json_each(?)) ${noMates}
           ORDER BY random() LIMIT ?`,
         query.lo,
         query.hi,
@@ -183,7 +194,7 @@ export class SqlitePuzzleSource implements PuzzleSource {
       rows = this.db.all<PuzzleSqlRow>(
         `SELECT p.id, p.fen, p.moves, p.rating, p.themes
            FROM puzzle_theme t JOIN puzzle p ON p.id = t.puzzle_id
-          WHERE t.theme = ? AND t.rating BETWEEN ? AND ? AND p.id NOT IN (SELECT value FROM json_each(?))
+          WHERE t.theme = ? AND t.rating BETWEEN ? AND ? AND p.id NOT IN (SELECT value FROM json_each(?)) ${noMates}
           ORDER BY random() LIMIT ?`,
         query.theme,
         query.lo,
@@ -193,8 +204,8 @@ export class SqlitePuzzleSource implements PuzzleSource {
       );
     } else {
       rows = this.db.all<PuzzleSqlRow>(
-        `SELECT id, fen, moves, rating, themes FROM puzzle
-          WHERE rating BETWEEN ? AND ? AND (' ' || themes || ' ') LIKE ? AND id NOT IN (SELECT value FROM json_each(?))
+        `SELECT p.id, p.fen, p.moves, p.rating, p.themes FROM puzzle p
+          WHERE p.rating BETWEEN ? AND ? AND (' ' || p.themes || ' ') LIKE ? AND p.id NOT IN (SELECT value FROM json_each(?)) ${noMates}
           ORDER BY random() LIMIT ?`,
         query.lo,
         query.hi,
@@ -418,6 +429,29 @@ export function rateAttempt(skill: ThemeSkill, puzzleRating: number, score: 0 | 
   };
 }
 
+/** Rating points per Glicko-2 unit (400 / ln 10) — the constant glicko2-lite scales with. */
+const GLICKO2_SCALE = 173.7178;
+
+/** Glicko's g(RD): the less certain a rating, the flatter the expected score. */
+function glickoG(rd: number): number {
+  const phi = rd / GLICKO2_SCALE;
+  return 1 / Math.sqrt(1 + (3 * phi * phi) / (Math.PI * Math.PI));
+}
+
+/**
+ * Expected score of the student on a puzzle, E = 1 / (1 + 10^(−g·Δ/400)). Glickman's forecast combines both
+ * deviations, g(√(RD² + PUZZLE_RD²)); with `rd = 0` it is exactly the expectation `rateAttempt` scores against.
+ */
+export function expectedScore(skill: Pick<ThemeSkill, 'rating' | 'rd'>, puzzleRating: number): number {
+  const g = glickoG(Math.hypot(skill.rd, PUZZLE_RD));
+  return 1 / (1 + Math.exp((-g * (skill.rating - puzzleRating)) / GLICKO2_SCALE));
+}
+
+/** The puzzle rating the student solves with probability `success` — `expectedScore` solved for the puzzle. */
+export function puzzleRatingFor(skill: Pick<ThemeSkill, 'rating' | 'rd'>, success: number): number {
+  return skill.rating - (GLICKO2_SCALE * Math.log(success / (1 - success))) / glickoG(Math.hypot(skill.rd, PUZZLE_RD));
+}
+
 /** Lichess tags that describe length / phase / evaluation rather than a skill — no own scale. */
 const SERVICE_THEMES = new Set(['short', 'long', 'veryLong', 'oneMove', 'middlegame', 'opening', 'advantage', 'crushing', 'equality', 'mate', 'master', 'masterVsMaster', 'superGM']);
 
@@ -465,8 +499,16 @@ export function applyAttemptToProfile(profile: StudentProfile, attempt: PuzzleAt
 // ───────────────────────── adaptive selection ─────────────────────────
 
 export const WINDOW_HALF_WIDTH = 150;
-/** aim slightly below the student's rating: ~75–80 % success keeps a child motivated */
-export const TARGET_OFFSET = -50;
+/**
+ * The expected score a batch aims at: about four puzzles of five solved (a solve with a hint counts half) keeps a
+ * child motivated — the success rate of good guided practice.
+ */
+export const TARGET_SUCCESS = 0.8;
+/**
+ * The easy end of the Lichess puzzle scale (the imported database starts at 399, the starter set at 404). A target
+ * below it would narrow the first window to a thin slice of the very easiest puzzles.
+ */
+export const PUZZLE_RATING_FLOOR = 400;
 export const RECENT_EXCLUDE_LIMIT = 200;
 const MAX_WIDENINGS = 12;
 
@@ -479,34 +521,45 @@ export interface NextPuzzlesRequest {
   recentIds: readonly string[];
 }
 
-function targetRating(profile: StudentProfile, theme: string | undefined): number {
-  const skill = theme !== undefined ? profile.themeSkills[theme] : undefined;
-  return (skill ?? profile.puzzleRating).rating + TARGET_OFFSET;
+/**
+ * The rating a batch is centred on: TARGET_SUCCESS expected (an uncertain rating aims lower), never below the
+ * easy end of the scale.
+ */
+export function targetRating(skill: Pick<ThemeSkill, 'rating' | 'rd'>): number {
+  return Math.max(PUZZLE_RATING_FLOOR, puzzleRatingFor(skill, TARGET_SUCCESS));
+}
+
+interface WindowFilter {
+  noMates?: boolean;
+  /** no puzzle rated above this */
+  ceiling?: number;
 }
 
 /**
  * Widening search: ±150 first, then ±300, … Puzzles found in a narrower window are kept, a wider
  * window only tops the batch up — so the batch stays as close to the target as the source allows.
  */
-function pickWindowed(source: PuzzleSource, theme: string | undefined, count: number, target: number, exclude: ReadonlySet<string>): Puzzle[] {
+function pickWindowed(source: PuzzleSource, theme: string | undefined, count: number, target: number, exclude: ReadonlySet<string>, filter: WindowFilter = {}): Puzzle[] {
   if (count <= 0) return [];
   const found: Puzzle[] = [];
   const seen = new Set(exclude);
+  const ceiling = filter.ceiling === undefined ? undefined : Math.round(filter.ceiling);
   for (let step = 0; step <= MAX_WIDENINGS && found.length < count; step += 1) {
     const unbounded = step === MAX_WIDENINGS;
     const half = WINDOW_HALF_WIDTH * (step + 1);
-    const candidates = source.candidates({
-      theme,
-      lo: unbounded ? 0 : Math.round(target - half),
-      hi: unbounded ? 100_000 : Math.round(target + half),
-      exclude: seen,
-      limit: count - found.length,
-    });
+    const lo = unbounded ? 0 : Math.round(target - half);
+    let hi = unbounded ? 100_000 : Math.round(target + half);
+    const capped = ceiling !== undefined && hi >= ceiling;
+    if (capped) hi = ceiling;
+    if (hi < lo) continue;
+    const candidates = source.candidates({ theme, noMates: filter.noMates, lo, hi, exclude: seen, limit: count - found.length });
     for (const puzzle of candidates) {
       if (seen.has(puzzle.id)) continue;
       seen.add(puzzle.id);
       found.push(puzzle);
     }
+    // the window already spans every rating up to the ceiling: a wider one adds nothing
+    if (capped && lo <= 0) break;
   }
   return found.slice(0, count);
 }
@@ -516,8 +569,12 @@ function pickWindowed(source: PuzzleSource, theme: string | undefined, count: nu
  * many mating puzzles with them too; a mate served under such an instruction contradicts it.
  */
 export const MATERIAL_THEMES: ReadonlySet<string> = new Set(['hangingPiece', 'trappedPiece']);
-/** how many candidates are looked at per wanted puzzle when some of them will be filtered out */
-const FILTER_OVERSAMPLE = 4;
+/**
+ * Easy puzzles that really win material are rare (below 550 a `hangingPiece` is nearly always a mate), so one may be
+ * harder than the target — but still solved about one time in three. Past that, repeats and mates are kinder than an
+ * ever harder puzzle once the easy ones are used up.
+ */
+export const MIN_FITTING_SUCCESS = 0.35;
 
 export function isMatePuzzle(puzzle: Pick<Puzzle, 'themes'>): boolean {
   return puzzle.themes.some((theme) => theme === 'mate' || /^mateIn\d+$/.test(theme) || /Mate$/.test(theme));
@@ -527,24 +584,24 @@ export function selectNextPuzzles(source: PuzzleSource, profile: StudentProfile,
   const recent = new Set(request.recentIds.slice(0, RECENT_EXCLUDE_LIMIT));
   const picked: Puzzle[] = [];
   const pickedIds = new Set<string>();
-  const take = (theme: string | undefined, n: number, exclude: ReadonlySet<string>, accept?: (puzzle: Puzzle) => boolean) => {
+  const skillFor = (theme: string | undefined) => (theme !== undefined ? profile.themeSkills[theme] : undefined) ?? profile.puzzleRating;
+  const take = (theme: string | undefined, n: number, exclude: ReadonlySet<string>, filter?: WindowFilter) => {
     if (n <= 0) return;
     const merged = new Set([...exclude, ...pickedIds]);
-    const wanted = accept === undefined ? n : n * FILTER_OVERSAMPLE;
-    let added = 0;
-    for (const puzzle of pickWindowed(source, theme, wanted, targetRating(profile, theme), merged)) {
-      if (added >= n) break;
-      if (pickedIds.has(puzzle.id) || (accept !== undefined && !accept(puzzle))) continue;
+    for (const puzzle of pickWindowed(source, theme, n, targetRating(skillFor(theme)), merged, filter)) {
+      if (pickedIds.has(puzzle.id)) continue;
       picked.push(puzzle);
       pickedIds.add(puzzle.id);
-      added += 1;
     }
   };
+  /** a «win material» theme: no mates, and no puzzle harder than MIN_FITTING_SUCCESS */
+  const fitting = (theme: string): WindowFilter | undefined =>
+    MATERIAL_THEMES.has(theme) ? { noMates: true, ceiling: puzzleRatingFor(skillFor(theme), MIN_FITTING_SUCCESS) } : undefined;
 
   if (request.theme !== undefined) {
-    if (MATERIAL_THEMES.has(request.theme)) {
+    const fits = fitting(request.theme);
+    if (fits !== undefined) {
       // puzzles that fit the instruction first — fresh ones, then repeats; mates only fill what is still missing
-      const fits = (puzzle: Puzzle) => !isMatePuzzle(puzzle);
       take(request.theme, request.count, recent, fits);
       take(request.theme, request.count - picked.length, new Set(), fits);
     }
@@ -556,7 +613,8 @@ export function selectNextPuzzles(source: PuzzleSource, profile: StudentProfile,
     const fromStage = preferred.length === 0 ? 0 : Math.ceil(request.count / 2);
     for (let i = 0; i < fromStage; i += 1) {
       const theme = preferred[i % preferred.length];
-      if (theme !== undefined) take(theme, 1, recent);
+      // a stage theme is practised with puzzles that are about it; a missing one is filled up below
+      if (theme !== undefined) take(theme, 1, recent, fitting(theme));
     }
     take(undefined, request.count - picked.length, recent);
     if (picked.length < request.count) take(undefined, request.count - picked.length, new Set());
