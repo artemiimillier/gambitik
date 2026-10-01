@@ -19,7 +19,7 @@
     "@hono/zod-validator": "^0.9.1",
     "chess.js": "1.4.0",
     "glicko2-lite": "^6.0.0",
-    "hono": "^4.13.8",
+    "hono": "^4.13.9",
     "ts-fsrs": "^5.4.2",
     "zod": "^4.6.5"
   },

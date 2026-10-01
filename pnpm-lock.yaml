@@ -40,10 +40,10 @@ importers:
         version: link:../../packages/shared
       '@hono/node-server':
         specifier: ^2.1.1
-        version: 2.1.1(hono@4.13.8)
+        version: 2.1.1(hono@4.13.9)
       '@hono/zod-validator':
         specifier: ^0.9.1
-        version: 0.9.1(hono@4.13.8)(zod@4.6.5)
+        version: 0.9.1(hono@4.13.9)(zod@4.6.5)
       chess.js:
         specifier: 1.4.0
         version: 1.4.0
@@ -51,8 +51,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       hono:
-        specifier: ^4.13.8
-        version: 4.13.8
+        specifier: ^4.13.9
+        version: 4.13.9
       ts-fsrs:
         specifier: ^5.4.2
         version: 5.4.2
@@ -535,8 +535,8 @@ packages:
     resolution: {integrity: sha512-E6ogvxyd70DegyuJ2eStJESfUNHGhwCqMA8N5YMlGaRZ6BvS3Ku5zBoG5stf9W6il7FnG15v07+DZWgldBCIrQ==}
     engines: {node: 22 || 24 || >=26}
 
-  hono@4.13.8:
-    resolution: {integrity: sha512-/Gng7NfoykZl2pjukW5Z6+8Yxm3BPRf86GTbQnt0SbySkvax4fyL4H3HhY1cCpBGmiW9XDRFzRV+CXK2W8QudQ==}
+  hono@4.13.9:
+    resolution: {integrity: sha512-7dMkQmZoC4E6F7AtaQSPhlWAdnBti+j7rreMZl8QB4jFiEhP9TWbGWUMi8WYzBCgmgulxuvLQupKqo+Co6Omyg==}
     engines: {node: '>=16.9.0'}
 
   immer@11.1.18:
@@ -905,13 +905,13 @@ snapshots:
 
   '@fontsource-variable/nunito@5.3.0': {}
 
-  '@hono/node-server@2.1.1(hono@4.13.8)':
+  '@hono/node-server@2.1.1(hono@4.13.9)':
     dependencies:
-      hono: 4.13.8
+      hono: 4.13.9
 
-  '@hono/zod-validator@0.9.1(hono@4.13.8)(zod@4.6.5)':
+  '@hono/zod-validator@0.9.1(hono@4.13.9)(zod@4.6.5)':
     dependencies:
-      hono: 4.13.8
+      hono: 4.13.9
       zod: 4.6.5
 
   '@jridgewell/resolve-uri@3.1.2': {}
@@ -1132,7 +1132,7 @@ snapshots:
 
   glicko2-lite@6.0.0: {}
 
-  hono@4.13.8: {}
+  hono@4.13.9: {}
 
   immer@11.1.18: {}
 
